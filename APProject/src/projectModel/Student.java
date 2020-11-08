@@ -1,4 +1,4 @@
-package jdbc.connection;
+package projectModel;
 
 public class Student {
 

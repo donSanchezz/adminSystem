@@ -4,18 +4,44 @@ package jdbc.connection;
 import java.sql.SQLException;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
+
+import javax.swing.JOptionPane;
+
+import projectModel.Student;
+import projectView.Login;
 
 public class SQLOperations {
 	private Connection dbConn = null;
 	private Statement stmt = null;
 	private int numOfAffectedRows = 0;
 	private Student student;
+	 private Login theView;
 	
-	public SQLOperations (Connection dbConn) {
+	public SQLOperations ( Connection dbConn) {
 		this.dbConn =  dbConn;
+
 	}
 
+	
+	
+	/*
+	public void logInBtn() {
+		try {
+			Statement stmt = dbConn.createStatement();
+			String loginSql = "Select * from login where username = '"+theView.user.getText()+ "' and password = '"+theView.pass.getText().toString()+"'";
+			ResultSet rs = stmt.executeQuery(loginSql);
+			if (rs.next()) {
+				JOptionPane.showMessageDialog(null, "Login Sucessfull");
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Incorrect username and password...");
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	}*/
 	
 	public boolean insertStudent (Student s) {
 		
@@ -37,6 +63,10 @@ public class SQLOperations {
 	
 	
 }
+	
+	
+	
+	
 
 
 

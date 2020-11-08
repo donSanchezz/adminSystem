@@ -1,4 +1,4 @@
-package jdbc.connection;
+/*package jdbc.connection;
 
 import java.sql.DriverManager;
 import java.sql.Connection;
@@ -34,17 +34,18 @@ public class main {
 				
 		
 		
-		Student student = new Student (1, "John", "Mark", "johnmark@gmail.com", 1114444, "Financial", "I cant pay tomorrow");
+	Student student = new Student (3, "Ashley", "Barnes", "ashleybarnes@gmail.com", 222222, "Financial", "I cant pay tomorrow");
 		
 		
 		
-		SQLOperations sql = new SQLOperations (dbConn);
+	/*	SQLOperations sql = new SQLOperations (dbConn);
 		
 		
-		boolean created = sql.insertStudent(student);
+	boolean created = sql.insertStudent(student);
 		if (created==true) {
-			JOptionPane.showMessageDialog(null,  "Contact created", "Contact Creation", JOptionPane.INFORMATION_MESSAGE);
+	JOptionPane.showMessageDialog(null,  "Contact created", "Contact Creation", JOptionPane.INFORMATION_MESSAGE);
 		}
-	}
+	
 
 }
+*/
