@@ -15,27 +15,30 @@ import javax.swing.JOptionPane;
 import jdbc.connection.SQLOperations;
 import jdbc.connection.dbConnector;
 import projectView.Login;
+import projectView.StuDashboard;
 
 public class Controller {
 	
-	private Login theView;
+	private Login login;
 	private SQLOperations ops;
+	private StuDashboard stuDash;
 	
 
 	
-	public Controller (Login theView) {
+	public Controller (Login login, StuDashboard stuDash) {
 		
-		this.theView = theView;
+		this.login = login;
+		this.stuDash = stuDash;
 		
-		
-		this.theView.addLoginListener(new loginBtnListener());
+		this.login.addLoginListener(new loginBtnListener());
+		this.stuDash.addNewComplaintListener( new NewCompListener());
 	}
 	
 	
 	//Where the log-in button get's handled.
 	 class loginBtnListener implements ActionListener {
 
-		@Override
+	
 		public void actionPerformed(ActionEvent e) {
 			
 			
@@ -44,7 +47,7 @@ public class Controller {
 			//A query statement that gets the user input for username and view from the Login(View).
 			try {
 				Statement stmt = con.createStatement();
-				String loginSql = "Select * from login where username = '"+theView.user.getText()+ "' and password = '"+theView.pass.getText().toString()+"'";
+				String loginSql = "Select * from login where username = '"+login.user.getText()+ "' and password = '"+login.pass.getText().toString()+"'";
 				ResultSet rs = stmt.executeQuery(loginSql);
 				if (rs.next()) {
 					JOptionPane.showMessageDialog(null, "Login Sucessfull");
@@ -56,8 +59,17 @@ public class Controller {
 				e1.printStackTrace();
 			}
 			
+
 		}
 		 
+	 }
+	 
+	 
+	 class NewCompListener implements ActionListener {
+		 public void actionPerformed(ActionEvent e) {
+
+			
+		 }
 	 }
 
 }

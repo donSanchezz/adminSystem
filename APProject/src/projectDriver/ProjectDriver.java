@@ -6,17 +6,21 @@ import jdbc.connection.SQLOperations;
 import jdbc.connection.dbConnector;
 import projectController.Controller;
 import projectView.Login;
+import projectView.StuDashboard;
 
 public class ProjectDriver {
 
 	public static void main(String[] args) {
 		
-		Login frame = new Login();
+		Login loginFrame = new Login();
+		StuDashboard stuDashFrame = new StuDashboard();
 		new dbConnector();
 
 		
-		Controller con = new Controller(frame);
-		frame.setVisible(true);
+		Controller con = new Controller(loginFrame, stuDashFrame);
+		stuDashFrame.setVisible(true);
+		//loginFrame.setVisible(true);
+		
 		
 		
 		

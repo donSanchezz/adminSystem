@@ -2,40 +2,36 @@ package projectModel;
 
 public class Student {
 
-	private int stuId;
+	private int id;
 	private String firstName;
 	private String lastName;
 	private String email;
-	private int cantNum;
-	private String typeIssue;
-	private String detailIssue;
+	private int contactNum;
 	
-	public Student (int stuId, String firstName, String lastName, String email, int cantNum, String typeIssue, String detailIssue) {
-		this.stuId = stuId;
+	public Student (int id, String firstName, String lastName, String email, int contactNum) {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.cantNum = cantNum;
-		this.typeIssue = typeIssue;
-		this.detailIssue = detailIssue;
+		this.contactNum = contactNum;
+
 	}
 	
 	public Student () {
-		this.stuId = 1;
+		this.id = 1;
 		this.firstName = "John";
 		this.lastName = "Doe";
 		this.email = "johndoe@gmail.com";
-		this.cantNum = 8597198;
-		this.typeIssue = "Financial";
-		this.detailIssue = "I haven't recieved my balance";
+		this.contactNum = 8597198;
+
 	}
 
 	public int getStuId() {
-		return stuId;
+		return id;
 	}
 
-	public void setStuId(int stuId) {
-		this.stuId = stuId;
+	public void setStuId(int id) {
+		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -62,34 +58,20 @@ public class Student {
 		this.email = email;
 	}
 
-	public int getCantNum() {
-		return cantNum;
+	public int getCantactNum() {
+		return contactNum;
 	}
 
-	public void setCantNum(int cantNum) {
-		this.cantNum = cantNum;
+	public void setCantNum(int contactNum) {
+		this.contactNum = contactNum;
 	}
 
-	public String getTypeIssue() {
-		return typeIssue;
-	}
 
-	public void setTypeIssue(String typeIssue) {
-		this.typeIssue = typeIssue;
-	}
-
-	public String getDetailIssue() {
-		return detailIssue;
-	}
-
-	public void setDetailIssue(String detailIssue) {
-		this.detailIssue = detailIssue;
-	}
 
 	@Override
 	public String toString() {
-		return "Student [stuId=" + stuId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", cantNum=" + cantNum + ", typeIssue=" + typeIssue + ", detailIssue=" + detailIssue + "]";
+		return "Student [stuId=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", cantNum=" + contactNum + "]";
 	}
 	
 	
