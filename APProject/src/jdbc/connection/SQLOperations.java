@@ -47,7 +47,7 @@ public class SQLOperations {
 		
 	String insertSql = "INSERT INTO `students`"
 			+ "(`stuId`, `firstName`, `lastName`, `email`, `cantNum`, `typeIssue`, `detailIssue`)"
-			+"VALUES (' " +s.getStuId()+ " ', ' "+s.getFirstName()+ " ' , ' "+s.getLastName()+" ', ' " +s.getEmail()+" ' , ' " +s.getCantNum()+" ', ' "+s.getTypeIssue()+ " ', ' " +s.getDetailIssue()+"')";
+			+"VALUES (' " +s.getStuId()+ " ', ' "+s.getFirstName()+ " ' , ' "+s.getLastName()+" ', ' " +s.getEmail()+" ' , ' " +s.getCantactNum()+"')";
 	
 	
 		try {
