@@ -4,7 +4,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+import java.util.logging.LogManager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,12 +18,11 @@ public class Server {
 	private Socket connection;
 	private ServerSocket servSock;
 	
-private static final Logger Logger = LogManager.getLogger(Server.class);
-
+	private static final Logger Logger = LogManager.getLogger(Server.class);
 			
-	public Server () {
+	public Server() {
 		this.createConnection();
-		this.waitForRequest();
+		this.waitForRequests();
 	}
 	
 	private void createConnection () {
@@ -85,7 +84,7 @@ private static final Logger Logger = LogManager.getLogger(Server.class);
 					//Add complaint
 					
 					
-				}
+				}while();
 			}
 		}
 	}

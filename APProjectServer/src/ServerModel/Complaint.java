@@ -1,14 +1,39 @@
 package ServerModel;
 
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="complaint")
 public class Complaint extends DateTime {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	public int id;
+	
+	@Column(name="date")
 	public String date;
+	
+	@Column(name="time")
 	public String time;
+	
+	@Column(name="typeOfComplaint")
 	public String typeOfComplaint;
+	
+	@Column(name="complaint")
 	public String complaint;
+	
+	@Column(name="stuId")
 	public int stuId;
 	
 	
@@ -62,6 +87,8 @@ public class Complaint extends DateTime {
 		this.typeOfComplaint = typeOfComplaint;
 	}
 
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="Complaint_FK")
 	public String getComplaint() {
 		return complaint;
 	}

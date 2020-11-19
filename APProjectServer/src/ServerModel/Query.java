@@ -1,14 +1,34 @@
 package ServerModel;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-
+@Entity
+@Table(name="complaint")
 public class Query extends DateTime{
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	public int id;
+	
+	@Column(name="date")
 	public String date;
+	
+	@Column(name="time")
 	public String time;
+	
+	@Column(name="typeOfQuery")
 	public String typeOfQuery;
+	
+	@Column(name="query")
 	public String query;
+	
+	@Column(name="stuId")
 	public int stuId;
 	
 	public Query(int id, String date, String time, String typeOfQuery, String query, int stuId) {
