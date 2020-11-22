@@ -4,11 +4,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.LogManager;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ServerController.API;
 import ServerModel.Complaint;
 
 public class Server {
@@ -40,6 +41,7 @@ public class Server {
 	
 	
 	public void getStream () {
+		
 		try {
 			Logger.warn ("Attempting to setup Server Streams to client, Errors may occur");
 			os = new ObjectOutputStream (connection.getOutputStream());
@@ -48,6 +50,7 @@ public class Server {
 		}catch (IOException ex) {
 			Logger.error(ex.getMessage());
 		}
+		
 	}
 	
 	public void closeConnection () {
@@ -66,6 +69,8 @@ public class Server {
 	
 	private void waitForRequests() {
 		String action = "";
+		try {
+			while(true) {
 		Logger.info("Server waiting for connections");
 		connection = servSock.accept();
 		Logger.info ("Client requests accepted");
@@ -82,13 +87,26 @@ public class Server {
 					Complaint obj = (Complaint)is.readObject();
 					Logger.info("Data Successfully recieved from client");
 					//Add complaint
+					API ch = new API();
+					ch.insertComplaint(obj);
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					os.writeObject(true);
+					Logger.info("Data Successfully sent from client");
+					break;
 					
-					
-				}while();
+				}
+			}catch (Exception ex) {
+				Logger.warn("An error has occured");
 			}
-		}
+		}while(!action.contentEquals("Exit"));
+		this.closeConnection();
+		
 	}
 	
+		}catch (Exception ex) {
+			Logger.warn("An error has occured");
+		}
+	}
 	
 	
 

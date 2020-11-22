@@ -8,6 +8,7 @@ import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+//import configuration.Server;
 import projectModel.Complaint;
 
 public class Client {
@@ -16,7 +17,8 @@ public class Client {
 	private Socket connection;
 	
 	
-	private Logger Logger = LogManager.getLogger(Client.class);
+	//private Logger Logger = LogManager.getLogger(Client.class);
+	private static final Logger Logger = LogManager.getLogger(Client.class);
 	
 	public Client () {
 		this.createConnection();
@@ -24,18 +26,18 @@ public class Client {
 	}
 	
 	
-	private void createConnection () {
+	private void createConnection() {
 		try {
 			Logger.warn("Attempting to setup Client Socket, Erros may occur");
 			connection = new Socket(InetAddress.getLocalHost(), 8888);
-			Logger.info ("Socket Successfully COnfigred");
+			Logger.info ("Socket Successfully Configred");
 		}catch (IOException ex) {
 			Logger.error(ex.getMessage());
 		}
 		
 	}
 	
-	public final void getStreams () {
+	public final void getStreams() {
 		try {
 			Logger.warn("Attempting to setup Socket, Errors may occur");
 			os = new ObjectOutputStream (connection.getOutputStream());
@@ -46,7 +48,7 @@ public class Client {
 		}
 	}
 	
-	public void  closeConnection () {
+	public void  closeConnection() {
 		try {
 			Logger.warn("Attempting to close Client Streams to Server, Errors may occur");
 			os.close();
@@ -58,7 +60,7 @@ public class Client {
 		}
 	}
 	
-	public void sendAction (String action) {
+	public void sendAction(String action) {
 		try {
 			Logger.warn("Attempting to send information to Server, Errors may occur");
 			//Sending an action to the server as a string of what we wabt to achieve
@@ -72,7 +74,7 @@ public class Client {
 	}
 	
 	
-	public void sendComplaint (Complaint obj) {
+	public void sendComplaint(Complaint obj) {
 		try {
 			Logger.warn("Attempting to send information to Server, Errors may occur ");
 			os.writeObject(obj);
@@ -83,7 +85,7 @@ public class Client {
 	}
 	
 	
-	public void recieveResponse () {
+	public void recieveResponse() {
 		try {
 			Logger.warn("Attempting to recieve information from Server, Errors may occur");
 			Boolean flag = (Boolean)is.readObject();

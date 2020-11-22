@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+							"http://www.hibernte.org/dtd/hibernate-mapping-3.0.dtd">
+							
+<hibernate-mapping>
+
+<!-- Name of the class being mapping & table to whic hit maps in the databse -->
+
+<class name="ServerModel.Complaint" table ="complaint"
+
+<id column =id" name="id" type="java.lang.int"/>
+
+<!column name in database & corresponding field name in class -->
+<property name =

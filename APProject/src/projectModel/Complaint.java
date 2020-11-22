@@ -4,7 +4,7 @@ package projectModel;
 
 public class Complaint extends DateTime {
 	
-	public int id;
+	public transient int id;
 	public String date;
 	public String time;
 	public String typeOfComplaint;
