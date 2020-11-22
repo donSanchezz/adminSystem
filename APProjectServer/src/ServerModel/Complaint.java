@@ -19,7 +19,7 @@ public class Complaint extends DateTime {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	public int id;
+	public transient int id;
 	
 	@Column(name="date")
 	public String date;

@@ -8,8 +8,11 @@ import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+//import java.io.Serializable;
+
 //import configuration.Server;
 import projectModel.Complaint;
+import projectModel.Student;
 
 public class Client {
 	private ObjectOutputStream os;
@@ -42,6 +45,7 @@ public class Client {
 			Logger.warn("Attempting to setup Socket, Errors may occur");
 			os = new ObjectOutputStream (connection.getOutputStream());
 			is = new ObjectInputStream (connection.getInputStream());
+			Logger.warn("Socket setup successfull");
 			
 		}catch (IOException ex) {
 			Logger.error(ex.getMessage());
@@ -62,7 +66,7 @@ public class Client {
 	
 	public void sendAction(String action) {
 		try {
-			Logger.warn("Attempting to send information to Server, Errors may occur");
+			Logger.warn("Attempting to send the action thats need to be performed to Server, Errors may occur");
 			//Sending an action to the server as a string of what we wabt to achieve
 			//Already serialized
 			os.writeObject(action);
@@ -84,12 +88,21 @@ public class Client {
 		}
 	}
 	
+	public void sendStudent(Student stuObj) {
+		try {
+			Logger.warn("Attempting to send student information to Server, Errors may occur ");
+			os.writeObject(stuObj);
+			Logger.info("Data Successfully sent to server");
+		}catch (IOException ex) {
+			Logger.error("Data not Sent to server \n" + ex.getMessage());
+		}
+	}
 	
 	public void recieveResponse() {
 		try {
 			Logger.warn("Attempting to recieve information from Server, Errors may occur");
 			Boolean flag = (Boolean)is.readObject();
-			Logger.info("Date Successfully Recieve from server");
+			Logger.info("Data Successfully Recieved from server");
 			Logger.info ("Recieved: '"+ flag + "'from Server");
 		}catch (ClassCastException | ClassNotFoundException | IOException ex) {
 			Logger.error(ex.getMessage());

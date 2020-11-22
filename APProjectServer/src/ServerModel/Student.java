@@ -1,5 +1,6 @@
 package ServerModel;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,13 +12,14 @@ import javax.transaction.HeuristicRollbackException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.Transaction;
+import java.io.Serializable;
 
 import org.hibernate.Session;
 import factory.SessionFactoryBuilder;
 
 @Entity
 @Table(name="students")
-public class Student {
+public class Student implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

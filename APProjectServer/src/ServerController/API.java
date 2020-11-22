@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ServerModel.Complaint;
+import ServerModel.Student;
 import configuration.Server;
 import factory.SessionFactoryBuilder;
 
@@ -37,6 +38,32 @@ public class API {
 			session.getSession().flush();
 			session.getSession().close();
 		}
+	}
+		
+		
+		public Boolean insertStudent (Student stuObj) {
+			SessionFactoryBuilder session = new SessionFactoryBuilder();
+			session.getSession();
+			Transaction trans = null;
+			
+			try {
+				Logger.warn("Attempting to create a session");
+				trans = session.getSession().beginTransaction();
+				session.getSession().save(stuObj);
+				trans.commit();
+				Logger.info("Record inserted Successfully");
+				return true;
+			}catch (RuntimeException ex) {
+				if (trans != null) {
+					Logger.error("An SQL Exception has occured" + ex.getMessage() + "Insertion failed");
+					trans.rollback();
+				}
+				return false;
+			}
+			finally {
+				session.getSession().flush();
+				session.getSession().close();
+			}
 		
 	}
 

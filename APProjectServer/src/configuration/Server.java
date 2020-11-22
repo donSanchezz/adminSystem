@@ -5,12 +5,15 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import java.io.Serializable;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ServerController.API;
 import ServerModel.Complaint;
+import ServerModel.Student;
 
 public class Server {
 
@@ -77,26 +80,37 @@ public class Server {
 		this.getStream();
 		do {
 			try {
-				Logger.warn("Attempting to recieve data from client, Errors may occur");
+				Logger.warn("Attempting to recieve data of whats operation to be done from client, Errors may occur");
 				//Reading the string that was sent over from the Client server...the request that should be processed.
 				action = (String) is.readObject();
-				Logger.info ("Data Successfully recieve from client");
+				Logger.info ("Data Successfully recieved from client");
 				switch (action) {
 				case "Add Complaint":
 					Logger.warn("Attempting to recieve data from client, Erros may occur");
 					Complaint obj = (Complaint)is.readObject();
 					Logger.info("Data Successfully recieved from client");
 					//Add complaint
-					API ch = new API();
-					ch.insertComplaint(obj);
+					API com = new API();
+					com.insertComplaint(obj);
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					os.writeObject(true);
 					Logger.info("Data Successfully sent from client");
 					break;
-					
+				case "Add Student":
+					Logger.warn("Attempting to recieve student data from client, Erros may occur");
+					Student stuObj = (Student)is.readObject();
+					Logger.info("Data Successfully recieved from client");
+					//Add student
+					API stu = new API();
+					stu.insertStudent(stuObj);
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					os.writeObject(true);
+					Logger.info("Data Successfully sent from client");
+					break;
 				}
-			}catch (Exception ex) {
-				Logger.warn("An error has occured");
+			}catch (ClassNotFoundException | ClassCastException ex) {
+				Logger.error("An error has occured" + ex.getMessage());
+				os.writeObject(false);
 			}
 		}while(!action.contentEquals("Exit"));
 		this.closeConnection();
