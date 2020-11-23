@@ -121,22 +121,5 @@ public class Server {
 			Logger.warn("An error has occured");
 		}
 	}
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
