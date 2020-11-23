@@ -11,9 +11,10 @@ import java.io.Serializable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ServerController.API;
+
 import ServerModel.Complaint;
 import ServerModel.Student;
+import ServerModel.studentHib;
 
 public class Server {
 
@@ -90,8 +91,8 @@ public class Server {
 					Complaint obj = (Complaint)is.readObject();
 					Logger.info("Data Successfully recieved from client");
 					//Add complaint
-					API com = new API();
-					com.insertComplaint(obj);
+					//API com = new API();
+					//com.insertComplaint(obj);
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					os.writeObject(true);
 					Logger.info("Data Successfully sent from client");
@@ -101,16 +102,20 @@ public class Server {
 					Student stuObj = (Student)is.readObject();
 					Logger.info("Data Successfully recieved from client");
 					//Add student
-					API stu = new API();
-					stu.insertStudent(stuObj);
+					studentHib studenthib = new studentHib();
+					studenthib.saveStudent(stuObj);
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					os.writeObject(true);
 					Logger.info("Data Successfully sent from client");
 					break;
 				}
 			}catch (ClassNotFoundException | ClassCastException ex) {
-				Logger.error("An error has occured" + ex.getMessage());
+				//Logger.error("An error has occured" + ex.getMessage());
+				ex.printStackTrace();
 				os.writeObject(false);
+			}catch(Exception ex1){
+				Logger.error("An error has occued" + ex1.getMessage());
+				ex1.printStackTrace();
 			}
 		}while(!action.contentEquals("Exit"));
 		this.closeConnection();

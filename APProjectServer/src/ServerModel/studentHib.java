@@ -2,39 +2,44 @@
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionException;
 import org.hibernate.Transaction;
 
+import configuration.Server;
 import factory.SessionFactoryBuilder;
 
 public class studentHib {
-
+	private static final Logger Logger = LogManager.getLogger(Server.class);
 	//Class for student update, display all, update, delete
 	// Also get by an ID number. CRUD Operations.
 	
 	public void saveStudent(Student students) {
 		
+		
 		Transaction transaction = null;
 		
 		try(Session session = SessionFactoryBuilder.getSessionFactory().openSession()){
+			Logger.warn("Attempting to retrieve session from SessionFactoryBuilder");
 			
 			//Start the transaction
 			transaction = session.beginTransaction();
-			
 			//Saving the student
 			session.save(students);
-			
 			//Commit the transition
 			transaction.commit();
-			
-		}catch(Exception e) {
+			Logger.info("Session retrieved, data committed");
+		}catch(SessionException ex) {
 			
 			if(transaction != null){
 				
 			transaction.rollback();
 			
 			}
-			System.out.println("Error occurred");
+			Logger.error("Trouble configuring session, not successful" + ex.getMessage());
+			ex.printStackTrace();
 		}
 	}
 	
@@ -149,7 +154,7 @@ public class studentHib {
 	}
 	
 	//In the main class/ driver class, it should be like this:
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 	
 		//to run save student
 	studentHib studenthib = new studentHib();
@@ -171,6 +176,6 @@ public class studentHib {
 	//To deleteStudents
 	studenthib.deleteStudent(student.getStuId());
 	
-	}
+	}*/
 	
 }

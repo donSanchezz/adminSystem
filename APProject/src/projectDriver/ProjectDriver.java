@@ -30,10 +30,16 @@ public class ProjectDriver {
 		client.sendAction("Add Student");
 		
 		//client.sendComplaint(new Complaint(0, dt.Date(), dt.Time(), "Finance", "I have paid 500, but it hasn't show on my portal", 0));
-		client.sendStudent(new Student());
+		//Student stuObj = new Student(10, "Alexis", "Garcia", "alexisgarcia@gmail.com", 99999);
+		
+		client.sendStudent(new Student(10, "Alexis", "Garcia", "alexisgarcia@gmail.com", 99999));
 		
 		
 		client.recieveResponse();
+		
+		client.sendAction("Exit");
+		
+		
 		
 		/*Login loginFrame = new Login();
 		StuDashboard stuDashFrame = new StuDashboard();
