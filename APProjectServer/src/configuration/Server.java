@@ -22,6 +22,7 @@ public class Server {
 	private ObjectInputStream is;
 	private Socket connection;
 	private ServerSocket servSock;
+	private Student student;
 	
 	private static final Logger Logger = LogManager.getLogger(Server.class);
 			
@@ -100,7 +101,7 @@ public class Server {
 				case "Add Student":
 					Logger.warn("Attempting to recieve student data from client, Erros may occur");
 					Student stuObj = (Student)is.readObject();
-					Logger.info("Data Successfully recieved from client");
+					Logger.info("Student data Successfully recieved from client");
 					//Add student
 					studentHib studenthib = new studentHib();
 					studenthib.saveStudent(stuObj);
@@ -110,7 +111,7 @@ public class Server {
 					break;
 				}
 			}catch (ClassNotFoundException | ClassCastException ex) {
-				//Logger.error("An error has occured" + ex.getMessage());
+				Logger.error("An error has occured" + ex.getMessage());
 				ex.printStackTrace();
 				os.writeObject(false);
 			}catch(Exception ex1){

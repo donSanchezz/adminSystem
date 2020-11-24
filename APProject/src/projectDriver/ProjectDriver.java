@@ -14,6 +14,9 @@ import projectModel.DateTime;
 import projectModel.Student;
 import projectView.Login;
 import projectView.StuDashboard;
+import projectView.newComplaint;
+import projectView.newQuery;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,28 +28,27 @@ public class ProjectDriver {
 		DateTime dt = new DateTime();
 		//Complaint complaint;
 		
-		Client client = new Client();
+		//Client client = new Client();
 		//client.sendAction("Add Complaint");
-		client.sendAction("Add Student");
-		
+		//client.sendAction("Add Student");
 		//client.sendComplaint(new Complaint(0, dt.Date(), dt.Time(), "Finance", "I have paid 500, but it hasn't show on my portal", 0));
 		//Student stuObj = new Student(10, "Alexis", "Garcia", "alexisgarcia@gmail.com", 99999);
+		//client.sendStudent(new Student(10, "Alexis", "Garcia", "alexisgarcia@gmail.com", 99999));
+		//client.recieveResponse();
+		//client.sendAction("Exit");
 		
-		client.sendStudent(new Student(10, "Alexis", "Garcia", "alexisgarcia@gmail.com", 99999));
 		
-		
-		client.recieveResponse();
-		
-		client.sendAction("Exit");
 		
 		
 		
 		/*Login loginFrame = new Login();
-		StuDashboard stuDashFrame = new StuDashboard();
-		new dbConnector();
-
+		new dbConnector(); */
 		
-		Controller con = new Controller(loginFrame, stuDashFrame);
+		Login loginFrame = new Login();
+		StuDashboard stuDashFrame = new StuDashboard();
+		newComplaint newComplaint = new newComplaint();
+		newQuery newQuery = new newQuery();
+		Controller con = new Controller(loginFrame, stuDashFrame, newComplaint, newQuery);
 		stuDashFrame.setVisible(true);
 		//loginFrame.setVisible(true); */
 		

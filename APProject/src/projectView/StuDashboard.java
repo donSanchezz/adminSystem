@@ -25,6 +25,8 @@ public class StuDashboard extends JFrame {
 	private JTextField unsolvedTxt;
 	private JTextField solvedTxt;
 	JMenuItem newCompItem = new JMenuItem("New complaint");
+	JMenuItem newQueryItem = new JMenuItem("New query");
+	JMenuItem viewQueryItem = new JMenuItem("View query");
 	/**
 	 * Launch the application.
 	 */
@@ -61,6 +63,14 @@ public class StuDashboard extends JFrame {
 		
 		JMenuItem viewCompItem = new JMenuItem("View complaint");
 		compMenu.add(viewCompItem);
+		
+		JMenu queryMenu = new JMenu("Query");
+		menuBar.add(queryMenu);
+		
+
+		queryMenu.add(newQueryItem);
+		queryMenu.add(viewQueryItem);
+		
 		dashViewPane = new JPanel();
 		dashViewPane.setBackground(Color.LIGHT_GRAY);
 		dashViewPane.setForeground(new Color(0, 0, 0));
@@ -132,6 +142,10 @@ public class StuDashboard extends JFrame {
 	
 	public void addNewComplaintListener (ActionListener listenForNewComp) {
 		newCompItem.addActionListener(listenForNewComp);
+	}
+	
+	public void addNewQueryListener (ActionListener listenForNewQuery) {
+		newQueryItem.addActionListener(listenForNewQuery);
 	}
 	
 	

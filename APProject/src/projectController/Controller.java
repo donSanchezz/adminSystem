@@ -16,22 +16,38 @@ import jdbc.connection.SQLOperations;
 import jdbc.connection.dbConnector;
 import projectView.Login;
 import projectView.StuDashboard;
+import projectView.newComplaint;
+import projectView.newQuery;
 
 public class Controller {
 	
 	private Login login;
 	private SQLOperations ops;
 	private StuDashboard stuDash;
+	private newComplaint newComp;
+	private newQuery newQuery;
 	
+	newComplaint ncmp = new newComplaint();
 
 	
-	public Controller (Login login, StuDashboard stuDash) {
+	public Controller (Login login, StuDashboard stuDash, newComplaint newComp, newQuery newQuery) {
 		
 		this.login = login;
 		this.stuDash = stuDash;
+		this.newComp = newComp;
+		this.newQuery = newQuery;
 		
+		//Login listeners
 		this.login.addLoginListener(new loginBtnListener());
+		//Dashboard listeners
 		this.stuDash.addNewComplaintListener( new NewCompListener());
+		this.stuDash.addNewQueryListener( new NewQueryListener());
+		//Complaint listeners
+		this.newComp.addClearListenerC(new listenForClearBttnC());
+		this.newComp.addExitListenerC(new listenForExitBttnC());
+		//Query listeners
+		this.newQuery.addClearListenerQ(new listenForClearBttnQ());
+		this.newQuery.addExitListenerQ(new listenForExitBttnQ());
 	}
 	
 	
@@ -64,12 +80,70 @@ public class Controller {
 		 
 	 }
 	 
-	 
+	 //Dashboard Action Listeners
 	 class NewCompListener implements ActionListener {
 		 public void actionPerformed(ActionEvent e) {
-
+			 
+			 newComp.setVisible(true);
+			 stuDash.setVisible(false);
 			
 		 }
 	 }
+	 
+	 class NewQueryListener implements ActionListener {
+		 public void actionPerformed(ActionEvent e) {
+			 
+			 newQuery.setVisible(true);
+			 stuDash.setVisible(false);
+			
+		 }
+	 }
+	 
+	
+	 
+	 //Complaint Action Listeners
+	 class listenForClearBttnC implements ActionListener {
+		 public void actionPerformed(ActionEvent e) {
+			
+
+			 newComp.stuIdTxtField.setText(" ");
+			 newComp.compTxtArea.setText(" ");
+			 newComp.compCmbBox.setSelectedIndex(0);
+		 }
+	 }
+	 
+	 class listenForExitBttnC implements ActionListener {
+		 public void actionPerformed(ActionEvent e) {
+			
+			 newComp.setVisible(false);
+			 stuDash.setVisible(true);
+		 }
+	 }
+	 
+
+	 //Query Action Listeners
+	 
+	 class listenForClearBttnQ implements ActionListener {
+		 public void actionPerformed(ActionEvent e) {
+			
+
+			 newQuery.stuIdTxtField.setText(" ");
+			 newQuery.queryTxtArea.setText(" ");
+			 newQuery.queryCmbBox.setSelectedIndex(0);
+		 }
+	 }
+	 
+	 class listenForExitBttnQ implements ActionListener {
+		 public void actionPerformed(ActionEvent e) {
+			
+			 newQuery.setVisible(false);
+			 stuDash.setVisible(true);
+			 
+		 }
+	 }
+	 
+	
+	 
+	
 
 }
