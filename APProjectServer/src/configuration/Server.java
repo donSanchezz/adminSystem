@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 
 import ServerModel.Complaint;
+import ServerModel.ComplaintHib;
 import ServerModel.Student;
 import ServerModel.studentHib;
 
@@ -23,6 +24,7 @@ public class Server {
 	private Socket connection;
 	private ServerSocket servSock;
 	private Student student;
+	private Complaint complaint;
 	
 	private static final Logger Logger = LogManager.getLogger(Server.class);
 			
@@ -88,12 +90,12 @@ public class Server {
 				Logger.info ("Data Successfully recieved from client");
 				switch (action) {
 				case "Add Complaint":
-					Logger.warn("Attempting to recieve data from client, Erros may occur");
-					Complaint obj = (Complaint)is.readObject();
-					Logger.info("Data Successfully recieved from client");
+					Logger.warn("Attempting to recieve complaint data from client, Erros may occur");
+					Complaint comObj = (Complaint)is.readObject();
+					Logger.info("Complaint data successfully recieved from client");
 					//Add complaint
-					//API com = new API();
-					//com.insertComplaint(obj);
+					ComplaintHib com = new ComplaintHib();
+					com.saveComplaint(comObj);
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					os.writeObject(true);
 					Logger.info("Data Successfully sent from client");

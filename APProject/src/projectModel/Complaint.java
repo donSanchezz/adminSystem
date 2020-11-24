@@ -1,8 +1,9 @@
 package projectModel;
 
+import java.io.Serializable;
 
-
-public class Complaint extends DateTime {
+@SuppressWarnings("serial")
+public class Complaint extends DateTime implements Serializable {
 	
 	public transient int id;
 	public String date;
@@ -13,7 +14,6 @@ public class Complaint extends DateTime {
 	
 	
 	public Complaint(int id, String date, String time, String typeOfComplaint, String complaint, int stuId) {
-		super();
 		this.id = id;
 		this.date = date;
 		this.time = time;

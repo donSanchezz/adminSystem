@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="C:/Users/donov/OneDrive/Desktop/apache-log4j-2.13.3-bin/log4j-api-2.13.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/donov/OneDrive/Desktop/apache-log4j-2.13.3-bin/log4j-core-2.13.3.jar"/>
 	<classpathentry kind="lib" path="properties"/>
+	<classpathentry kind="lib" path="/APProjectServer/bin"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
