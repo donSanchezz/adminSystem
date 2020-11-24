@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 
 import jdbc.connection.SQLOperations;
 import jdbc.connection.dbConnector;
+import projectModel.Complaint;
+import projectModel.Query;
 import projectView.Login;
 import projectView.StuDashboard;
 import projectView.newComplaint;
@@ -28,7 +30,7 @@ public class Controller {
 	private newQuery newQuery;
 	
 	newComplaint ncmp = new newComplaint();
-
+	Client client = new Client();
 	
 	public Controller (Login login, StuDashboard stuDash, newComplaint newComp, newQuery newQuery) {
 		
@@ -45,9 +47,11 @@ public class Controller {
 		//Complaint listeners
 		this.newComp.addClearListenerC(new listenForClearBttnC());
 		this.newComp.addExitListenerC(new listenForExitBttnC());
+		this.newComp.addSubmitListenerC(new listenForSubmitBttnC());
 		//Query listeners
 		this.newQuery.addClearListenerQ(new listenForClearBttnQ());
 		this.newQuery.addExitListenerQ(new listenForExitBttnQ());
+		this.newQuery.addSubmitListenerQ(new listenForSubmitBttnQ());
 	}
 	
 	
@@ -117,6 +121,16 @@ public class Controller {
 			
 			 newComp.setVisible(false);
 			 stuDash.setVisible(true);
+			 newComp.stuIdTxtField.setText(" ");
+			 newComp.compTxtArea.setText(" ");
+			 newComp.compCmbBox.setSelectedIndex(0);
+		 }
+	 }
+	 
+	 class listenForSubmitBttnC implements ActionListener {
+		 public void actionPerformed(ActionEvent e) {
+			 client.sendAction("Add Complaint");
+			 client.sendComplaint(new Complaint(0, newComp.dateTxtField.getText(), newComp.timeTxtField.getText(), newComp.compCmbBox.getSelectedItem().toString(), newComp.compTxtArea.getText(), Integer.parseInt(newComp.stuIdTxtField.getText())));
 		 }
 	 }
 	 
@@ -138,7 +152,17 @@ public class Controller {
 			
 			 newQuery.setVisible(false);
 			 stuDash.setVisible(true);
+			 newQuery.stuIdTxtField.setText(" ");
+			 newQuery.queryTxtArea.setText(" ");
+			 newQuery.queryCmbBox.setSelectedIndex(0);
 			 
+		 }
+	 }
+	 
+	 class listenForSubmitBttnQ implements ActionListener {
+		 public void actionPerformed(ActionEvent e) {
+			 client.sendAction("Add Query");
+			 client.sendQuery(new Query(0, newQuery.dateTxtField.getText(), newQuery.timeTxtField.getText(), newQuery.queryCmbBox.getSelectedItem().toString(), newQuery.queryTxtArea.getText(), Integer.parseInt(newQuery.stuIdTxtField.getText())));
 		 }
 	 }
 	 

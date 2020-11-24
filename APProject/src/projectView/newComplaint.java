@@ -28,12 +28,13 @@ public class newComplaint extends JFrame {
 
 	private JPanel complaintPane;
 	public JTextField stuIdTxtField;
-	private JTextField dateTxtField;
-	private JTextField timeTxtField;
+	public JTextField dateTxtField;
+	public JTextField timeTxtField;
 	public JButton clearBttn = new JButton("Clear");
 	public JButton exitBttn = new JButton("Exit");
 	public JTextArea compTxtArea = new JTextArea();
 	public JComboBox compCmbBox = new JComboBox();
+	JButton submitBttn = new JButton("Submit");
 	/**
 	 * Launch the application.
 	 */
@@ -83,11 +84,11 @@ public class newComplaint extends JFrame {
 		lblComplaint.setBounds(55, 245, 127, 14);
 		complaintPane.add(lblComplaint);
 		
-		JLabel lblNewLabel = new JLabel("Date:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel.setBounds(55, 105, 46, 14);
-		complaintPane.add(lblNewLabel);
+		JLabel dateLbl = new JLabel("Date:");
+		dateLbl.setFont(new Font("Tahoma", Font.BOLD, 15));
+		dateLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		dateLbl.setBounds(55, 105, 46, 14);
+		complaintPane.add(dateLbl);
 		
 		JLabel timeLbl = new JLabel("Time:");
 		timeLbl.setHorizontalAlignment(SwingConstants.LEFT);
@@ -130,7 +131,7 @@ public class newComplaint extends JFrame {
 		compTxtArea.setBounds(55, 270, 603, 125);
 		complaintPane.add(compTxtArea);
 		
-		JButton submitBttn = new JButton("Submit");
+		
 		submitBttn.setFont(new Font("Tahoma", Font.BOLD, 15));
 		submitBttn.setBounds(55, 416, 89, 23);
 		complaintPane.add(submitBttn);
@@ -153,6 +154,10 @@ public class newComplaint extends JFrame {
 
 	public void addExitListenerC (ActionListener listenForExitBttnC) {
 		exitBttn.addActionListener(listenForExitBttnC);
+	}
+	
+	public void addSubmitListenerC (ActionListener listenForSubmitBttnC) {
+		submitBttn.addActionListener(listenForSubmitBttnC);
 	}
 	
 	

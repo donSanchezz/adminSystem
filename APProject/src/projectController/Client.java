@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 //import configuration.Server;
 import projectModel.Complaint;
+import projectModel.Query;
 import projectModel.Student;
 
 public class Client {
@@ -80,11 +81,21 @@ public class Client {
 	
 	public void sendComplaint(Complaint obj) {
 		try {
-			Logger.warn("Attempting to send information to Server, Errors may occur ");
+			Logger.warn("Attempting to send complaint information to Server, Errors may occur ");
 			os.writeObject(obj);
-			Logger.info("Data Successfully sent to server");
+			Logger.info("Complaint data Successfully sent to server");
 		}catch (IOException ex) {
-			Logger.error("Data not Sent to server \n" + ex.getMessage());
+			Logger.error("Data not sent to server \n" + ex.getMessage());
+		}
+	}
+	
+	public void sendQuery(Query obj) {
+		try {
+			Logger.warn("Attempting to send query information to Server, Errors may occur ");
+			os.writeObject(obj);
+			Logger.info("Query data Successfully sent to server");
+		}catch (IOException ex) {
+			Logger.error("Data not sent to server \n" + ex.getMessage());
 		}
 	}
 	

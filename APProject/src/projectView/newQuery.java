@@ -23,12 +23,13 @@ public class newQuery extends JFrame {
 
 	private JPanel queryPane;
 	public JTextField stuIdTxtField;
-	private JTextField dateTxtField;
-	private JTextField timeTxtField;
+	public JTextField dateTxtField;
+	public  JTextField timeTxtField;
 	public JButton clearBttn = new JButton("Clear");
 	public JButton exitBttn = new JButton("Exit");
 	public JTextArea queryTxtArea = new JTextArea();
 	public JComboBox queryCmbBox = new JComboBox();
+	JButton submitBttn = new JButton("Submit");
 
 	
 	DateTime dt = new DateTime();
@@ -126,7 +127,7 @@ public class newQuery extends JFrame {
 		queryTxtArea.setBounds(55, 270, 603, 125);
 		queryPane.add(queryTxtArea);
 		
-		JButton submitBttn = new JButton("Submit");
+		
 		submitBttn.setFont(new Font("Tahoma", Font.BOLD, 15));
 		submitBttn.setBounds(55, 416, 89, 23);
 		queryPane.add(submitBttn);
@@ -149,6 +150,10 @@ public class newQuery extends JFrame {
 
 	public void addExitListenerQ (ActionListener listenForExitBttnQ) {
 		exitBttn.addActionListener(listenForExitBttnQ);
+	}
+	
+	public void addSubmitListenerQ (ActionListener listenForSubmitBttnQ) {
+		submitBttn.addActionListener(listenForSubmitBttnQ);
 	}
 
 }

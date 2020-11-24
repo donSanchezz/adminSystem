@@ -1,36 +1,32 @@
 package projectView;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import java.awt.Color;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JInternalFrame;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
-public class StuDashboard extends JFrame {
+public class RepDashboard extends JFrame {
 
 	private JPanel dashViewPane;
 	private JTextField stuNameHeader;
 	private JTextField finUnsolvedTxt;
 	private JTextField finSolvedTxt;
-	JMenuItem newCompItem = new JMenuItem("New complaint");
-	JMenuItem newQueryItem = new JMenuItem("New query");
-	JMenuItem viewQueryItem = new JMenuItem("View query");
 	public JTextField admUnsolvedTxt;
 	public JTextField admSolvedTxt;
 	public JTextField hlthUnsolvedTxt;
 	public JTextField hlthSolvedTxt;
+	
 
 	/**
 	 * Launch the application.
@@ -39,7 +35,7 @@ public class StuDashboard extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StuDashboard frame = new StuDashboard();
+					RepDashboard frame = new RepDashboard();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +47,7 @@ public class StuDashboard extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public StuDashboard() {
+	public RepDashboard() {
 		setResizable(false);
 		setBackground(new Color(0, 128, 128));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,18 +59,32 @@ public class StuDashboard extends JFrame {
 		JMenu compMenu = new JMenu("Complaint");
 		menuBar.add(compMenu);
 		
-	
-		compMenu.add(newCompItem);
+		JMenu viewComp = new JMenu("View Complaint");
+		compMenu.add(viewComp);
 		
-		JMenuItem viewCompItem = new JMenuItem("View complaint");
-		compMenu.add(viewCompItem);
+		JMenuItem viewFin = new JMenuItem("View Financial");
+		viewComp.add(viewFin);
+		
+		JMenuItem viewAdm = new JMenuItem("View Administration");
+		viewComp.add(viewAdm);
+		
+		JMenuItem viewHlth = new JMenuItem("View Health");
+		viewComp.add(viewHlth);
 		
 		JMenu queryMenu = new JMenu("Query");
 		menuBar.add(queryMenu);
 		
-
-		queryMenu.add(newQueryItem);
-		queryMenu.add(viewQueryItem);
+		JMenu viewQuery = new JMenu("View Query");
+		queryMenu.add(viewQuery);
+		
+		JMenuItem viewFinQ = new JMenuItem("View Financial");
+		viewQuery.add(viewFinQ);
+		
+		JMenuItem viewAdmQ = new JMenuItem("View Administration");
+		viewQuery.add(viewAdmQ);
+		
+		JMenuItem viewHlthQ = new JMenuItem("View Health");
+		viewQuery.add(viewHlthQ);
 		
 		dashViewPane = new JPanel();
 		dashViewPane.setBackground(Color.LIGHT_GRAY);
@@ -93,15 +103,15 @@ public class StuDashboard extends JFrame {
 		stuNameHeader.setBackground(Color.WHITE);
 		stuNameHeader.setHorizontalAlignment(SwingConstants.RIGHT);
 		stuNameHeader.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		stuNameHeader.setText("Student Name");
+		stuNameHeader.setText("Reps Name");
 		stuNameHeader.setBounds(574, 0, 138, 26);
 		headerPanel.add(stuNameHeader);
 		stuNameHeader.setColumns(10);
 		
-		JLabel stuHeaderLbl = new JLabel("Student");
+		JLabel stuHeaderLbl = new JLabel("Student Services Rep");
 		stuHeaderLbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		stuHeaderLbl.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		stuHeaderLbl.setBounds(584, 37, 128, 23);
+		stuHeaderLbl.setBounds(499, 37, 213, 23);
 		headerPanel.add(stuHeaderLbl);
 		
 		JPanel financialPanel = new JPanel();
@@ -220,10 +230,10 @@ public class StuDashboard extends JFrame {
 	}
 	
 	public void addNewComplaintListener (ActionListener listenForNewComp) {
-		newCompItem.addActionListener(listenForNewComp);
+		//newCompItem.addActionListener(listenForNewComp);
 	}
 	
 	public void addNewQueryListener (ActionListener listenForNewQuery) {
-		newQueryItem.addActionListener(listenForNewQuery);
+		//newQueryItem.addActionListener(listenForNewQuery);
 	}
 }
