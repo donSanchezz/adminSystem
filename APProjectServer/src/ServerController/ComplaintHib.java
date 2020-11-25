@@ -119,12 +119,12 @@ public class ComplaintHib {
 			//Get students
 			
 			Logger.warn("Starting query to get all complaints");
-			complaint = session.createQuery("from complaint").getResultList();
+			 complaint = session.createQuery("from Complaint").getResultList();
 			Logger.info("Query retrieved to get all complaints.");
 			
 			Logger.warn("Attempting to print out all complaints");
-			for (Complaint tempComplaint : complaint) {
-				System.out.println(tempComplaint);
+			for (Complaint c : complaint) {
+				System.out.println(c);
 			}
 			Logger.info("All complaints printed out");
 			
