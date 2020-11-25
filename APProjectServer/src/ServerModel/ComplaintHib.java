@@ -8,8 +8,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.Transaction;
 
+//import projectModel.Complaint;
 import configuration.Server;
 import factory.SessionFactoryBuilder;
+import ServerModel.Complaint;
 
 public class ComplaintHib {
 	private static final Logger Logger = LogManager.getLogger(Server.class);
