@@ -24,14 +24,14 @@ import org.apache.logging.log4j.Logger;
 public class ProjectDriver {
 
 	public static void main(String[] args) {
-		
+		//Client client = new Client();
 		DateTime dt = new DateTime();
 		//Complaint complaint;
 		
 		//Client client = new Client();
 		//client.sendAction("Add Complaint");
 		//client.sendAction("Add Student");
-		//client.sendComplaint(new Complaint(0, dt.Date(), dt.Time(), "Finance", "I have paid 500, but it hasn't show on my portal", 0));
+		//client.sendComplaint(new Complaint(0, "23", "23", "Finance", "I have paid 500, but it hasn't show on my portal", 0));
 		//Student stuObj = new Student(10, "Alexis", "Garcia", "alexisgarcia@gmail.com", 99999);
 		//client.sendStudent(new Student(10, "Alexis", "Garcia", "alexisgarcia@gmail.com", 99999));
 		//client.recieveResponse();

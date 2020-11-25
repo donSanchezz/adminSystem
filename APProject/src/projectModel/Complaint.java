@@ -3,7 +3,7 @@ package projectModel;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class Complaint extends DateTime implements Serializable {
+public class Complaint extends DateTime  implements Serializable {
 	
 	public transient int id;
 	public String date;

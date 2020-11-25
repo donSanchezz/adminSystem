@@ -4,6 +4,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import projectModel.Complaint;
 
 import java.io.Serializable;
 
@@ -12,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-import ServerModel.Complaint;
+
 import ServerModel.ComplaintHib;
 import ServerModel.Student;
 import ServerModel.studentHib;

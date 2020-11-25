@@ -16,7 +16,7 @@ public class ComplaintHib {
 	//Class for student update, display all, update, delete
 	// Also get by an ID number. CRUD Operations.
 	
-	public void saveComplaint(Complaint comObj) {
+	public void saveComplaint(projectModel.Complaint comObj) {
 		
 		
 		Transaction transaction = null;
