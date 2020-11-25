@@ -1,6 +1,8 @@
-package ServerModel;
+package ServerController;
 
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,33 +13,38 @@ import org.hibernate.Transaction;
 //import projectModel.Complaint;
 import configuration.Server;
 import factory.SessionFactoryBuilder;
-import ServerModel.Complaint;
+import projectModel.Query;
 
-public class ComplaintHib {
+
+public class QueryHib {
 	private static final Logger Logger = LogManager.getLogger(Server.class);
 	//Class for student update, display all, update, delete
 	// Also get by an ID number. CRUD Operations.
 	
-	public void saveComplaint(projectModel.Complaint comObj) {
+	public void saveQuery(projectModel.Query stuQuery) {
 		
 		
 		Transaction transaction = null;
 		
-		try(Session session = SessionFactoryBuilder.getSessionFactory().openSession()){
+		try(Session session = SessionFactoryBuilder.getSessionFactoryQ().openSession()){
 			Logger.warn("Attempting to retrieve session from SessionFactoryBuilder");
 			
 			//Start the transaction
 			transaction = session.beginTransaction();
 			//Saving the student
-			session.save(comObj);
+			session.save(stuQuery);
 			//Commit the transition
 			transaction.commit();
+			
+				
+			 
 			Logger.info("Session retrieved, data committed");
 		}catch(SessionException ex) {
 			
 			if(transaction != null){
 				
 			transaction.rollback();
+		
 			
 			}
 			Logger.error("Trouble configuring session, not successful" + ex.getMessage());
@@ -45,7 +52,7 @@ public class ComplaintHib {
 		}
 	}
 	
-	public void updateStudent(Student students) {
+	/*public void updateStudent(Student students) {
 		
 		Transaction transaction = null;
 		
@@ -154,6 +161,8 @@ public class ComplaintHib {
 		}
 
 	}
+
+	
 	
 	//In the main class/ driver class, it should be like this:
 	/*public static void main(String[] args) {

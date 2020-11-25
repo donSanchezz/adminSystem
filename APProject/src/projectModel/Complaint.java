@@ -39,6 +39,9 @@ public class Complaint extends DateTime implements Serializable {
 	@Column(name="stuId")
 	public int stuId;
 	
+public Complaint(){
+		
+	}
 	
 	public Complaint(int id, String date, String time, String typeOfComplaint, String complaint, int stuId) {
 		super();

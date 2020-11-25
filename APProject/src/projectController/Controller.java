@@ -131,6 +131,18 @@ public class Controller {
 		 public void actionPerformed(ActionEvent e) {
 			 client.sendAction("Add Complaint");
 			 client.sendComplaint(new Complaint(0, newComp.dateTxtField.getText(), newComp.timeTxtField.getText(), newComp.compCmbBox.getSelectedItem().toString(), newComp.compTxtArea.getText(), Integer.parseInt(newComp.stuIdTxtField.getText())));
+			 if (client.recieveResponse()== true) {
+				 JOptionPane.showMessageDialog(null, "Complaint Logged Sucessfull"); 
+				 
+			 }
+			 else {
+				 JOptionPane.showMessageDialog(null, "Complaint Logged Unsucessfull");
+			 };
+			 newComp.setVisible(false);
+			 stuDash.setVisible(true);
+			 newComp.stuIdTxtField.setText(" ");
+			 newComp.compTxtArea.setText(" ");
+			 newComp.compCmbBox.setSelectedIndex(0);
 		 }
 	 }
 	 
@@ -163,6 +175,18 @@ public class Controller {
 		 public void actionPerformed(ActionEvent e) {
 			 client.sendAction("Add Query");
 			 client.sendQuery(new Query(0, newQuery.dateTxtField.getText(), newQuery.timeTxtField.getText(), newQuery.queryCmbBox.getSelectedItem().toString(), newQuery.queryTxtArea.getText(), Integer.parseInt(newQuery.stuIdTxtField.getText())));
+			 if (client.recieveResponse()== true) {
+				 JOptionPane.showMessageDialog(null, "Query Logged Sucessfull"); 
+			 }
+			 else {
+				 JOptionPane.showMessageDialog(null, "Query Logged Unsucessfull");
+			 };
+			 client.sendAction("Exit");
+			 newQuery.setVisible(false);
+			 stuDash.setVisible(true);
+			 newQuery.stuIdTxtField.setText(" ");
+			 newQuery.queryTxtArea.setText(" ");
+			 newQuery.queryCmbBox.setSelectedIndex(0);
 		 }
 	 }
 	 

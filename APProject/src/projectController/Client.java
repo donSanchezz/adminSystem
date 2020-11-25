@@ -109,15 +109,19 @@ public class Client {
 		}
 	}
 	
-	public void recieveResponse() {
+	public Boolean recieveResponse() {
+		Boolean val = null;
 		try {
 			Logger.warn("Attempting to recieve information from Server, Errors may occur");
 			Boolean flag = (Boolean)is.readObject();
 			Logger.info("Data Successfully Recieved from server");
 			Logger.info ("Recieved: '"+ flag + "'from Server");
+			val=flag;
+			
 		}catch (ClassCastException | ClassNotFoundException | IOException ex) {
 			Logger.error(ex.getMessage());
 		}
+		return val;
 	}
 	
 }

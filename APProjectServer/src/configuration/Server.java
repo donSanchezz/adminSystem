@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 //import projectModel.Complaint;
 import projectModel.Complaint;
+import projectModel.Query;
 
 import java.io.Serializable;
 
@@ -13,9 +14,8 @@ import java.io.Serializable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
-
-import ServerModel.ComplaintHib;
+import ServerController.ComplaintHib;
+import ServerController.QueryHib;
 import ServerModel.Student;
 import ServerModel.studentHib;
 
@@ -102,13 +102,13 @@ public class Server {
 					os.writeObject(true);
 					Logger.info("Data Successfully sent from client");
 					break;
-				case "Add Student":
-					Logger.warn("Attempting to recieve student data from client, Erros may occur");
-					Student stuObj = (Student)is.readObject();
-					Logger.info("Student data Successfully recieved from client");
+				case "Add Query":
+					Logger.warn("Attempting to recieve query data from client, Erros may occur");
+					Query stuQuery = (Query)is.readObject();
+					Logger.info("Query data Successfully recieved from client");
 					//Add student
-					studentHib studenthib = new studentHib();
-					studenthib.saveStudent(stuObj);
+					QueryHib queryHib = new QueryHib();
+					queryHib.saveQuery(stuQuery);
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					os.writeObject(true);
 					Logger.info("Data Successfully sent from client");

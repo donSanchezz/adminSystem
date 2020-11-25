@@ -1,14 +1,41 @@
 package projectModel;
 
+import java.io.Serializable;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-public class Query extends DateTime{
+@SuppressWarnings("serial")
+@Entity
+@Table(name="query")
+public class Query extends DateTime implements Serializable{
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	public int id;
+	
+	@Column(name="date")
 	public String date;
+	
+	@Column(name="time")
 	public String time;
+	
+	@Column(name="typeOfQuery")
 	public String typeOfQuery;
+	
+	@Column(name="query")
 	public String query;
+	
+	@Column(name="stuId")
 	public int stuId;
 	
 	public Query(int id, String date, String time, String typeOfQuery, String query, int stuId) {
@@ -57,7 +84,9 @@ public class Query extends DateTime{
 	public void setTypeOfComplaint(String typeOfQuery) {
 		this.typeOfQuery = typeOfQuery;
 	}
-
+	
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="Query_FK")
 	public String getQuery() {
 		return query;
 	}
