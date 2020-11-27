@@ -113,6 +113,17 @@ public class Server {
 					os.writeObject(true);
 					Logger.info("Data Successfully sent from client");
 					break;
+				case "View Complaint":
+					Logger.warn("Attempting to recieve query data from client, Erros may occur");
+					Complaint viewComp = (Complaint)is.readObject();
+					Logger.info("Query data Successfully recieved from client");
+					//Add student
+					//QueryHib queryHib = new QueryHib();
+					//queryHib.saveQuery(stuQuery);
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					os.writeObject(true);
+					Logger.info("Data Successfully sent from client");
+					break;
 				}
 			}catch (ClassNotFoundException | ClassCastException ex) {
 				Logger.error("An error has occured" + ex.getMessage());
@@ -131,5 +142,7 @@ public class Server {
 			Logger.warn("An error has occured");
 		}
 	}
+	
+	
 
 }

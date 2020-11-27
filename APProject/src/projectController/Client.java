@@ -43,7 +43,7 @@ public class Client {
 	
 	public final void getStreams() {
 		try {
-			Logger.warn("Attempting to setup Socket, Errors may occur");
+			Logger.warn("Attempting to setup Output Socket, Errors may occur");
 			os = new ObjectOutputStream (connection.getOutputStream());
 			is = new ObjectInputStream (connection.getInputStream());
 			Logger.warn("Socket setup successfull");

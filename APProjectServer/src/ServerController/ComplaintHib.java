@@ -1,22 +1,33 @@
 package ServerController;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+//import java.util.List;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.Transaction;
 
+import com.mysql.jdbc.Statement;
+
 //import projectModel.Complaint;
 import configuration.Server;
 import factory.SessionFactoryBuilder;
+import factory.dbConnector;
 import projectModel.Complaint;
 import ServerModel.Student;
 
 public class ComplaintHib {
+	
+	dbConnector con;
 	private static final Logger Logger = LogManager.getLogger(Server.class);
 	//Class for student update, display all, update, delete
 	// Also get by an ID number. CRUD Operations.
@@ -110,8 +121,9 @@ public class ComplaintHib {
 	public List<Complaint> getAllComplaint() {
 		
 		Transaction transaction = null;
-		List<Complaint> complaint = null;
+		List<Complaint> complaintList = new ArrayList<>();
 		try(Session session = SessionFactoryBuilder.getSessionFactory().openSession()){
+			ResultSet resultSet;
 			Logger.warn("Starting transacting to get all complaints");
 			//Start the transaction
 			transaction = session.beginTransaction();
@@ -119,13 +131,22 @@ public class ComplaintHib {
 			//Get students
 			
 			Logger.warn("Starting query to get all complaints");
-			 complaint = session.createQuery("from Complaint").getResultList();
+			complaintList =  session.createQuery("from Complaint").getResultList();
 			Logger.info("Query retrieved to get all complaints.");
 			
 			Logger.warn("Attempting to print out all complaints");
-			for (Complaint c : complaint) {
-				System.out.println(c);
-			}
+			/*while (complaintList.next()) {
+				Complaint cmp = new Complaint(0, null, null, null, null, 0);
+				cmp.setId(resultSet.getInt(1));
+				cmp.setDate(resultSet.getString(2));
+				cmp.setTime(resultSet.getString(3));
+				cmp.setTypeOfComplaint(resultSet.getString(4));
+				cmp.setComplaint(resultSet.getString(5));
+				cmp.setStuId(resultSet.getInt(6));
+				
+				complaintList.add(cmp);
+			}*/
+			
 			Logger.info("All complaints printed out");
 			
 			//Commit the transition
@@ -133,17 +154,56 @@ public class ComplaintHib {
 			transaction.commit();
 			Logger.info("Transaction successfully committed");
 			
-		}catch(Exception e) {
+		}catch(HibernateException e) {
 			
-			/*if(transaction != null){
+			if(transaction != null){
 				
 			transaction.rollback();
 			
-			}*/
+			}
 			Logger.error("An error has occured" + e.getMessage());
+			e.printStackTrace();
 		}
-		return complaint;
+		return complaintList;
 	}
+	
+	public void sendAllComplaint() {
+		List<Complaint> list = getAllComplaint();
+		for (int i =0; i<list.size(); i++) {
+			os.writeObject(list.get(i));
+			
+		}
+	}
+	
+	
+	/*public ArrayList<Complaint> cmpList () {
+		ArrayList<Complaint> cmpList = new ArrayList<Complaint>();
+		dbConnector con1;
+		Connection con = dbConnector.getConnection();
+		String query = "SELECT * FROM `complaint`";
+		Statement st;
+		ResultSet rs;
+		
+		try {
+			st = (Statement) con.createStatement();
+			rs = st.executeQuery(query);
+			Complaint cmp;
+			while(rs.next()) {
+				cmp = new Complaint (rs.getInt("id"), rs.getString("date"), rs.getString("time"), rs.getString("typeOfComplaint"), rs.getString("complaint"), rs.getInt("stuId"));
+				cmpList.add(cmp);
+				
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		return cmpList;
+		
+	}*/
 	
 	
 	
@@ -205,6 +265,15 @@ public class ComplaintHib {
 		ComplaintHib comp2 = new ComplaintHib();
 		
 		//System.out.println(comp2.getComplaintById(11));
-		comp2.getAllComplaint();
+		//comp2.getAllComplaint();
+		//System.out.println(comp2.getAllComplaint());
+		
+		List<Complaint> cmp = new ArrayList<>();
+		cmp = comp2.getAllComplaint();
+		System.out.println(cmp.get(0));
+		System.out.println(cmp.get(1));
+		System.out.println(cmp.get(2));
+		
+		
 	}
 }

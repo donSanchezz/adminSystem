@@ -16,6 +16,7 @@ import jdbc.connection.SQLOperations;
 import jdbc.connection.dbConnector;
 import projectModel.Complaint;
 import projectModel.Query;
+import projectView.AgentViewCompaint;
 import projectView.Login;
 import projectView.StuDashboard;
 import projectView.newComplaint;
@@ -28,16 +29,18 @@ public class Controller {
 	private StuDashboard stuDash;
 	private newComplaint newComp;
 	private newQuery newQuery;
+	private AgentViewCompaint agentViewC;
 	
 	newComplaint ncmp = new newComplaint();
 	Client client = new Client();
 	
-	public Controller (Login login, StuDashboard stuDash, newComplaint newComp, newQuery newQuery) {
+	public Controller (Login login, StuDashboard stuDash, newComplaint newComp, newQuery newQuery, AgentViewCompaint agentViewC) {
 		
 		this.login = login;
 		this.stuDash = stuDash;
 		this.newComp = newComp;
 		this.newQuery = newQuery;
+		////this.agentViewC = agentViewC
 		
 		//Login listeners
 		this.login.addLoginListener(new loginBtnListener());
@@ -52,6 +55,9 @@ public class Controller {
 		this.newQuery.addClearListenerQ(new listenForClearBttnQ());
 		this.newQuery.addExitListenerQ(new listenForExitBttnQ());
 		this.newQuery.addSubmitListenerQ(new listenForSubmitBttnQ());
+		
+		//agent view
+		this.agentViewC.AddNewTableListener(new listenForJTable());
 	}
 	
 	

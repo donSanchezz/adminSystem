@@ -12,6 +12,7 @@ import projectController.Controller;
 import projectModel.Complaint;
 import projectModel.DateTime;
 import projectModel.Student;
+import projectView.AgentViewCompaint;
 import projectView.Login;
 import projectView.StuDashboard;
 import projectView.newComplaint;
@@ -48,7 +49,8 @@ public class ProjectDriver {
 		StuDashboard stuDashFrame = new StuDashboard();
 		newComplaint newComplaint = new newComplaint();
 		newQuery newQuery = new newQuery();
-		Controller con = new Controller(loginFrame, stuDashFrame, newComplaint, newQuery);
+		AgentViewCompaint agentViewComp = new AgentViewCompaint();
+		Controller con = new Controller(loginFrame, stuDashFrame, newComplaint, newQuery, agentViewComp);
 		stuDashFrame.setVisible(true);
 		//loginFrame.setVisible(true); */
 		

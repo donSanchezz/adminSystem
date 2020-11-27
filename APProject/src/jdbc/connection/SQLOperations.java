@@ -6,9 +6,12 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import factory.dbConnector;
+import projectModel.Complaint;
 import projectModel.Student;
 import projectView.Login;
 
@@ -43,7 +46,7 @@ public class SQLOperations {
 		}
 	}*/
 	
-	public boolean insertStudent (Student s) {
+	/*public boolean insertStudent (Student s) {
 		
 	String insertSql = "INSERT INTO `students`"
 			+ "(`stuId`, `firstName`, `lastName`, `email`, `cantNum`, `typeIssue`, `detailIssue`)"
@@ -59,7 +62,32 @@ public class SQLOperations {
 	}catch (SQLException e) {
 		System.out.println("SQL Exception Thrown: " +e.getMessage());
 	}
-		return false;
+		return false;*/
+	
+	public ArrayList<Complaint> cmpList () {
+		ArrayList<Complaint> cmpList = new ArrayList<Complaint>();
+		dbConnector con1;
+		Connection con = dbConnector.getConnection();
+		String query = "SELECT * FROM `complaint`";
+		Statement st;
+		ResultSet rs;
+		
+		try {
+			st = (Statement) con.createStatement();
+			rs = st.executeQuery(query);
+			Complaint cmp;
+			while(rs.next()) {
+				cmp = new Complaint (rs.getInt("id"), rs.getString("date"), rs.getString("time"), rs.getString("typeOfComplaint"), rs.getString("complaint"), rs.getInt("stuId"));
+				cmpList.add(cmp);
+				
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return cmpList;
+		
+	}
 	
 	
 }
@@ -70,5 +98,5 @@ public class SQLOperations {
 
 
 
-}
+
 
