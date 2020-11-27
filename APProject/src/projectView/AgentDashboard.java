@@ -28,6 +28,7 @@ public class AgentDashboard extends JFrame {
 	public JTextField hlthUnsolvedTxt;
 	public JTextField hlthSolvedTxt;
 	JMenuItem viewFin = new JMenuItem("View Financial");
+	JMenuItem viewAdm = new JMenuItem("View Administration");
 	
 
 	/**
@@ -67,7 +68,7 @@ public class AgentDashboard extends JFrame {
 		
 		viewComp.add(viewFin);
 		
-		JMenuItem viewAdm = new JMenuItem("View Administration");
+		
 		viewComp.add(viewAdm);
 		
 		JMenuItem viewHlth = new JMenuItem("View Health");
@@ -241,6 +242,10 @@ public class AgentDashboard extends JFrame {
 	
 	public void addViewCompListener (ActionListener listenForViewCompMenuBttn) {
 		viewFin.addActionListener(listenForViewCompMenuBttn);
+	}
+	
+	public void addViewCompListenerAdm (ActionListener listenForViewCompAdmMenuBttn) {
+		viewAdm.addActionListener(listenForViewCompAdmMenuBttn);
 	}
 	
 	

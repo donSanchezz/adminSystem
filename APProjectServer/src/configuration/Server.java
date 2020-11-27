@@ -116,7 +116,7 @@ public class Server {
 					os.writeObject(true);
 					Logger.info("Data Successfully sent from client");
 					break;
-				case "View Complaint":
+				case "View Complaint Financial":
 					Logger.warn("Attempting to recieve query data from client, Erros may occur");
 					//Complaint viewComp = (Complaint)is.readObject();
 					ComplaintHib cmpHib = new ComplaintHib();
@@ -125,11 +125,29 @@ public class Server {
 					//QueryHib queryHib = new QueryHib();
 					//queryHib.saveQuery(stuQuery);
 					Logger.warn("Attempting to send data to client, Errors may occur");
-					ArrayList<Complaint> list = cmpHib.getAllComplaint();
+					ArrayList<Complaint> list = cmpHib.getAllComplaintFinancial();
 					
 					//for (int i =0; i<list.size(); i++) {
 						os.writeObject(list);
 						System.out.println(list);
+					//}
+					
+					Logger.info("Data Successfully sent from client");
+					break;
+				case "View Complaint Admin":
+					Logger.warn("Attempting to recieve query data from client, Erros may occur");
+					//Complaint viewComp = (Complaint)is.readObject();
+					ComplaintHib cmpHib1 = new ComplaintHib();
+					Logger.info("Query data Successfully recieved from client");
+					//Add student
+					//QueryHib queryHib = new QueryHib();
+					//queryHib.saveQuery(stuQuery);
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					ArrayList<Complaint> list2 = cmpHib1.getAllComplaintFinancial();
+					
+					//for (int i =0; i<list.size(); i++) {
+						os.writeObject(list2);
+						System.out.println(list2);
 					//}
 					
 					Logger.info("Data Successfully sent from client");

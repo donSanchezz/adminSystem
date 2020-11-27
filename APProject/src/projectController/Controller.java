@@ -24,6 +24,7 @@ import projectModel.Complaint;
 import projectModel.Query;
 import projectView.AgentDashboard;
 import projectView.AgentViewCompaint;
+import projectView.AgentViewComplaintAdm;
 import projectView.Login;
 import projectView.StuDashboard;
 import projectView.newComplaint;
@@ -38,11 +39,12 @@ public class Controller {
 	private newQuery newQuery;
 	private AgentDashboard agentDash;
 	private AgentViewCompaint agentViewComp;
+	private AgentViewComplaintAdm agentViewCompAdm;
 	
 	newComplaint ncmp = new newComplaint();
 	Client client = new Client();
 	
-	public Controller (Login login, StuDashboard stuDash, newComplaint newComp, newQuery newQuery, AgentDashboard agentDash, AgentViewCompaint agentViewComp) {
+	public Controller (Login login, StuDashboard stuDash, newComplaint newComp, newQuery newQuery, AgentDashboard agentDash, AgentViewCompaint agentViewComp, AgentViewComplaintAdm agentViewCompAdm) {
 		
 		this.login = login;
 		this.stuDash = stuDash;
@@ -50,6 +52,7 @@ public class Controller {
 		this.newQuery = newQuery;
 		this.agentDash = agentDash;
 		this.agentViewComp = agentViewComp;
+		this.agentViewCompAdm = agentViewCompAdm;
 		
 		//Login listeners
 		this.login.addLoginListener(new loginBtnListener());
@@ -70,8 +73,15 @@ public class Controller {
 		
 		//agent dashboard
 		this.agentDash.addViewCompListener(new listenForViewCompMenuBttn());
+		this.agentDash.addViewCompListenerAdm(new listenForViewCompAdmMenuBttn());
+		
+		
+		//agent financial view 
 		this.agentViewComp.addUpdateListener(new listenForUpdateBttn());
 		this.agentViewComp.addJTableListener( new listenForJTableClicked());
+		
+		//agent administration view
+		this.agentViewCompAdm.addUpdateListener( new listenForUpdateAdmBttn());
 	}
 	
 	
@@ -219,21 +229,30 @@ public class Controller {
 		 
 		 
 	 }
+	 
+	 class listenForViewCompAdmMenuBttn implements ActionListener {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				agentViewCompAdm.setVisible(true);
+			}
+			 
+			 
+		 }
 	
 	 class listenForUpdateBttn implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 			ArrayList<Complaint> list = new ArrayList<Complaint>();
-			client.sendAction("View Complaint");
+			client.sendAction("View Complaint Financial");
 			try {
-				list =  client.recieveComplaints();
+				list =  client.recieveComplaintsFinancial();
 			} catch (ClassNotFoundException | IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			System.out.println(list.get(0));
-			System.out.println(list.get(1));
-			System.out.println(list.get(2));
+			//System.out.println(list.get(0));
+			//System.out.println(list.get(1));
+			//System.out.println(list.get(2));
 			
 			//Adding each item in the ArrayList to a row
 			DefaultTableModel model = (DefaultTableModel) agentViewComp.table.getModel();
@@ -244,8 +263,7 @@ public class Controller {
 				row[2]= list.get(i).getTime();
 				row[3]= list.get(i).getTypeOfComplaint();
 				row[4]=list.get(i).getComplaint();
-				row[5]=list.get(i).getId();
-				
+				row[5]=list.get(i).getStuId();
 				model.addRow(row);
 			}
 		}
@@ -256,12 +274,12 @@ public class Controller {
 		 public void mouseClicked(MouseEvent arg0) {
 			 int i = agentViewComp.table.getSelectedRow();
 			 TableModel model = agentViewComp.table.getModel();
-			agentViewComp.cmpIdTxt.setText(model.getValueAt(i, 0).toString());
-			agentViewComp.dateTxt.setText(model.getValueAt(i, 1).toString());
-			agentViewComp.timeTxt.setText(model.getValueAt(i, 2).toString());
-			agentViewComp.typeTxt.setText(model.getValueAt(i, 3).toString());
-			agentViewComp.stuIdTxt.setText(model.getValueAt(i, 5).toString());
-			agentViewComp.textArea.setText(model.getValueAt(i, 4).toString());
+			 agentViewCompAdm.cmpIdTxt.setText(model.getValueAt(i, 0).toString());
+			 agentViewCompAdm.dateTxt.setText(model.getValueAt(i, 1).toString());
+			 agentViewCompAdm.timeTxt.setText(model.getValueAt(i, 2).toString());
+			 agentViewCompAdm.typeTxt.setText(model.getValueAt(i, 3).toString());
+			 agentViewCompAdm.stuIdTxt.setText(model.getValueAt(i, 5).toString());
+			 agentViewCompAdm.textArea.setText(model.getValueAt(i, 4).toString());
 
 			}
 		@Override
@@ -277,6 +295,39 @@ public class Controller {
 		public void mouseReleased(MouseEvent e) {
 		}
 	 }
+	 
+	 
+	 class listenForUpdateAdmBttn implements ActionListener {
+
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Complaint> list = new ArrayList<Complaint>();
+				client.sendAction("View Complaint Admin");
+				try {
+					list =  client.recieveComplaintsAdmin();
+				} catch (ClassNotFoundException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//System.out.println(list.get(0));
+				//System.out.println(list.get(1));
+				//System.out.println(list.get(2));
+				
+				//Adding each item in the ArrayList to a row
+				DefaultTableModel model = (DefaultTableModel) agentViewCompAdm.table.getModel();
+				Object [] row = new Object [6];
+				for (int i = 0; i<list.size(); i++) {
+					row[0] = list.get(i).getId();
+					row[1] = list.get(i).getDate();
+					row[2]= list.get(i).getTime();
+					row[3]= list.get(i).getTypeOfComplaint();
+					row[4]=list.get(i).getComplaint();
+					row[5]=list.get(i).getStuId();
+					model.addRow(row);
+				}
+			}
+			 
+		 }
+	 
 	
 
 }

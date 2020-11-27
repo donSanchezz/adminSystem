@@ -118,12 +118,11 @@ public class ComplaintHib {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<Complaint> getAllComplaint() {
+	public ArrayList<Complaint> getAllComplaintFinancial() {
 		
 		Transaction transaction = null;
 		ArrayList<Complaint> complaintList = new ArrayList<>();
 		try(Session session = SessionFactoryBuilder.getSessionFactory().openSession()){
-			ResultSet resultSet;
 			Logger.warn("Starting transacting to get all complaints");
 			//Start the transaction
 			transaction = session.beginTransaction();
@@ -131,23 +130,8 @@ public class ComplaintHib {
 			//Get students
 			
 			Logger.warn("Starting query to get all complaints");
-			complaintList =  (ArrayList<Complaint>) session.createQuery("from Complaint").getResultList();
-			Logger.info("Query retrieved to get all complaints.");
-			
-			Logger.warn("Attempting to print out all complaints");
-			/*while (complaintList.next()) {
-				Complaint cmp = new Complaint(0, null, null, null, null, 0);
-				cmp.setId(resultSet.getInt(1));
-				cmp.setDate(resultSet.getString(2));
-				cmp.setTime(resultSet.getString(3));
-				cmp.setTypeOfComplaint(resultSet.getString(4));
-				cmp.setComplaint(resultSet.getString(5));
-				cmp.setStuId(resultSet.getInt(6));
-				
-				complaintList.add(cmp);
-			}*/
-			
-			Logger.info("All complaints printed out");
+			complaintList =  (ArrayList<Complaint>) session.createQuery("from Complaint c where c.typeOfComplaint='Financial'").getResultList();
+			Logger.info("Query retrieved to get all financial complaints.");
 			
 			//Commit the transition
 			Logger.warn("Attempting to commit transaction");
@@ -167,43 +151,43 @@ public class ComplaintHib {
 		return complaintList;
 	}
 	
-	/*public void sendAllComplaint() {
-		List<Complaint> list = getAllComplaint();
-		for (int i =0; i<list.size(); i++) {
-			os.writeObject(list.get(i));
-			
-		}
-	}*/
-	
-	
-	/*public ArrayList<Complaint> cmpList () {
-		ArrayList<Complaint> cmpList = new ArrayList<Complaint>();
-		dbConnector con1;
-		Connection con = dbConnector.getConnection();
-		String query = "SELECT * FROM `complaint`";
-		Statement st;
-		ResultSet rs;
+	@SuppressWarnings("unchecked")
+	public ArrayList<Complaint> getAllComplaintAdmin() {
 		
-		try {
-			st = (Statement) con.createStatement();
-			rs = st.executeQuery(query);
-			Complaint cmp;
-			while(rs.next()) {
-				cmp = new Complaint (rs.getInt("id"), rs.getString("date"), rs.getString("time"), rs.getString("typeOfComplaint"), rs.getString("complaint"), rs.getInt("stuId"));
-				cmpList.add(cmp);
+		Transaction transaction = null;
+		ArrayList<Complaint> complaintList = new ArrayList<>();
+		try(Session session = SessionFactoryBuilder.getSessionFactory().openSession()){
+			Logger.warn("Starting transacting to get all administration complaints");
+			//Start the transaction
+			transaction = session.beginTransaction();
+			Logger.info("Transaction retrieved to get all administration complaints.");
+			//Get students
+			
+			Logger.warn("Starting query to get all administration complaints");
+			complaintList =  (ArrayList<Complaint>) session.createQuery("from Complaint c where c.typeOfComplaint='Administration'").getResultList();
+			Logger.info("Query retrieved to get all administration complaints.");
+			
+			//Commit the transition
+			Logger.warn("Attempting to commit transaction");
+			transaction.commit();
+			Logger.info("Transaction successfully committed");
+			
+		}catch(HibernateException e) {
+			
+			if(transaction != null){
 				
+			transaction.rollback();
+			
 			}
-		}catch (Exception e) {
+			Logger.error("An error has occured" + e.getMessage());
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
-		return cmpList;
-		
-	}*/
+		return complaintList;
+	}
+	
+	
+	
+	
 	
 	
 	
@@ -268,11 +252,11 @@ public class ComplaintHib {
 		//comp2.getAllComplaint();
 		//System.out.println(comp2.getAllComplaint());
 		
-		List<Complaint> cmp = new ArrayList<>();
+		/*List<Complaint> cmp = new ArrayList<>();
 		cmp = comp2.getAllComplaint();
 		System.out.println(cmp.get(0));
 		System.out.println(cmp.get(1));
-		System.out.println(cmp.get(2));
+		System.out.println(cmp.get(2));*/
 		
 		
 	}

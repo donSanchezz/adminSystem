@@ -129,62 +129,17 @@ public class Client {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<Complaint> recieveComplaints() throws ClassNotFoundException, IOException {
-		//ArrayList<Vozilo> list = new ArrayList<Vozilo>();
-		//ArrayList<Complaint> list = new ArrayList<Complaint>();
-		/*try {
-			Logger.warn("Attempting to recieve information from Server, Errors may occur");
-			//
-			list  =  (ArrayList<Complaint>) is.readObject();
-			Logger.info("All complaints Successfully Recieved from server");		
-		}catch (ClassCastException | IOException ex) {
-			Logger.error(ex.getMessage());
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+	public ArrayList<Complaint> recieveComplaintsFinancial() throws ClassNotFoundException, IOException {
+	
 		return (ArrayList<Complaint>) is.readObject();
 	}
 	
-	/*public List<Complaint> recieveComplaints() {
-		//ArrayList<Vozilo> list = new ArrayList<Vozilo>();
-		ArrayList<Complaint> list = new ArrayList<Complaint>();
-		try {
-			Logger.warn("Attempting to recieve information from Server, Errors may occur");
-			//for (int i =0; i<4; i++) {
-			// System.out.println(is.readObject());
-			//Complaint cmp = (Complaint) is.readObject();
-			//System.out.println(cmp);
-			//list.add(cmp); 
-			//}
-			/*for (Complaint cmp : list) {
-			    System.out.println("IDs: " + cmp.getStuId() + "\n");
-			}
-		
-			Object obj = null;
-			System.out.println("Pass initialization");
-			while ((obj = is.readObject()) != "stop") {
-				System.out.println("Inside loop");
-				obj = is.readObject();
-			    if (obj instanceof Complaint) {
-			    Complaint cmp = (Complaint) obj;
-			    list.add(cmp);
-			    System.out.println(cmp);
-			    }
-			    System.out.println("End of loop ");
-			}
-			
-			/*for (Complaint cmp : list) {
-			    System.out.println("Student: " + cmp.getStuId() + "\n");
-			}
-			Logger.info("All complaints Successfully Recieved from server");		
-		}catch (ClassCastException | IOException ex) {
-			Logger.error(ex.getMessage());
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return (List<Complaint>) list;
-	}*/
+	@SuppressWarnings("unchecked")
+	public ArrayList<Complaint> recieveComplaintsAdmin() throws ClassNotFoundException, IOException {
+	
+		return (ArrayList<Complaint>) is.readObject();
+	}
+	
+	
 	
 }
