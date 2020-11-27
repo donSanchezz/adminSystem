@@ -4,6 +4,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 //import projectModel.Complaint;
@@ -124,10 +125,13 @@ public class Server {
 					//QueryHib queryHib = new QueryHib();
 					//queryHib.saveQuery(stuQuery);
 					Logger.warn("Attempting to send data to client, Errors may occur");
-					List<Complaint> list = cmpHib.getAllComplaint();
-					for (int i =0; i<list.size(); i++) {
-						os.writeObject(list.get(i));
-					}
+					ArrayList<Complaint> list = cmpHib.getAllComplaint();
+					
+					//for (int i =0; i<list.size(); i++) {
+						os.writeObject(list);
+						System.out.println(list);
+					//}
+					
 					Logger.info("Data Successfully sent from client");
 					break;
 				}

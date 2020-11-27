@@ -4,13 +4,19 @@ package projectController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import jdbc.connection.SQLOperations;
 import jdbc.connection.dbConnector;
@@ -65,6 +71,7 @@ public class Controller {
 		//agent dashboard
 		this.agentDash.addViewCompListener(new listenForViewCompMenuBttn());
 		this.agentViewComp.addUpdateListener(new listenForUpdateBttn());
+		this.agentViewComp.addJTableListener( new listenForJTableClicked());
 	}
 	
 	
@@ -216,11 +223,59 @@ public class Controller {
 	 class listenForUpdateBttn implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-	
+			ArrayList<Complaint> list = new ArrayList<Complaint>();
 			client.sendAction("View Complaint");
-			client.recieveComplaints();
+			try {
+				list =  client.recieveComplaints();
+			} catch (ClassNotFoundException | IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			System.out.println(list.get(0));
+			System.out.println(list.get(1));
+			System.out.println(list.get(2));
+			
+			//Adding each item in the ArrayList to a row
+			DefaultTableModel model = (DefaultTableModel) agentViewComp.table.getModel();
+			Object [] row = new Object [6];
+			for (int i = 0; i<list.size(); i++) {
+				row[0] = list.get(i).getId();
+				row[1] = list.get(i).getDate();
+				row[2]= list.get(i).getTime();
+				row[3]= list.get(i).getTypeOfComplaint();
+				row[4]=list.get(i).getComplaint();
+				row[5]=list.get(i).getId();
+				
+				model.addRow(row);
+			}
 		}
 		 
+	 }
+	 
+	 class listenForJTableClicked implements MouseListener {
+		 public void mouseClicked(MouseEvent arg0) {
+			 int i = agentViewComp.table.getSelectedRow();
+			 TableModel model = agentViewComp.table.getModel();
+			agentViewComp.cmpIdTxt.setText(model.getValueAt(i, 0).toString());
+			agentViewComp.dateTxt.setText(model.getValueAt(i, 1).toString());
+			agentViewComp.timeTxt.setText(model.getValueAt(i, 2).toString());
+			agentViewComp.typeTxt.setText(model.getValueAt(i, 3).toString());
+			agentViewComp.stuIdTxt.setText(model.getValueAt(i, 5).toString());
+			agentViewComp.textArea.setText(model.getValueAt(i, 4).toString());
+
+			}
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {	
+		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
 	 }
 	
 

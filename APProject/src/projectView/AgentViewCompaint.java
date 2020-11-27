@@ -17,6 +17,10 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
+import javax.swing.JTextArea;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class AgentViewCompaint extends JFrame {
 
@@ -25,15 +29,16 @@ public class AgentViewCompaint extends JFrame {
 	private JTextField textField;
 	private JTextField emailTxt;
 	private JTextField contactLbl;
-	private JTextField cmpIdTxt;
-	private JTextField dateTxt;
-	private JTextField timeTxt;
-	private JTextField typeTxt;
-	private JTextField textField_1;
-	private JTable table;
+	public JTextField cmpIdTxt;
+	public JTextField dateTxt;
+	public JTextField timeTxt;
+	public JTextField typeTxt;
+	public JTextField stuIdTxt;
+	public JTable table;
 	DefaultTableModel model;
 	private JScrollPane scrollPane;
-	JButton updateBtn = new JButton("Update");
+	JButton loadBttn = new JButton("Load");
+	public JTextArea textArea = new JTextArea();
 
 	/**
 	 * Launch the application.
@@ -56,7 +61,7 @@ public class AgentViewCompaint extends JFrame {
 	 */
 	public AgentViewCompaint() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 794, 498);
+		setBounds(100, 100, 1124, 582);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -147,45 +152,63 @@ public class AgentViewCompaint extends JFrame {
 		typeTxt.setBounds(147, 235, 117, 20);
 		contentPane.add(typeTxt);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(147, 264, 117, 20);
-		contentPane.add(textField_1);
+		stuIdTxt = new JTextField();
+		stuIdTxt.setColumns(10);
+		stuIdTxt.setBounds(147, 264, 117, 20);
+		contentPane.add(stuIdTxt);
 		model= new DefaultTableModel();
-		Object [] column = {"FirstName", "LastName", "Email", "Contact", "CmpId", "Date", "Time", "Type", "Complaint"};
+		Object [] column = {"CmpId", "Date", "Time", "Type", "Complaint", "Stu ID"};
 		Object [] row = new Object [0];
 		model.setColumnIdentifiers(column);;
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(285, 15, 483, 433);
+		scrollPane.setBounds(380, 15, 718, 433);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		/*table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});*/
 		scrollPane.setViewportView(table);
 		table.setModel(model);
 		
 	
-		updateBtn.setBounds(10, 320, 89, 23);
-		contentPane.add(updateBtn);
+		loadBttn.setBounds(10, 475, 89, 23);
+		contentPane.add(loadBttn);
 		
 		JButton deleteBttn = new JButton("Delete");
-		deleteBttn.setBounds(126, 320, 89, 23);
+		deleteBttn.setBounds(258, 475, 89, 23);
 		contentPane.add(deleteBttn);
 		
 		JButton exitBttn = new JButton("Exit");
-		exitBttn.setBounds(126, 373, 89, 23);
+		exitBttn.setBounds(258, 509, 89, 23);
 		contentPane.add(exitBttn);
 		
 		JButton clearBttn = new JButton("Clear");
-		clearBttn.setBounds(10, 373, 89, 23);
+		clearBttn.setBounds(10, 509, 89, 23);
 		contentPane.add(clearBttn);
+		
+		JButton updateBttn = new JButton("Update");
+		updateBttn.setBounds(134, 475, 89, 23);
+		contentPane.add(updateBttn);
+		
+		JLabel lblComplaint = new JLabel("Complaint:");
+		lblComplaint.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblComplaint.setBounds(10, 294, 127, 19);
+		contentPane.add(lblComplaint);
+		
+		textArea.setBounds(10, 313, 337, 135);
+		contentPane.add(textArea);
 		
 	}
 	
 		public void addUpdateListener (ActionListener listenForUpdateBttn) {
-		updateBtn.addActionListener(listenForUpdateBttn);
+		loadBttn.addActionListener(listenForUpdateBttn);
 	}
-	
-	
-
+		
+		public void addJTableListener (MouseListener listenForJTableClicked) {
+			table.addMouseListener( listenForJTableClicked);
+		}
 }

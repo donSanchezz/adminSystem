@@ -118,10 +118,10 @@ public class ComplaintHib {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Complaint> getAllComplaint() {
+	public ArrayList<Complaint> getAllComplaint() {
 		
 		Transaction transaction = null;
-		List<Complaint> complaintList = new ArrayList<>();
+		ArrayList<Complaint> complaintList = new ArrayList<>();
 		try(Session session = SessionFactoryBuilder.getSessionFactory().openSession()){
 			ResultSet resultSet;
 			Logger.warn("Starting transacting to get all complaints");
@@ -131,7 +131,7 @@ public class ComplaintHib {
 			//Get students
 			
 			Logger.warn("Starting query to get all complaints");
-			complaintList =  session.createQuery("from Complaint").getResultList();
+			complaintList =  (ArrayList<Complaint>) session.createQuery("from Complaint").getResultList();
 			Logger.info("Query retrieved to get all complaints.");
 			
 			Logger.warn("Attempting to print out all complaints");
