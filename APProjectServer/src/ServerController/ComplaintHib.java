@@ -167,13 +167,13 @@ public class ComplaintHib {
 		return complaintList;
 	}
 	
-	public void sendAllComplaint() {
+	/*public void sendAllComplaint() {
 		List<Complaint> list = getAllComplaint();
 		for (int i =0; i<list.size(); i++) {
 			os.writeObject(list.get(i));
 			
 		}
-	}
+	}*/
 	
 	
 	/*public ArrayList<Complaint> cmpList () {

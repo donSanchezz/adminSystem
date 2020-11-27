@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+@SuppressWarnings("serial")
 public class AgentDashboard extends JFrame {
 
 	private JPanel dashViewPane;
@@ -26,6 +27,7 @@ public class AgentDashboard extends JFrame {
 	public JTextField admSolvedTxt;
 	public JTextField hlthUnsolvedTxt;
 	public JTextField hlthSolvedTxt;
+	JMenuItem viewFin = new JMenuItem("View Financial");
 	
 
 	/**
@@ -62,7 +64,7 @@ public class AgentDashboard extends JFrame {
 		JMenu viewComp = new JMenu("View Complaint");
 		compMenu.add(viewComp);
 		
-		JMenuItem viewFin = new JMenuItem("View Financial");
+		
 		viewComp.add(viewFin);
 		
 		JMenuItem viewAdm = new JMenuItem("View Administration");
@@ -236,4 +238,10 @@ public class AgentDashboard extends JFrame {
 	public void addNewQueryListener (ActionListener listenForNewQuery) {
 		//newQueryItem.addActionListener(listenForNewQuery);
 	}
+	
+	public void addViewCompListener (ActionListener listenForViewCompMenuBttn) {
+		viewFin.addActionListener(listenForViewCompMenuBttn);
+	}
+	
+	
 }

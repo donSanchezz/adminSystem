@@ -16,6 +16,7 @@ import jdbc.connection.SQLOperations;
 import jdbc.connection.dbConnector;
 import projectModel.Complaint;
 import projectModel.Query;
+import projectView.AgentDashboard;
 import projectView.AgentViewCompaint;
 import projectView.Login;
 import projectView.StuDashboard;
@@ -29,18 +30,20 @@ public class Controller {
 	private StuDashboard stuDash;
 	private newComplaint newComp;
 	private newQuery newQuery;
-	private AgentViewCompaint agentViewC;
+	private AgentDashboard agentDash;
+	private AgentViewCompaint agentViewComp;
 	
 	newComplaint ncmp = new newComplaint();
 	Client client = new Client();
 	
-	public Controller (Login login, StuDashboard stuDash, newComplaint newComp, newQuery newQuery, AgentViewCompaint agentViewC) {
+	public Controller (Login login, StuDashboard stuDash, newComplaint newComp, newQuery newQuery, AgentDashboard agentDash, AgentViewCompaint agentViewComp) {
 		
 		this.login = login;
 		this.stuDash = stuDash;
 		this.newComp = newComp;
 		this.newQuery = newQuery;
-		////this.agentViewC = agentViewC
+		this.agentDash = agentDash;
+		this.agentViewComp = agentViewComp;
 		
 		//Login listeners
 		this.login.addLoginListener(new loginBtnListener());
@@ -57,7 +60,11 @@ public class Controller {
 		this.newQuery.addSubmitListenerQ(new listenForSubmitBttnQ());
 		
 		//agent view
-		this.agentViewC.AddNewTableListener(new listenForJTable());
+		//this.agentViewC.AddNewTableListener(new listenForJTable());
+		
+		//agent dashboard
+		this.agentDash.addViewCompListener(new listenForViewCompMenuBttn());
+		this.agentViewComp.addUpdateListener(new listenForUpdateBttn());
 	}
 	
 	
@@ -196,8 +203,25 @@ public class Controller {
 		 }
 	 }
 	 
-	
 	 
+	 class listenForViewCompMenuBttn implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+			
+			agentViewComp.setVisible(true);
+		}
+		 
+		 
+	 }
+	
+	 class listenForUpdateBttn implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+	
+			client.sendAction("View Complaint");
+			client.recieveComplaints();
+		}
+		 
+	 }
 	
 
 }

@@ -33,6 +33,7 @@ public class AgentViewCompaint extends JFrame {
 	private JTable table;
 	DefaultTableModel model;
 	private JScrollPane scrollPane;
+	JButton updateBtn = new JButton("Update");
 
 	/**
 	 * Launch the application.
@@ -163,7 +164,7 @@ public class AgentViewCompaint extends JFrame {
 		scrollPane.setViewportView(table);
 		table.setModel(model);
 		
-		JButton updateBtn = new JButton("Update");
+	
 		updateBtn.setBounds(10, 320, 89, 23);
 		contentPane.add(updateBtn);
 		
@@ -181,7 +182,10 @@ public class AgentViewCompaint extends JFrame {
 		
 	}
 	
-	public void AddNewTableListener (ComponentListener listenForJTable) {
-		table.addComponentListener(listenForJTable);
+		public void addUpdateListener (ActionListener listenForUpdateBttn) {
+		updateBtn.addActionListener(listenForUpdateBttn);
 	}
+	
+	
+
 }

@@ -5,6 +5,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -71,7 +75,7 @@ public class Client {
 			//Sending an action to the server as a string of what we wabt to achieve
 			//Already serialized
 			os.writeObject(action);
-			Logger.info("Client Streams Successfully Closed to Server");
+			Logger.info("Action  Successfully sent to Server");
 			
 		}catch (IOException ex) {
 			Logger.error("Data not sent to server \n" +ex.getMessage());
@@ -122,6 +126,26 @@ public class Client {
 			Logger.error(ex.getMessage());
 		}
 		return val;
+	}
+	
+	public List<Complaint> recieveComplaints() {
+		List<Complaint> list = new ArrayList<>();
+		try {
+			Logger.warn("Attempting to recieve information from Server, Errors may occur");
+			//for (int i =0; i<list.size(); i++) {
+			for (int i =0; i<4; i++) {
+			list = (List<Complaint>) is.readObject();
+			 
+			 
+			}
+			Logger.info("All complaints Successfully Recieved from server");		
+		}catch (ClassCastException | IOException ex) {
+			Logger.error(ex.getMessage());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 }
