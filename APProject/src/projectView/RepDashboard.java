@@ -19,13 +19,14 @@ import javax.swing.border.EmptyBorder;
 public class RepDashboard extends JFrame {
 
 	private JPanel dashViewPane;
-	private JTextField stuNameHeader;
+	public JTextField repLNameHeader;
 	private JTextField finUnsolvedTxt;
 	private JTextField finSolvedTxt;
 	public JTextField admUnsolvedTxt;
 	public JTextField admSolvedTxt;
 	public JTextField hlthUnsolvedTxt;
 	public JTextField hlthSolvedTxt;
+	public JTextField repFNameHeader;
 	
 
 	/**
@@ -99,20 +100,30 @@ public class RepDashboard extends JFrame {
 		dashViewPane.add(headerPanel);
 		headerPanel.setLayout(null);
 		
-		stuNameHeader = new JTextField();
-		stuNameHeader.setBackground(Color.WHITE);
-		stuNameHeader.setHorizontalAlignment(SwingConstants.RIGHT);
-		stuNameHeader.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		stuNameHeader.setText("Reps Name");
-		stuNameHeader.setBounds(574, 0, 138, 26);
-		headerPanel.add(stuNameHeader);
-		stuNameHeader.setColumns(10);
+		repLNameHeader = new JTextField();
+		repLNameHeader.setBackground(Color.WHITE);
+		repLNameHeader.setHorizontalAlignment(SwingConstants.CENTER);
+		repLNameHeader.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		repLNameHeader.setText("LName");
+		repLNameHeader.setBounds(574, 0, 138, 26);
+		headerPanel.add(repLNameHeader);
+		repLNameHeader.setColumns(10);
 		
 		JLabel stuHeaderLbl = new JLabel("Student Services Rep");
 		stuHeaderLbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		stuHeaderLbl.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		stuHeaderLbl.setBounds(499, 37, 213, 23);
 		headerPanel.add(stuHeaderLbl);
+		
+		repFNameHeader = new JTextField();
+		repFNameHeader.setEditable(false);
+		repFNameHeader.setText("FName");
+		repFNameHeader.setHorizontalAlignment(SwingConstants.RIGHT);
+		repFNameHeader.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		repFNameHeader.setColumns(10);
+		repFNameHeader.setBackground(Color.WHITE);
+		repFNameHeader.setBounds(426, 0, 138, 26);
+		headerPanel.add(repFNameHeader);
 		
 		JPanel financialPanel = new JPanel();
 		financialPanel.setBounds(62, 92, 260, 150);

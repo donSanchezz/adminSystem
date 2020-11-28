@@ -11,6 +11,7 @@ import projectModel.Agent;
 //import projectModel.Complaint;
 import projectModel.Complaint;
 import projectModel.Query;
+import projectModel.Reps;
 
 import java.io.Serializable;
 
@@ -21,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 import ServerController.AgentHib;
 import ServerController.ComplaintHib;
 import ServerController.QueryHib;
+import ServerController.RepsHib;
 import ServerController.studentHib;
 import projectModel.Student;
 
@@ -86,9 +88,11 @@ public class Server {
 		AgentHib agtHib = new AgentHib();
 		ComplaintHib cmpHib = new ComplaintHib();
 		QueryHib queryHib = new QueryHib();
+		RepsHib repHib = new RepsHib();
 		ArrayList<Complaint> cmpList;
 		ArrayList<Student> stuList;
 		ArrayList<Agent> agtList;
+		ArrayList<Reps> repList;
 		String username;
 		String password;
 		Boolean flag;
@@ -147,6 +151,27 @@ public class Server {
 					 agtList = agtHib.getAgentInfo(ID);
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					os.writeObject(agtList);
+					Logger.info("Data Successfully sent from client");
+					break;
+				case "Representative":
+					Logger.warn("Attempting to recieve agent login data from client, Erros may occur");
+					 username= (String) is.readObject();
+					 password = (String) is.readObject();
+					Logger.info("Login data successfully recieved from client");
+					//Add complaint
+					flag = repHib.repsLogin(username, password);
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					os.writeObject(flag);
+					Logger.info("Data Successfully sent from client");
+					break;
+				case "Get Rep Info":
+					Logger.warn("Attempting to rep data from client, Erros may occur");
+					ID = (String) is.readObject();
+					Logger.info("Rep Login data successfully recieved from client");
+					//Add complaint
+					repList = repHib.getRepInfo(ID);
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					os.writeObject(repList);
 					Logger.info("Data Successfully sent from client");
 					break;
 				case "Add Complaint":

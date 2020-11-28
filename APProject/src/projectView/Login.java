@@ -74,7 +74,7 @@ public class Login extends JFrame {
 		contentPane.add(lblNewLabel_1_1_1);
 		
 		
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Student", "Agent", "Student Rep."}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Student", "Agent", "Representative"}));
 		comboBox.setBounds(10, 179, 134, 20);
 		contentPane.add(comboBox);
 	}

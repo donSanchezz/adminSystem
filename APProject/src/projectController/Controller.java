@@ -23,12 +23,14 @@ import jdbc.connection.dbConnector;
 import projectModel.Agent;
 import projectModel.Complaint;
 import projectModel.Query;
+import projectModel.Reps;
 import projectModel.Student;
 import projectView.AgentDashboard;
 import projectView.AgentViewCompaint;
 import projectView.AgentViewComplaintAdm;
 import projectView.AgentViewComplaintHlth;
 import projectView.Login;
+import projectView.RepDashboard;
 import projectView.StuDashboard;
 import projectView.newComplaint;
 import projectView.newQuery;
@@ -38,6 +40,7 @@ public class Controller {
 	private Login login;
 	private SQLOperations ops;
 	private StuDashboard stuDash;
+	private RepDashboard repDash;
 	private newComplaint newComp;
 	private newQuery newQuery;
 	private AgentDashboard agentDash;
@@ -48,7 +51,7 @@ public class Controller {
 	newComplaint ncmp = new newComplaint();
 	Client client = new Client();
 	
-	public Controller (Login login, StuDashboard stuDash, newComplaint newComp, newQuery newQuery, AgentDashboard agentDash, AgentViewCompaint agentViewComp, AgentViewComplaintAdm agentViewCompAdm, AgentViewComplaintHlth agentViewCompHlth) {
+	public Controller (Login login, StuDashboard stuDash, RepDashboard repDash, newComplaint newComp, newQuery newQuery, AgentDashboard agentDash, AgentViewCompaint agentViewComp, AgentViewComplaintAdm agentViewCompAdm, AgentViewComplaintHlth agentViewCompHlth) {
 		
 		this.login = login;
 		this.stuDash = stuDash;
@@ -58,6 +61,7 @@ public class Controller {
 		this.agentViewComp = agentViewComp;
 		this.agentViewCompAdm = agentViewCompAdm;
 		this.agentViewCompHlth = agentViewCompHlth;
+		this.repDash = repDash;
 		
 		//Login listeners
 		this.login.addLoginListener(new loginBtnListener());
@@ -164,6 +168,36 @@ public class Controller {
 					ex.printStackTrace();
 				}
 					break;
+					case "Representative":
+						flag = client.recieveResponse();
+						try {
+						if (flag==true) {
+							client.sendAction("Get Rep Info");
+							client.sendAction(login.user.getText());
+							try {
+								ArrayList<Reps> list = new ArrayList<Reps>();
+								
+								list = client.recieveRep();
+								list.get(0).getStuId();
+								repDash.repFNameHeader.setText(list.get(0).getFirstName()); 
+								repDash.repLNameHeader.setText(list.get(0).getLastName());
+								//row[0] = list.get(i).getId();
+							} catch (ClassNotFoundException | IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							JOptionPane.showMessageDialog(null, "Login Sucessfull");
+							repDash.setVisible(true);
+							login.setVisible(false);
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Incorrect username and password...");
+						}
+				}catch(IndexOutOfBoundsException ex) {
+					System.out.println("Error occured" + ex.getMessage());
+					ex.printStackTrace();
+				}
+						break;
 				
 			}
 			}

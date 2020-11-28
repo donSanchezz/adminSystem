@@ -19,6 +19,7 @@ import projectModel.Agent;
 //import configuration.Server;
 import projectModel.Complaint;
 import projectModel.Query;
+import projectModel.Reps;
 import projectModel.Student;
 
 public class Client {
@@ -154,6 +155,13 @@ public class Client {
 	public ArrayList<Agent> recieveAgent () throws ClassNotFoundException, IOException {
 		
 		return (ArrayList<Agent>) is.readObject();
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Reps> recieveRep () throws ClassNotFoundException, IOException {
+		
+		return (ArrayList<Reps>) is.readObject();
 	}
 	
 	@SuppressWarnings("unchecked")
