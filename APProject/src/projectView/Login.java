@@ -14,13 +14,16 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
 	public JTextField user;
 	public JPasswordField pass;
-	JButton loginBtn = new JButton("Login");
+	public JButton loginBtn = new JButton("Login");
+	public JComboBox comboBox = new JComboBox();
 
 	/**
 	 * Launch the application.
@@ -31,8 +34,9 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 322, 300);
+		setBounds(100, 100, 322, 344);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -62,8 +66,17 @@ public class Login extends JFrame {
 		contentPane.add(pass);
 		
 		
-		loginBtn.setBounds(10, 163, 89, 23);
+		loginBtn.setBounds(107, 260, 89, 23);
 		contentPane.add(loginBtn);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("Type");
+		lblNewLabel_1_1_1.setBounds(10, 163, 72, 14);
+		contentPane.add(lblNewLabel_1_1_1);
+		
+		
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Student", "Agent", "Student Rep."}));
+		comboBox.setBounds(10, 179, 134, 20);
+		contentPane.add(comboBox);
 	}
 	
 	public void addLoginListener (ActionListener listenForLoginBtn) {

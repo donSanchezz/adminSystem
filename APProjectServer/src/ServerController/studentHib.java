@@ -1,6 +1,13 @@
- package ServerModel;
+ package ServerController;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,8 +15,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.Transaction;
 
+import projectModel.Student;
 import configuration.Server;
 import factory.SessionFactoryBuilder;
+//import jdbc.connection.dbConnector;
+import factory.dbConnector;
+import projectModel.Complaint;
 
 public class studentHib {
 	private static final Logger Logger = LogManager.getLogger(Server.class);
@@ -153,6 +164,76 @@ public class studentHib {
 
 	}
 	
+	public Boolean stuLogin (String username, String password) {
+		Boolean flag = null;
+	//getting a connection
+	Logger.warn("Attempting to set-up a connection");
+	Connection con = dbConnector.getConnection();
+	Logger.info("Connecting successfull");
+	//A query statement that gets the user input for username and view from the Login(View).
+	try {
+		Logger.warn("Attempting to create a statement from the connection");
+		Statement stmt = con.createStatement();
+		String loginSql = "Select * from students where id = '"+username+ "' and pass = '"+password+"'";
+		Logger.info("Statement created and stored:" +loginSql);
+		ResultSet rs = stmt.executeQuery(loginSql);
+		Logger.warn("Attempting to verify user's credentials");
+		if (rs.next()) {
+			Logger.info("User's credentials are a match!");
+			flag = true;
+		}
+		else {
+			Logger.info("User's credentials are a not match!");
+			flag = false;
+		}
+	} catch (SQLException e1) {
+		e1.printStackTrace();
+	}
+	return flag;
+	}
+	
+	
+	public ArrayList<Student> getStudentInfo(String ID) {
+		
+		ArrayList<Student> studentInfo = new ArrayList<>();
+		
+		//getting a connection
+		Logger.warn("Attempting to set-up a connection");
+		Connection con = dbConnector.getConnection();
+		Logger.info("Connecting successfull");
+		//A query statement that gets the user input for username and view from the Login(View).
+		try {
+			Logger.warn("Attempting to create a statement from the connection");
+			Statement stmt = con.createStatement();
+			String loginSql = "Select * from students where id = '"+ID+"'";
+			Logger.info("Statement created and stored:" +loginSql);
+			ResultSet rs = stmt.executeQuery(loginSql);
+			Logger.warn("Attempting to assign user's information");
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String firstName = rs.getString("firstName");
+				String lastName = rs.getString("lastName");
+				String email = rs.getString("email");
+				int contactNum = rs.getInt("contactNum");
+				int pass = rs.getInt("pass");
+				
+				Student stu = new Student();
+				stu.setStuId(id);
+				stu.setFirstName(firstName);
+				stu.setLastName(lastName);
+				stu.setEmail(email);
+				stu.setCantNum(contactNum);
+				stu.setPass(pass);
+				
+				studentInfo.add(stu);
+			}
+
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+		return studentInfo;
+	}
 	//In the main class/ driver class, it should be like this:
 	/*public static void main(String[] args) {
 	

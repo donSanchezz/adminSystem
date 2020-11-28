@@ -7,7 +7,14 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import configuration.Server;
+
 public class dbConnector {
+	
+	private static final Logger Logger = LogManager.getLogger(Server.class);
 	
 	public static Connection getConnection () {
 
@@ -18,19 +25,19 @@ public class dbConnector {
 			
 			Connection dbConn = null; //Create a JDBC Connection object
 			
-			System.out.println("Connecting to localhost");
+	
 			try {
+				Logger.warn("Attempting to connect to localhost");
 				//Try to get a connection to the MySQL server and database
-				System.out.println("Attempting to connect to: " +jdbcUrl);
+				Logger.warn("Attempting to connect to: " +jdbcUrl);
 				dbConn = DriverManager.getConnection(jdbcUrl, username, password);
 				
 				if (dbConn != null) { //Check if the connection was successful
-					JOptionPane.showMessageDialog(null, 
-							"Connection to database server succesful", 
-							"DB Connection Status", JOptionPane.INFORMATION_MESSAGE);
+					Logger.info("Connection to database server succesful");
+	
 				}
 			}catch(SQLException e) {
-			System.out.println("Error connecting to database, check your username or password");
+			Logger.error("Error connecting to database, check your username or password");
 			
 		}
 			return dbConn;

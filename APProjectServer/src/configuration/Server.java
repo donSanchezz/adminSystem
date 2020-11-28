@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import projectModel.Agent;
 //import projectModel.Complaint;
 import projectModel.Complaint;
 import projectModel.Query;
@@ -17,10 +18,11 @@ import java.io.Serializable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ServerController.AgentHib;
 import ServerController.ComplaintHib;
 import ServerController.QueryHib;
-import ServerModel.Student;
-import ServerModel.studentHib;
+import ServerController.studentHib;
+import projectModel.Student;
 
 public class Server {
 
@@ -80,6 +82,17 @@ public class Server {
 	
 	
 	private void waitForRequests() {
+		studentHib stuHib = new studentHib();
+		AgentHib agtHib = new AgentHib();
+		ComplaintHib cmpHib = new ComplaintHib();
+		QueryHib queryHib = new QueryHib();
+		ArrayList<Complaint> cmpList;
+		ArrayList<Student> stuList;
+		ArrayList<Agent> agtList;
+		String username;
+		String password;
+		Boolean flag;
+		String ID;
 		String action = "";
 		try {
 			while(true) {
@@ -92,8 +105,50 @@ public class Server {
 				Logger.warn("Attempting to recieve data of whats operation to be done from client, Errors may occur");
 				//Reading the string that was sent over from the Client server...the request that should be processed.
 				action = (String) is.readObject();
-				Logger.info ("Data Successfully recieved from client");
+				Logger.info ("Data Successfully recieved from client" + action);
 				switch (action) {
+				case "Student":
+					Logger.warn("Attempting to recieve login data from client, Erros may occur");
+					username = (String) is.readObject();
+					password = (String) is.readObject();
+					Logger.info("Login data successfully recieved from client");
+					//Add complaint
+					flag = stuHib.stuLogin(username, password);
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					os.writeObject(flag);
+					Logger.info("Data Successfully sent from client");
+					break;
+				case "Get Student Info":
+					Logger.warn("Attempting to student login data from client, Erros may occur");
+					 ID = (String) is.readObject();
+					Logger.info("Student Login data successfully recieved from client");
+					//Add complaint
+					 stuList = stuHib.getStudentInfo(ID);
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					os.writeObject(stuList);
+					Logger.info("Data Successfully sent from client");
+					break;
+				case "Agent":
+					Logger.warn("Attempting to recieve agent login data from client, Erros may occur");
+					 username= (String) is.readObject();
+					 password = (String) is.readObject();
+					Logger.info("Login data successfully recieved from client");
+					//Add complaint
+					flag = agtHib.agentLogin(username, password);
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					os.writeObject(flag);
+					Logger.info("Data Successfully sent from client");
+					break;
+				case "Get Agent Info":
+					Logger.warn("Attempting to agent data from client, Erros may occur");
+					ID = (String) is.readObject();
+					Logger.info("Agent Login data successfully recieved from client");
+					//Add complaint
+					 agtList = agtHib.getAgentInfo(ID);
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					os.writeObject(agtList);
+					Logger.info("Data Successfully sent from client");
+					break;
 				case "Add Complaint":
 					Logger.warn("Attempting to recieve complaint data from client, Erros may occur");
 					Complaint comObj = (Complaint)is.readObject();
@@ -110,7 +165,6 @@ public class Server {
 					Query stuQuery = (Query)is.readObject();
 					Logger.info("Query data Successfully recieved from client");
 					//Add student
-					QueryHib queryHib = new QueryHib();
 					queryHib.saveQuery(stuQuery);
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					os.writeObject(true);
@@ -118,38 +172,29 @@ public class Server {
 					break;
 				case "View Complaint Financial":
 					Logger.warn("Attempting to recieve query data from client, Erros may occur");
-					//Complaint viewComp = (Complaint)is.readObject();
-					ComplaintHib cmpHib = new ComplaintHib();
 					Logger.info("Query data Successfully recieved from client");
-					//Add student
-					//QueryHib queryHib = new QueryHib();
-					//queryHib.saveQuery(stuQuery);
 					Logger.warn("Attempting to send data to client, Errors may occur");
-					ArrayList<Complaint> list = cmpHib.getAllComplaintFinancial();
-					
-					//for (int i =0; i<list.size(); i++) {
-						os.writeObject(list);
-						System.out.println(list);
-					//}
-					
+					 cmpList = cmpHib.getAllComplaintFinancial();
+						os.writeObject(cmpList);
+						System.out.println(cmpList);
 					Logger.info("Data Successfully sent from client");
 					break;
 				case "View Complaint Admin":
 					Logger.warn("Attempting to recieve query data from client, Erros may occur");
-					//Complaint viewComp = (Complaint)is.readObject();
-					ComplaintHib cmpHib1 = new ComplaintHib();
 					Logger.info("Query data Successfully recieved from client");
-					//Add student
-					//QueryHib queryHib = new QueryHib();
-					//queryHib.saveQuery(stuQuery);
 					Logger.warn("Attempting to send data to client, Errors may occur");
-					ArrayList<Complaint> list2 = cmpHib1.getAllComplaintFinancial();
-					
-					//for (int i =0; i<list.size(); i++) {
-						os.writeObject(list2);
-						System.out.println(list2);
-					//}
-					
+					cmpList = cmpHib.getAllComplaintFinancial();
+						os.writeObject(cmpList);
+						System.out.println(cmpList);
+					Logger.info("Data Successfully sent from client");
+					break;
+				case "View Complaint Health":
+					Logger.warn("Attempting to recieve query data from client, Erros may occur");
+					Logger.info("Query data Successfully recieved from client");
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					 cmpList = cmpHib.getAllComplaintHlth();
+						os.writeObject(cmpList);
+						System.out.println(cmpList);
 					Logger.info("Data Successfully sent from client");
 					break;
 				}

@@ -21,7 +21,7 @@ import javax.swing.JInternalFrame;
 public class StuDashboard extends JFrame {
 
 	private JPanel dashViewPane;
-	private JTextField stuNameHeader;
+	public JTextField stuLNameHeader;
 	private JTextField finUnsolvedTxt;
 	private JTextField finSolvedTxt;
 	JMenuItem newCompItem = new JMenuItem("New complaint");
@@ -31,6 +31,7 @@ public class StuDashboard extends JFrame {
 	public JTextField admSolvedTxt;
 	public JTextField hlthUnsolvedTxt;
 	public JTextField hlthSolvedTxt;
+	public JTextField stuFNameHeader;
 
 	/**
 	 * Launch the application.
@@ -89,20 +90,31 @@ public class StuDashboard extends JFrame {
 		dashViewPane.add(headerPanel);
 		headerPanel.setLayout(null);
 		
-		stuNameHeader = new JTextField();
-		stuNameHeader.setBackground(Color.WHITE);
-		stuNameHeader.setHorizontalAlignment(SwingConstants.RIGHT);
-		stuNameHeader.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		stuNameHeader.setText("Student Name");
-		stuNameHeader.setBounds(574, 0, 138, 26);
-		headerPanel.add(stuNameHeader);
-		stuNameHeader.setColumns(10);
+		stuLNameHeader = new JTextField();
+		stuLNameHeader.setEditable(false);
+		stuLNameHeader.setBackground(Color.WHITE);
+		stuLNameHeader.setHorizontalAlignment(SwingConstants.RIGHT);
+		stuLNameHeader.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		stuLNameHeader.setText("FName");
+		stuLNameHeader.setBounds(490, 0, 114, 26);
+		headerPanel.add(stuLNameHeader);
+		stuLNameHeader.setColumns(10);
 		
 		JLabel stuHeaderLbl = new JLabel("Student");
 		stuHeaderLbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		stuHeaderLbl.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		stuHeaderLbl.setBounds(584, 37, 128, 23);
 		headerPanel.add(stuHeaderLbl);
+		
+		stuFNameHeader = new JTextField();
+		stuFNameHeader.setEditable(false);
+		stuFNameHeader.setText("LName");
+		stuFNameHeader.setHorizontalAlignment(SwingConstants.CENTER);
+		stuFNameHeader.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		stuFNameHeader.setColumns(10);
+		stuFNameHeader.setBackground(Color.WHITE);
+		stuFNameHeader.setBounds(608, 0, 114, 26);
+		headerPanel.add(stuFNameHeader);
 		
 		JPanel financialPanel = new JPanel();
 		financialPanel.setBounds(62, 92, 260, 150);

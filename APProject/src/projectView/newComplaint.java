@@ -122,7 +122,7 @@ public class newComplaint extends JFrame {
 		complaintPane.add(timeTxtField);
 		
 	
-		compCmbBox.setModel(new DefaultComboBoxModel(new String[] {"Financial", "Administration", "Student Services"}));
+		compCmbBox.setModel(new DefaultComboBoxModel(new String[] {"Financial", "Administration", "Health"}));
 		compCmbBox.setBounds(233, 197, 147, 20);
 		complaintPane.add(compCmbBox);
 		

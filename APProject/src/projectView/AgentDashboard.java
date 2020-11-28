@@ -20,7 +20,7 @@ import javax.swing.border.EmptyBorder;
 public class AgentDashboard extends JFrame {
 
 	private JPanel dashViewPane;
-	private JTextField stuNameHeader;
+	public JTextField agtLNameHeader;
 	private JTextField finUnsolvedTxt;
 	private JTextField finSolvedTxt;
 	public JTextField admUnsolvedTxt;
@@ -29,6 +29,8 @@ public class AgentDashboard extends JFrame {
 	public JTextField hlthSolvedTxt;
 	JMenuItem viewFin = new JMenuItem("View Financial");
 	JMenuItem viewAdm = new JMenuItem("View Administration");
+	JMenuItem viewHlth = new JMenuItem("View Health");
+	public JTextField agtFNameHeader;
 	
 
 	/**
@@ -71,7 +73,6 @@ public class AgentDashboard extends JFrame {
 		
 		viewComp.add(viewAdm);
 		
-		JMenuItem viewHlth = new JMenuItem("View Health");
 		viewComp.add(viewHlth);
 		
 		JMenu queryMenu = new JMenu("Query");
@@ -102,20 +103,31 @@ public class AgentDashboard extends JFrame {
 		dashViewPane.add(headerPanel);
 		headerPanel.setLayout(null);
 		
-		stuNameHeader = new JTextField();
-		stuNameHeader.setBackground(Color.WHITE);
-		stuNameHeader.setHorizontalAlignment(SwingConstants.RIGHT);
-		stuNameHeader.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		stuNameHeader.setText("Agents Name");
-		stuNameHeader.setBounds(574, 0, 138, 26);
-		headerPanel.add(stuNameHeader);
-		stuNameHeader.setColumns(10);
+		agtLNameHeader = new JTextField();
+		agtLNameHeader.setEditable(false);
+		agtLNameHeader.setBackground(Color.WHITE);
+		agtLNameHeader.setHorizontalAlignment(SwingConstants.CENTER);
+		agtLNameHeader.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		agtLNameHeader.setText("Agents Name");
+		agtLNameHeader.setBounds(574, 0, 138, 26);
+		headerPanel.add(agtLNameHeader);
+		agtLNameHeader.setColumns(10);
 		
 		JLabel stuHeaderLbl = new JLabel("Student Services Agent");
 		stuHeaderLbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		stuHeaderLbl.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		stuHeaderLbl.setBounds(499, 37, 213, 23);
 		headerPanel.add(stuHeaderLbl);
+		
+		agtFNameHeader = new JTextField();
+		agtFNameHeader.setEditable(false);
+		agtFNameHeader.setText("Agents Name");
+		agtFNameHeader.setHorizontalAlignment(SwingConstants.RIGHT);
+		agtFNameHeader.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		agtFNameHeader.setColumns(10);
+		agtFNameHeader.setBackground(Color.WHITE);
+		agtFNameHeader.setBounds(426, 0, 138, 26);
+		headerPanel.add(agtFNameHeader);
 		
 		JPanel financialPanel = new JPanel();
 		financialPanel.setBounds(62, 92, 260, 150);
@@ -248,5 +260,8 @@ public class AgentDashboard extends JFrame {
 		viewAdm.addActionListener(listenForViewCompAdmMenuBttn);
 	}
 	
+	public void addViewCompListenerHlth (ActionListener listenForViewCompHlthMenuBttn) {
+		viewHlth.addActionListener(listenForViewCompHlthMenuBttn);
+	}
 	
 }

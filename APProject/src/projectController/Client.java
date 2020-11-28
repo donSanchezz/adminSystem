@@ -12,6 +12,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import projectModel.Agent;
+
 //import java.io.Serializable;
 
 //import configuration.Server;
@@ -82,6 +84,20 @@ public class Client {
 		}
 	}
 	
+	public void sendLoginInfoStu(String username, String pass) {
+		try {
+			Logger.warn("Attempting to send the action thats need to be performed to Server, Errors may occur");
+			//Sending an action to the server as a string of what we wabt to achieve
+			//Already serialized
+			os.writeObject(username);
+			os.writeObject(pass);
+			Logger.info("Action  Successfully sent to Server");
+			
+		}catch (IOException ex) {
+			Logger.error("Data not sent to server \n" +ex.getMessage());
+		}
+	}
+	
 	
 	public void sendComplaint(Complaint obj) {
 		try {
@@ -129,6 +145,18 @@ public class Client {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public ArrayList<Student> recieveStudent () throws ClassNotFoundException, IOException {
+		
+		return (ArrayList<Student>) is.readObject();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Agent> recieveAgent () throws ClassNotFoundException, IOException {
+		
+		return (ArrayList<Agent>) is.readObject();
+	}
+	
+	@SuppressWarnings("unchecked")
 	public ArrayList<Complaint> recieveComplaintsFinancial() throws ClassNotFoundException, IOException {
 	
 		return (ArrayList<Complaint>) is.readObject();
@@ -136,6 +164,12 @@ public class Client {
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<Complaint> recieveComplaintsAdmin() throws ClassNotFoundException, IOException {
+	
+		return (ArrayList<Complaint>) is.readObject();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Complaint> recieveComplaintsHlth() throws ClassNotFoundException, IOException {
 	
 		return (ArrayList<Complaint>) is.readObject();
 	}

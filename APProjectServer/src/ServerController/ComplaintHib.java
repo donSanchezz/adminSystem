@@ -23,7 +23,7 @@ import configuration.Server;
 import factory.SessionFactoryBuilder;
 import factory.dbConnector;
 import projectModel.Complaint;
-import ServerModel.Student;
+import projectModel.Student;
 
 public class ComplaintHib {
 	
@@ -166,6 +166,40 @@ public class ComplaintHib {
 			Logger.warn("Starting query to get all administration complaints");
 			complaintList =  (ArrayList<Complaint>) session.createQuery("from Complaint c where c.typeOfComplaint='Administration'").getResultList();
 			Logger.info("Query retrieved to get all administration complaints.");
+			
+			//Commit the transition
+			Logger.warn("Attempting to commit transaction");
+			transaction.commit();
+			Logger.info("Transaction successfully committed");
+			
+		}catch(HibernateException e) {
+			
+			if(transaction != null){
+				
+			transaction.rollback();
+			
+			}
+			Logger.error("An error has occured" + e.getMessage());
+			e.printStackTrace();
+		}
+		return complaintList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Complaint> getAllComplaintHlth() {
+		
+		Transaction transaction = null;
+		ArrayList<Complaint> complaintList = new ArrayList<>();
+		try(Session session = SessionFactoryBuilder.getSessionFactory().openSession()){
+			Logger.warn("Starting transacting to get all health complaints");
+			//Start the transaction
+			transaction = session.beginTransaction();
+			Logger.info("Transaction retrieved to get all health complaints.");
+			//Get students
+			
+			Logger.warn("Starting query to get all health complaints");
+			complaintList =  (ArrayList<Complaint>) session.createQuery("from Complaint c where c.typeOfComplaint='Health'").getResultList();
+			Logger.info("Query retrieved to get all health complaints.");
 			
 			//Commit the transition
 			Logger.warn("Attempting to commit transaction");

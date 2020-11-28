@@ -1,4 +1,4 @@
-package projectModel;
+package ServerModel;
 
 
 import javax.persistence.CascadeType;
@@ -23,8 +23,8 @@ import org.hibernate.Session;
 import factory.SessionFactoryBuilder;
 
 @Entity
-@Table(name="students")
-public class Student implements Serializable {
+@Table(name="agents")
+public class Agent implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -44,13 +44,13 @@ public class Student implements Serializable {
 	private int contactNum;
 	
 	@Column(name="pass")
-	private int pass;
+	private String pass;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	//@OneToMany(cascade=CascadeType.ALL)
 	//@JoinTable(name="student_complaint_table", joinColumns=@JoinColumn(name="id"), inverseJoinColumns=JoinColumn(name="id"))
-	private ArrayList<Complaint> complaintList = new ArrayList<>();
+	//private ArrayList<Agent> agentList = new ArrayList<>();
 	
-	public Student (int id, String firstName, String lastName, String email, int contactNum, int pass) {
+	public Agent (int id, String firstName, String lastName, String email, int contactNum, String pass) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -60,13 +60,13 @@ public class Student implements Serializable {
 
 	}
 	
-	public Student () {
+	public Agent () {
 		this.id = 1;
 		this.firstName = "John";
 		this.lastName = "Doe";
 		this.email = "johndoe@gmail.com";
 		this.contactNum = 8597198;
-		this.pass=1;
+		this.pass=null;
 
 	}
 
@@ -114,22 +114,22 @@ public class Student implements Serializable {
 
 	
 
-	public int getPass() {
+	public String getPass() {
 		return pass;
 	}
 
-	public void setPass(int pass) {
+	public void setPass(String pass) {
 		this.pass = pass;
 	}
 
-	public ArrayList<Complaint> getComplaintList() {
-		return complaintList;
+	/*public ArrayList<Agent> getComplaintList() {
+		return agentList;
 	}
 
-	public void setComplaintList(ArrayList<Complaint> complaintList) {
-		this.complaintList = complaintList;
+	public void setComplaintList(ArrayList<Agent> agentList) {
+		this.agentList = agentList;
 	}
-
+	*/
 	@Override
 	public String toString() {
 		return "Student [stuId=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
@@ -137,7 +137,7 @@ public class Student implements Serializable {
 	}
 	
 	
-	public Student getStudent() {
+	/*public Agent getAgent() {
 		return this;
-	}
+	}*/
 }

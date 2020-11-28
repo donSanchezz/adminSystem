@@ -20,11 +20,14 @@ import javax.swing.table.TableModel;
 
 import jdbc.connection.SQLOperations;
 import jdbc.connection.dbConnector;
+import projectModel.Agent;
 import projectModel.Complaint;
 import projectModel.Query;
+import projectModel.Student;
 import projectView.AgentDashboard;
 import projectView.AgentViewCompaint;
 import projectView.AgentViewComplaintAdm;
+import projectView.AgentViewComplaintHlth;
 import projectView.Login;
 import projectView.StuDashboard;
 import projectView.newComplaint;
@@ -40,11 +43,12 @@ public class Controller {
 	private AgentDashboard agentDash;
 	private AgentViewCompaint agentViewComp;
 	private AgentViewComplaintAdm agentViewCompAdm;
+	private AgentViewComplaintHlth agentViewCompHlth;
 	
 	newComplaint ncmp = new newComplaint();
 	Client client = new Client();
 	
-	public Controller (Login login, StuDashboard stuDash, newComplaint newComp, newQuery newQuery, AgentDashboard agentDash, AgentViewCompaint agentViewComp, AgentViewComplaintAdm agentViewCompAdm) {
+	public Controller (Login login, StuDashboard stuDash, newComplaint newComp, newQuery newQuery, AgentDashboard agentDash, AgentViewCompaint agentViewComp, AgentViewComplaintAdm agentViewCompAdm, AgentViewComplaintHlth agentViewCompHlth) {
 		
 		this.login = login;
 		this.stuDash = stuDash;
@@ -53,6 +57,7 @@ public class Controller {
 		this.agentDash = agentDash;
 		this.agentViewComp = agentViewComp;
 		this.agentViewCompAdm = agentViewCompAdm;
+		this.agentViewCompHlth = agentViewCompHlth;
 		
 		//Login listeners
 		this.login.addLoginListener(new loginBtnListener());
@@ -74,6 +79,7 @@ public class Controller {
 		//agent dashboard
 		this.agentDash.addViewCompListener(new listenForViewCompMenuBttn());
 		this.agentDash.addViewCompListenerAdm(new listenForViewCompAdmMenuBttn());
+		this.agentDash.addViewCompListenerHlth(new listenForViewCompHlthMenuBttn());
 		
 		
 		//agent financial view 
@@ -82,37 +88,89 @@ public class Controller {
 		
 		//agent administration view
 		this.agentViewCompAdm.addUpdateListener( new listenForUpdateAdmBttn());
+		this.agentViewCompAdm.addJTableListener( new listenForJTableClickedAdm());
+		
+		//agent health view
+		this.agentViewCompHlth.addUpdateListener( new listenForUpdateHlthBttn());
+		this.agentViewCompHlth.addJTableListener( new listenForJTableClickedHlth());
 	}
 	
 	
-	//Where the log-in button get's handled.
 	 class loginBtnListener implements ActionListener {
 
-	
-		public void actionPerformed(ActionEvent e) {
-			
-			
-			//getting a connection
-			Connection con = dbConnector.getConnection();
-			//A query statement that gets the user input for username and view from the Login(View).
-			try {
-				Statement stmt = con.createStatement();
-				String loginSql = "Select * from login where username = '"+login.user.getText()+ "' and password = '"+login.pass.getText().toString()+"'";
-				ResultSet rs = stmt.executeQuery(loginSql);
-				if (rs.next()) {
-					JOptionPane.showMessageDialog(null, "Login Sucessfull");
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "Incorrect username and password...");
-				}
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+		 Boolean flag;
+			public void actionPerformed(ActionEvent e) {
+					String action = login.comboBox.getSelectedItem().toString();
+					client.sendAction(action);
+					client.sendLoginInfoStu (login.user.getText(), login.pass.getText().toString());
+					switch (action) {
+					case "Student":
+					flag = client.recieveResponse();
+					try {
+					if (flag==true) {
+						client.sendAction("Get Student Info");
+						client.sendAction(login.user.getText());
+						try {
+							ArrayList<Student> list = new ArrayList<Student>();
+							
+							list = client.recieveStudent();
+							list.get(0).getStuId();
+							stuDash.stuLNameHeader.setText(list.get(0).getFirstName()); 
+							stuDash.stuFNameHeader.setText(list.get(0).getLastName());
+							//row[0] = list.get(i).getId();
+						} catch (ClassNotFoundException | IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						JOptionPane.showMessageDialog(null, "Login Sucessfull");
+						stuDash.setVisible(true);
+						login.setVisible(false);
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Incorrect username and password...");
+					}
+			}catch(IndexOutOfBoundsException ex) {
+				System.out.println("Error occured" + ex.getMessage());
+				ex.printStackTrace();
 			}
-			
-
-		}
-		 
-	 }
+					break;
+					case "Agent" :
+						flag = client.recieveResponse();
+						try {
+						if (flag==true) {
+							client.sendAction("Get Agent Info");
+							client.sendAction(login.user.getText());
+							try {
+								ArrayList<Agent> agtList = new ArrayList<Agent>();
+								
+								agtList = client.recieveAgent();
+								agtList.get(0).getStuId();
+								agentDash.agtLNameHeader.setText(agtList.get(0).getFirstName()); 
+								agentDash.agtFNameHeader.setText(agtList.get(0).getLastName());
+								//row[0] = list.get(i).getId();
+							} catch (ClassNotFoundException | IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							JOptionPane.showMessageDialog(null, "Login Sucessfull");
+							agentDash.setVisible(true);
+							login.setVisible(false);
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Incorrect username and password...");
+						}
+				}catch(IndexOutOfBoundsException ex) {
+					System.out.println("Error occured" + ex.getMessage());
+					ex.printStackTrace();
+				}
+					break;
+				
+			}
+			}
+		
+			 
+		 }
+	
 	 
 	 //Dashboard Action Listeners
 	 class NewCompListener implements ActionListener {
@@ -238,6 +296,16 @@ public class Controller {
 			 
 			 
 		 }
+	 
+	 class listenForViewCompHlthMenuBttn implements ActionListener {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				agentViewCompHlth.setVisible(true);
+			}
+			 
+			 
+		 }
+	 
 	
 	 class listenForUpdateBttn implements ActionListener {
 
@@ -274,12 +342,12 @@ public class Controller {
 		 public void mouseClicked(MouseEvent arg0) {
 			 int i = agentViewComp.table.getSelectedRow();
 			 TableModel model = agentViewComp.table.getModel();
-			 agentViewCompAdm.cmpIdTxt.setText(model.getValueAt(i, 0).toString());
-			 agentViewCompAdm.dateTxt.setText(model.getValueAt(i, 1).toString());
-			 agentViewCompAdm.timeTxt.setText(model.getValueAt(i, 2).toString());
-			 agentViewCompAdm.typeTxt.setText(model.getValueAt(i, 3).toString());
-			 agentViewCompAdm.stuIdTxt.setText(model.getValueAt(i, 5).toString());
-			 agentViewCompAdm.textArea.setText(model.getValueAt(i, 4).toString());
+			 agentViewComp.cmpIdTxt.setText(model.getValueAt(i, 0).toString());
+			 agentViewComp.dateTxt.setText(model.getValueAt(i, 1).toString());
+			 agentViewComp.timeTxt.setText(model.getValueAt(i, 2).toString());
+			 agentViewComp.typeTxt.setText(model.getValueAt(i, 3).toString());
+			 agentViewComp.stuIdTxt.setText(model.getValueAt(i, 5).toString());
+			 agentViewComp.textArea.setText(model.getValueAt(i, 4).toString());
 
 			}
 		@Override
@@ -295,6 +363,8 @@ public class Controller {
 		public void mouseReleased(MouseEvent e) {
 		}
 	 }
+	 
+	 
 	 
 	 
 	 class listenForUpdateAdmBttn implements ActionListener {
@@ -327,6 +397,90 @@ public class Controller {
 			}
 			 
 		 }
+	 
+	 class listenForJTableClickedAdm implements MouseListener {
+		 public void mouseClicked(MouseEvent arg0) {
+			 int i = agentViewCompAdm.table.getSelectedRow();
+			 TableModel model = agentViewCompAdm.table.getModel();
+			 agentViewCompAdm.cmpIdTxt.setText(model.getValueAt(i, 0).toString());
+			 agentViewCompAdm.dateTxt.setText(model.getValueAt(i, 1).toString());
+			 agentViewCompAdm.timeTxt.setText(model.getValueAt(i, 2).toString());
+			 agentViewCompAdm.typeTxt.setText(model.getValueAt(i, 3).toString());
+			 agentViewCompAdm.stuIdTxt.setText(model.getValueAt(i, 5).toString());
+			 agentViewCompAdm.textArea.setText(model.getValueAt(i, 4).toString());
+
+			}
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {	
+		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
+	 }
+	 
+	 
+	 class listenForUpdateHlthBttn implements ActionListener {
+
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Complaint> list = new ArrayList<Complaint>();
+				client.sendAction("View Complaint Health");
+				try {
+					list =  client.recieveComplaintsHlth();
+				} catch (ClassNotFoundException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//System.out.println(list.get(0));
+				//System.out.println(list.get(1));
+				//System.out.println(list.get(2));
+				
+				//Adding each item in the ArrayList to a row
+				DefaultTableModel model = (DefaultTableModel) agentViewCompHlth.table.getModel();
+				Object [] row = new Object [6];
+				for (int i = 0; i<list.size(); i++) {
+					row[0] = list.get(i).getId();
+					row[1] = list.get(i).getDate();
+					row[2]= list.get(i).getTime();
+					row[3]= list.get(i).getTypeOfComplaint();
+					row[4]=list.get(i).getComplaint();
+					row[5]=list.get(i).getStuId();
+					model.addRow(row);
+				}
+			}
+			 
+		 }
+	 
+	 class listenForJTableClickedHlth implements MouseListener {
+		 public void mouseClicked(MouseEvent arg0) {
+			 int i = agentViewCompHlth.table.getSelectedRow();
+			 TableModel model = agentViewCompHlth.table.getModel();
+			 agentViewCompHlth.cmpIdTxt.setText(model.getValueAt(i, 0).toString());
+			 agentViewCompHlth.dateTxt.setText(model.getValueAt(i, 1).toString());
+			 agentViewCompHlth.timeTxt.setText(model.getValueAt(i, 2).toString());
+			 agentViewCompHlth.typeTxt.setText(model.getValueAt(i, 3).toString());
+			 agentViewCompHlth.stuIdTxt.setText(model.getValueAt(i, 5).toString());
+			 agentViewCompHlth.textArea.setText(model.getValueAt(i, 4).toString());
+
+			}
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {	
+		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
+	 }
 	 
 	
 
