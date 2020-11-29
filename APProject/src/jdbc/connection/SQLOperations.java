@@ -64,7 +64,7 @@ public class SQLOperations {
 	}
 		return false;*/
 	
-	public ArrayList<Complaint> cmpList () {
+/*	public ArrayList<Complaint> cmpList () {
 		ArrayList<Complaint> cmpList = new ArrayList<Complaint>();
 		dbConnector con1;
 		Connection con = dbConnector.getConnection();
@@ -77,7 +77,7 @@ public class SQLOperations {
 			rs = st.executeQuery(query);
 			Complaint cmp;
 			while(rs.next()) {
-				cmp = new Complaint (rs.getInt("id"), rs.getString("date"), rs.getString("time"), rs.getString("typeOfComplaint"), rs.getString("complaint"), rs.getInt("stuId"));
+				cmp = new Complaint (rs.getInt("id"), rs.getString("date"), rs.getString("time"), rs.getString("typeOfComplaint"), rs.getString("complaint"), rs.getInt("stuId"), rs.getSta);
 				cmpList.add(cmp);
 				
 			}
@@ -87,7 +87,7 @@ public class SQLOperations {
 		
 		return cmpList;
 		
-	}
+	}*/
 	
 	
 }

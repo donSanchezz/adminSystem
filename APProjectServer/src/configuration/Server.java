@@ -90,6 +90,7 @@ public class Server {
 		QueryHib queryHib = new QueryHib();
 		RepsHib repHib = new RepsHib();
 		ArrayList<Complaint> cmpList;
+		ArrayList<Complaint> cmpList2;
 		ArrayList<Student> stuList;
 		ArrayList<Agent> agtList;
 		ArrayList<Reps> repList;
@@ -128,8 +129,13 @@ public class Server {
 					Logger.info("Student Login data successfully recieved from client");
 					//Add complaint
 					 stuList = stuHib.getStudentInfo(ID);
+					 cmpList= cmpHib.getSolvedComplaintById(ID);
+					 cmpList2 = cmpHib.getUnsolvedComplaintById(ID);
+					 System.out.println(cmpList);
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					os.writeObject(stuList);
+					os.writeObject(cmpList);
+					os.writeObject(cmpList2);
 					Logger.info("Data Successfully sent from client");
 					break;
 				case "Agent":
@@ -177,12 +183,21 @@ public class Server {
 				case "Add Complaint":
 					Logger.warn("Attempting to recieve complaint data from client, Erros may occur");
 					Complaint comObj = (Complaint)is.readObject();
+					 ID = (String) is.readObject();
+				
 					Logger.info("Complaint data successfully recieved from client");
 					//Add complaint
 					ComplaintHib com = new ComplaintHib();
 					com.saveComplaint(comObj);
+					 cmpList= cmpHib.getSolvedComplaintById(ID);
+					 cmpList2 = cmpHib.getUnsolvedComplaintById(ID);
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					os.writeObject(true);
+					System.out.println("3");
+					os.writeObject(cmpList);
+					System.out.println("4");
+					os.writeObject(cmpList2);
+					System.out.println("5");
 					Logger.info("Data Successfully sent from client");
 					break;
 				case "Add Query":

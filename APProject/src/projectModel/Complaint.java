@@ -39,11 +39,14 @@ public class Complaint extends DateTime implements Serializable {
 	@Column(name="stuId")
 	public int stuId;
 	
+	@Column(name="status")
+	public String status;
+	
 public Complaint(){
 		
 	}
 	
-	public Complaint(int id, String date, String time, String typeOfComplaint, String complaint, int stuId) {
+	public Complaint(int id, String date, String time, String typeOfComplaint, String complaint, int stuId, String status) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -51,6 +54,7 @@ public Complaint(){
 		this.typeOfComplaint = typeOfComplaint;
 		this.complaint = complaint;
 		this.stuId = stuId;
+		this.status = status;
 	}
 
 	
@@ -124,7 +128,13 @@ public Complaint(){
 		
 	}
 
+	public String getStatus() {
+		return status;
+	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {

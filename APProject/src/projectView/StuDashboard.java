@@ -22,8 +22,8 @@ public class StuDashboard extends JFrame {
 
 	private JPanel dashViewPane;
 	public JTextField stuLNameHeader;
-	private JTextField finUnsolvedTxt;
-	private JTextField finSolvedTxt;
+	public JTextField finUnsolvedTxt;
+	public JTextField finSolvedTxt;
 	JMenuItem newCompItem = new JMenuItem("New complaint");
 	JMenuItem newQueryItem = new JMenuItem("New query");
 	JMenuItem viewQueryItem = new JMenuItem("View query");

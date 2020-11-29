@@ -103,6 +103,7 @@ public class newComplaint extends JFrame {
 		complaintPane.add(studentId);
 		
 		stuIdTxtField = new JTextField();
+		stuIdTxtField.setEditable(false);
 		stuIdTxtField.setBounds(233, 59, 147, 20);
 		complaintPane.add(stuIdTxtField);
 		stuIdTxtField.setColumns(10);

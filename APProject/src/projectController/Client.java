@@ -152,6 +152,12 @@ public class Client {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public ArrayList<Complaint> recieveStuCmps () throws ClassNotFoundException, IOException {
+		
+		return (ArrayList<Complaint>) is.readObject();
+	}
+	
+	@SuppressWarnings("unchecked")
 	public ArrayList<Agent> recieveAgent () throws ClassNotFoundException, IOException {
 		
 		return (ArrayList<Agent>) is.readObject();

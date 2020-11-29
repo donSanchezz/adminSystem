@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-//import java.util.List;
+import java.sql.Statement;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -16,12 +16,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.Transaction;
 
-import com.mysql.jdbc.Statement;
+//import com.mysql.jdbc.Statement;
 
 //import projectModel.Complaint;
 import configuration.Server;
 import factory.SessionFactoryBuilder;
 import factory.dbConnector;
+import projectModel.Agent;
 import projectModel.Complaint;
 import projectModel.Student;
 
@@ -254,34 +255,106 @@ public class ComplaintHib {
 
 	}
 	
-	//In the main class/ driver class, it should be like this:
-	/*public static void main(String[] args) {
+	public ArrayList<Complaint> getSolvedComplaintById(String ID) {
+		
+		ArrayList<Complaint> cmpInfo = new ArrayList<>();
+		
+		//getting a connection
+		Logger.warn("Attempting to set-up a connection");
+		Connection con = dbConnector.getConnection();
+		Logger.info("Connecting successfull");
+		//A query statement that gets the user input for username and view from the Login(View).
+		try {
+			Logger.warn("Attempting to create a statement from the connection");
+			Statement stmt = con.createStatement();
+			String solved = "solved";
+			String sql = "Select  * from complaint  where stuId = '"+ID+"' and status = '"+solved+"' ";
+			Logger.info("Statement created and stored:" +sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Logger.warn("Attempting to assign user's information");
+			Complaint cmp = new Complaint();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String date = rs.getString("date");
+				String time = rs.getString("time");
+				String typeOfComplaint = rs.getString("typeOfComplaint");
+				String complaint = rs.getString("complaint");
+				int stuId = rs.getInt("stuId");
+				String status = rs.getString("status");
+				
+				
+				cmp.setId(id);
+				cmp.setDate(date);
+				cmp.setTime(time);
+				cmp.setTypeOfComplaint(typeOfComplaint);
+				cmp.setComplaint(complaint);
+				cmp.setStuId(stuId);
+				cmp.setStatus(status);
+				
+				cmpInfo.add(new Complaint(id, date, time, typeOfComplaint, complaint, stuId, status));
+
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+		System.out.println(cmpInfo);
+		return cmpInfo;
+	}
 	
-		//to run save student
-	studentHib studenthib = new studentHib();
 	
-	Student student = new Student();
-	studenthib.saveStudent(student);
-	
-	//To updateStudent
-	student.setFirstName("Lone");
-	studenthib.updateStudent(student);
-	
-	//To run getStudentById
-	Student student2 = studenthib.getStudentById(student.getStuId());
-	
-	//To run getAllStudents
-	List<Student> students = studenthib.getAllStudents();
-	students.forEach(student1 -> System.out.println(student.getStuId()));
-	
-	//To deleteStudents
-	studenthib.deleteStudent(student.getStuId());
-	
-	}*/
+public ArrayList<Complaint> getUnsolvedComplaintById(String ID) {
+		
+		ArrayList<Complaint> cmpInfo = new ArrayList<>();
+		
+		//getting a connection
+		Logger.warn("Attempting to set-up a connection");
+		Connection con = dbConnector.getConnection();
+		Logger.info("Connecting successfull");
+		//A query statement that gets the user input for username and view from the Login(View).
+		try {
+			Logger.warn("Attempting to create a statement from the connection");
+			Statement stmt = con.createStatement();
+			String unsolved = "unsolved";
+			String sql = "Select  * from complaint  where stuId = '"+ID+"' and status = '"+unsolved+"' ";
+			Logger.info("Statement created and stored:" +sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Logger.warn("Attempting to assign user's information");
+			Complaint cmp = new Complaint();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String date = rs.getString("date");
+				String time = rs.getString("time");
+				String typeOfComplaint = rs.getString("typeOfComplaint");
+				String complaint = rs.getString("complaint");
+				int stuId = rs.getInt("stuId");
+				String status = rs.getString("status");
+				
+				
+				cmp.setId(id);
+				cmp.setDate(date);
+				cmp.setTime(time);
+				cmp.setTypeOfComplaint(typeOfComplaint);
+				cmp.setComplaint(complaint);
+				cmp.setStuId(stuId);
+				cmp.setStatus(status);
+				
+				cmpInfo.add(new Complaint(id, date, time, typeOfComplaint, complaint, stuId, status));
+
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+		System.out.println(cmpInfo);
+		return cmpInfo;
+	}
 	
 	public static void main(String[] args) {
 		ComplaintHib comp2 = new ComplaintHib();
-		
+		comp2.getSolvedComplaintById("1");
 		//System.out.println(comp2.getComplaintById(11));
 		//comp2.getAllComplaint();
 		//System.out.println(comp2.getAllComplaint());

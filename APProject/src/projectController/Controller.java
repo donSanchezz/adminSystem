@@ -116,12 +116,17 @@ public class Controller {
 						client.sendAction(login.user.getText());
 						try {
 							ArrayList<Student> list = new ArrayList<Student>();
-							
+							ArrayList<Complaint> solved = new ArrayList<Complaint>();
+							ArrayList<Complaint> unsolved = new ArrayList<Complaint>();
 							list = client.recieveStudent();
+							solved = client.recieveStuCmps();
+							unsolved = client.recieveStuCmps();
 							list.get(0).getStuId();
 							stuDash.stuLNameHeader.setText(list.get(0).getFirstName()); 
 							stuDash.stuFNameHeader.setText(list.get(0).getLastName());
-							//row[0] = list.get(i).getId();
+							newComp.stuIdTxtField.setText(login.user.getText());
+							stuDash.finUnsolvedTxt.setText(String.valueOf(solved.size()));
+							stuDash.finSolvedTxt.setText(String.valueOf(unsolved.size()));
 						} catch (ClassNotFoundException | IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -252,10 +257,27 @@ public class Controller {
 	 class listenForSubmitBttnC implements ActionListener {
 		 public void actionPerformed(ActionEvent e) {
 			 client.sendAction("Add Complaint");
-			 client.sendComplaint(new Complaint(0, newComp.dateTxtField.getText(), newComp.timeTxtField.getText(), newComp.compCmbBox.getSelectedItem().toString(), newComp.compTxtArea.getText(), Integer.parseInt(newComp.stuIdTxtField.getText())));
+			 client.sendComplaint(new Complaint(0, newComp.dateTxtField.getText(), newComp.timeTxtField.getText(), newComp.compCmbBox.getSelectedItem().toString(), newComp.compTxtArea.getText(), Integer.parseInt(newComp.stuIdTxtField.getText()), "unsolved"));
+			 client.sendAction(login.user.getText());
 			 if (client.recieveResponse()== true) {
 				 JOptionPane.showMessageDialog(null, "Complaint Logged Sucessfull"); 
-				 
+				try {
+					 ArrayList<Complaint> solved1 = new ArrayList<Complaint>();
+					ArrayList<Complaint> unsolved1 = new ArrayList<Complaint>();
+					System.out.println("1");
+					solved1 = client.recieveStuCmps();
+					System.out.println("2");
+					unsolved1 = client.recieveStuCmps();
+					System.out.println("3");
+					stuDash.finUnsolvedTxt.setText(String.valueOf(solved1.size()));
+					System.out.println(String.valueOf(solved1.size()));
+					stuDash.finSolvedTxt.setText(String.valueOf(unsolved1.size()));
+					System.out.println(String.valueOf(unsolved1.size()));
+				} catch (ClassNotFoundException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			 }
 			 else {
 				 JOptionPane.showMessageDialog(null, "Complaint Logged Unsucessfull");
