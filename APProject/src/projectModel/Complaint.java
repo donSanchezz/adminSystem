@@ -135,21 +135,11 @@ public Complaint(){
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Complaint [id=" + id + ", date=" + date + ", time=" + time + ", typeOfComplaint=" + typeOfComplaint
-				+ ", complaint=" + complaint + ", stuId=" + stuId + "]";
-	}
+				+ ", complaint=" + complaint + ", stuId=" + stuId + ", status=" + status + "]";
 
-
-
-
-
-
-	
-	
-	
-	
-
+}
 }

@@ -21,6 +21,8 @@ import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class AgentViewCompaint extends JFrame {
 
@@ -39,7 +41,9 @@ public class AgentViewCompaint extends JFrame {
 	private JScrollPane scrollPane;
 	JButton loadBttn = new JButton("Load");
 	public JTextArea textArea = new JTextArea();
-
+	public JComboBox statusComboBox = new JComboBox();
+	JButton updateBttn = new JButton("Update");
+	
 	/**
 	 * Launch the application.
 	 */
@@ -157,7 +161,7 @@ public class AgentViewCompaint extends JFrame {
 		stuIdTxt.setBounds(147, 264, 117, 20);
 		contentPane.add(stuIdTxt);
 		model= new DefaultTableModel();
-		Object [] column = {"CmpId", "Date", "Time", "Type", "Complaint", "Stu ID"};
+		Object [] column = {"CmpId", "Date", "Time", "Type", "Complaint", "Stu ID", "Status"};
 		Object [] row = new Object [0];
 		model.setColumnIdentifiers(column);;
 		
@@ -190,17 +194,27 @@ public class AgentViewCompaint extends JFrame {
 		clearBttn.setBounds(10, 509, 89, 23);
 		contentPane.add(clearBttn);
 		
-		JButton updateBttn = new JButton("Update");
+		
 		updateBttn.setBounds(134, 475, 89, 23);
 		contentPane.add(updateBttn);
 		
 		JLabel lblComplaint = new JLabel("Complaint:");
 		lblComplaint.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblComplaint.setBounds(10, 294, 127, 19);
+		lblComplaint.setBounds(10, 327, 127, 19);
 		contentPane.add(lblComplaint);
 		
-		textArea.setBounds(10, 313, 337, 135);
+		textArea.setBounds(10, 357, 337, 91);
 		contentPane.add(textArea);
+		
+		JLabel statusLbl = new JLabel("Status:");
+		statusLbl.setFont(new Font("Tahoma", Font.BOLD, 15));
+		statusLbl.setBounds(10, 297, 127, 19);
+		contentPane.add(statusLbl);
+		
+		
+		statusComboBox.setModel(new DefaultComboBoxModel(new String[] {"solved", "unsolved"}));
+		statusComboBox.setBounds(148, 298, 116, 20);
+		contentPane.add(statusComboBox);
 		
 	}
 	
@@ -210,5 +224,9 @@ public class AgentViewCompaint extends JFrame {
 		
 		public void addJTableListener (MouseListener listenForJTableClicked) {
 			table.addMouseListener( listenForJTableClicked);
+		}
+		
+		public void addUpdateListener2 (ActionListener listenForUpdateBttn2) {
+			updateBttn.addActionListener(listenForUpdateBttn2);
 		}
 }

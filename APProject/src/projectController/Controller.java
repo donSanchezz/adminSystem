@@ -78,7 +78,7 @@ public class Controller {
 		this.newQuery.addSubmitListenerQ(new listenForSubmitBttnQ());
 		
 		//agent view
-		//this.agentViewC.AddNewTableListener(new listenForJTable());
+		this.agentViewComp.addUpdateListener2(new listenForUpdateBttn2());
 		
 		//agent dashboard
 		this.agentDash.addViewCompListener(new listenForViewCompMenuBttn());
@@ -125,8 +125,8 @@ public class Controller {
 							stuDash.stuLNameHeader.setText(list.get(0).getFirstName()); 
 							stuDash.stuFNameHeader.setText(list.get(0).getLastName());
 							newComp.stuIdTxtField.setText(login.user.getText());
-							stuDash.finUnsolvedTxt.setText(String.valueOf(solved.size()));
-							stuDash.finSolvedTxt.setText(String.valueOf(unsolved.size()));
+							stuDash.finSolvedTxt.setText(String.valueOf(solved.size()));
+							stuDash.finUnsolvedTxt.setText(String.valueOf(unsolved.size()));
 						} catch (ClassNotFoundException | IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -264,11 +264,8 @@ public class Controller {
 				try {
 					 ArrayList<Complaint> solved1 = new ArrayList<Complaint>();
 					ArrayList<Complaint> unsolved1 = new ArrayList<Complaint>();
-					System.out.println("1");
 					solved1 = client.recieveStuCmps();
-					System.out.println("2");
 					unsolved1 = client.recieveStuCmps();
-					System.out.println("3");
 					stuDash.finUnsolvedTxt.setText(String.valueOf(solved1.size()));
 					System.out.println(String.valueOf(solved1.size()));
 					stuDash.finSolvedTxt.setText(String.valueOf(unsolved1.size()));
@@ -380,7 +377,7 @@ public class Controller {
 			
 			//Adding each item in the ArrayList to a row
 			DefaultTableModel model = (DefaultTableModel) agentViewComp.table.getModel();
-			Object [] row = new Object [6];
+			Object [] row = new Object [7];
 			for (int i = 0; i<list.size(); i++) {
 				row[0] = list.get(i).getId();
 				row[1] = list.get(i).getDate();
@@ -388,6 +385,7 @@ public class Controller {
 				row[3]= list.get(i).getTypeOfComplaint();
 				row[4]=list.get(i).getComplaint();
 				row[5]=list.get(i).getStuId();
+				row[6]=list.get(i).getStatus();
 				model.addRow(row);
 			}
 		}
@@ -404,6 +402,7 @@ public class Controller {
 			 agentViewComp.typeTxt.setText(model.getValueAt(i, 3).toString());
 			 agentViewComp.stuIdTxt.setText(model.getValueAt(i, 5).toString());
 			 agentViewComp.textArea.setText(model.getValueAt(i, 4).toString());
+			agentViewComp.statusComboBox.setSelectedItem(model.getValueAt(i, 6));
 
 			}
 		@Override
@@ -536,6 +535,24 @@ public class Controller {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 		}
+	 }
+	 
+	 
+	 class listenForUpdateBttn2 implements ActionListener {
+
+		public void actionPerformed(ActionEvent arg0) {
+			client.sendAction("Agent Update");
+			String status = agentViewComp.statusComboBox.getSelectedItem().toString();
+			String cmpID = agentViewComp.cmpIdTxt.getSelectedText();
+			client.sendAgentUpdateInfo(cmpID, status);
+			Boolean flag = client.recieveResponse();
+			if (flag = true) {
+				JOptionPane.showMessageDialog(null, "Update Sucessfull");
+			}else {
+				 JOptionPane.showMessageDialog(null, "Update Unsucessfull");
+			}
+		}
+		 
 	 }
 	 
 	

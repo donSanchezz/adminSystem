@@ -99,6 +99,20 @@ public class Client {
 		}
 	}
 	
+	public void sendAgentUpdateInfo(String cmpID, String status) {
+		try {
+			Logger.warn("Attempting to send the action thats need to be performed to Server, Errors may occur");
+			//Sending an action to the server as a string of what we wabt to achieve
+			//Already serialized
+			os.writeObject(cmpID);
+			os.writeObject(status);
+			Logger.info("Action  Successfully sent to Server");
+			
+		}catch (IOException ex) {
+			Logger.error("Data not sent to server \n" +ex.getMessage());
+		}
+	}
+	
 	
 	public void sendComplaint(Complaint obj) {
 		try {

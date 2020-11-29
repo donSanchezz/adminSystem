@@ -159,6 +159,18 @@ public class Server {
 					os.writeObject(agtList);
 					Logger.info("Data Successfully sent from client");
 					break;
+				case "Agent Update":
+					Logger.warn("Attempting to agent data from client, Erros may occur");
+					String id = (String) is.readObject();
+					String status = (String) is.readObject();
+					
+					Logger.info("Agent Login data successfully recieved from client");
+					//Add complaint
+					flag = agtHib.agentUpdateComp(id, status);
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					os.writeObject(flag);
+					Logger.info("Data Successfully sent from client");
+					break;
 				case "Representative":
 					Logger.warn("Attempting to recieve agent login data from client, Erros may occur");
 					 username= (String) is.readObject();

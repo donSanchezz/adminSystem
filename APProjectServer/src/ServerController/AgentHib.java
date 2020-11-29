@@ -86,4 +86,32 @@ public class AgentHib {
 		
 		return agentInfo;
 	}
+	
+	public Boolean agentUpdateComp (String ID, String status) {
+		Boolean flag = null;
+	//getting a connection
+	Logger.warn("Attempting to set-up a connection");
+	Connection con = dbConnector.getConnection();
+	Logger.info("Connecting successfull");
+	//A query statement that gets the user input for username and view from the Login(View).
+	try {
+		Logger.warn("Attempting to create a statement from the connection");
+		Statement stmt = con.createStatement();
+		String sql = "Update complaint set status = '"+status+ "' where id = '"+ID+"'";
+		Logger.info("Statement created and stored:" +sql);
+		ResultSet rs = stmt.executeQuery(sql);
+		Logger.warn("Attempting to update database table");
+		if (rs.next()) {
+			Logger.info("Update successfull!");
+			flag = true;
+		}
+		else {
+			Logger.info("Update failed!");
+			flag = false;
+		}
+	} catch (SQLException e1) {
+		e1.printStackTrace();
+	}
+	return flag;
+	}
 }

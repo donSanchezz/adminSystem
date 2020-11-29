@@ -64,30 +64,30 @@ public class ComplaintHib {
 		}
 	}
 	
-	public void updateStudent(Student students) {
+	public void updateComplaint(Complaint complaint) {
 		
 		Transaction transaction = null;
 		
 		try(Session session = SessionFactoryBuilder.getSessionFactory().openSession()){
-			
+			Logger.warn("Attempting to retrieve session from SessionFactoryBuilder");
 		
 			//Start the transaction
 			transaction = session.beginTransaction();
 			
 			//Saving the student
-			session.saveOrUpdate(students);
+			session.saveOrUpdate(complaint);
 			
 			//Commit the transition
 			transaction.commit();
-			
+			Logger.info("Session retrieved, data committed");
 		}catch(Exception e) {
 			
 			if(transaction != null){
 				
 			transaction.rollback();
-			
+			Logger.error("Trouble configuring session, not successful" + e.getMessage());
 			}
-			System.out.println("Error occurred");
+			
 		}
 	}
 	
@@ -149,6 +149,7 @@ public class ComplaintHib {
 			Logger.error("An error has occured" + e.getMessage());
 			e.printStackTrace();
 		}
+		System.out.println(complaintList);
 		return complaintList;
 	}
 	
@@ -354,7 +355,8 @@ public ArrayList<Complaint> getUnsolvedComplaintById(String ID) {
 	
 	public static void main(String[] args) {
 		ComplaintHib comp2 = new ComplaintHib();
-		comp2.getSolvedComplaintById("1");
+		//comp2.getSolvedComplaintById("1");
+		comp2.getAllComplaintFinancial();
 		//System.out.println(comp2.getComplaintById(11));
 		//comp2.getAllComplaint();
 		//System.out.println(comp2.getAllComplaint());
