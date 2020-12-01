@@ -9,6 +9,7 @@ import jdbc.connection.SQLOperations;
 import jdbc.connection.dbConnector;
 import projectController.Client;
 import projectController.Controller;
+import projectModel.Comment;
 import projectModel.Complaint;
 import projectModel.DateTime;
 import projectModel.Student;
@@ -18,6 +19,7 @@ import projectView.AgentViewComplaintAdm;
 import projectView.AgentViewComplaintHlth;
 import projectView.Login;
 import projectView.RepDashboard;
+import projectView.RepViewComplaint;
 import projectView.StuDashboard;
 import projectView.newComplaint;
 import projectView.newQuery;
@@ -30,12 +32,13 @@ public class ProjectDriver {
 
 	public static void main(String[] args) {
 		//Client client = new Client();
-		DateTime dt = new DateTime();
+		//DateTime dt = new DateTime();
 		//Complaint complaint;
 		
 		//Client client = new Client();
 		//client.sendAction("Add Complaint");
-		//client.sendAction("Add Student");
+		//client.sendAction("Add Comment");
+		//client.sendComment(new Comment(0, dt.Date(), dt.Time(), "test", 1));
 		//client.sendComplaint(new Complaint(0, "23", "23", "Finance", "I have paid 500, but it hasn't show on my portal", 0));
 		//Student stuObj = new Student(10, "Alexis", "Garcia", "alexisgarcia@gmail.com", 99999);
 		//client.sendStudent(new Student(10, "Alexis", "Garcia", "alexisgarcia@gmail.com", 99999));
@@ -58,11 +61,13 @@ public class ProjectDriver {
 		AgentViewCompaint agentViewComp = new AgentViewCompaint();
 		AgentViewComplaintAdm agentViewCompAdm = new AgentViewComplaintAdm();
 		AgentViewComplaintHlth agentViewCompHlth = new AgentViewComplaintHlth();
+		RepViewComplaint repViewComp = new RepViewComplaint();
 		
-		Controller con = new Controller(loginFrame, stuDashFrame, repDash, newComplaint, newQuery, agentDash, agentViewComp, agentViewCompAdm, agentViewCompHlth );
+		Controller con = new Controller(loginFrame, stuDashFrame, repDash, newComplaint, newQuery, agentDash, agentViewComp, agentViewCompAdm, agentViewCompHlth, repViewComp );
 		//stuDashFrame.setVisible(true);
-		
+	
 		loginFrame.setVisible(true);
+		//repViewComp.setVisible(true);
 		//loginFrame.setVisible(true); */
 		
 		/*final Logger Logger = LogManager.getLogger(ProjectDriver.class);

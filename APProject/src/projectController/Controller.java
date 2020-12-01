@@ -21,7 +21,9 @@ import javax.swing.table.TableModel;
 import jdbc.connection.SQLOperations;
 import jdbc.connection.dbConnector;
 import projectModel.Agent;
+import projectModel.Comment;
 import projectModel.Complaint;
+import projectModel.DateTime;
 import projectModel.Query;
 import projectModel.Reps;
 import projectModel.Student;
@@ -31,6 +33,7 @@ import projectView.AgentViewComplaintAdm;
 import projectView.AgentViewComplaintHlth;
 import projectView.Login;
 import projectView.RepDashboard;
+import projectView.RepViewComplaint;
 import projectView.StuDashboard;
 import projectView.newComplaint;
 import projectView.newQuery;
@@ -47,11 +50,14 @@ public class Controller {
 	private AgentViewCompaint agentViewComp;
 	private AgentViewComplaintAdm agentViewCompAdm;
 	private AgentViewComplaintHlth agentViewCompHlth;
+	private RepViewComplaint repViewComp;
+
+	
 	
 	newComplaint ncmp = new newComplaint();
 	Client client = new Client();
-	
-	public Controller (Login login, StuDashboard stuDash, RepDashboard repDash, newComplaint newComp, newQuery newQuery, AgentDashboard agentDash, AgentViewCompaint agentViewComp, AgentViewComplaintAdm agentViewCompAdm, AgentViewComplaintHlth agentViewCompHlth) {
+	DateTime dt = new DateTime();
+	public Controller (Login login, StuDashboard stuDash, RepDashboard repDash, newComplaint newComp, newQuery newQuery, AgentDashboard agentDash, AgentViewCompaint agentViewComp, AgentViewComplaintAdm agentViewCompAdm, AgentViewComplaintHlth agentViewCompHlth, RepViewComplaint repViewComp) {
 		
 		this.login = login;
 		this.stuDash = stuDash;
@@ -62,6 +68,7 @@ public class Controller {
 		this.agentViewCompAdm = agentViewCompAdm;
 		this.agentViewCompHlth = agentViewCompHlth;
 		this.repDash = repDash;
+		this.repViewComp = repViewComp;
 		
 		//Login listeners
 		this.login.addLoginListener(new loginBtnListener());
@@ -97,6 +104,17 @@ public class Controller {
 		//agent health view
 		this.agentViewCompHlth.addUpdateListener( new listenForUpdateHlthBttn());
 		this.agentViewCompHlth.addJTableListener( new listenForJTableClickedHlth());
+		
+		//rep dashboard listeners
+		this.repDash.addViewCompListener( new listenForViewCompMenuBttn2());
+		//this.repDash.addViewCompListenerAdm(new listenForViewCompAdmMenuBttn2());
+		//this.repDash.addViewCompListenerHlth(new listenForViewCompHlthMenuBttn2());
+		
+		//rep View complaint
+		this.repViewComp.addUpdateListener(new listenForUpdateBttn3());
+		this.repViewComp.addLoadBttnListener(new listenForLoadBttn());
+		this.repViewComp.addJTableListener(new listenForJTableClickedRep());
+		
 	}
 	
 	
@@ -336,10 +354,10 @@ public class Controller {
 		public void actionPerformed(ActionEvent arg0) {
 			
 			agentViewComp.setVisible(true);
-		}
-		 
-		 
+		} 
 	 }
+	 
+	 
 	 
 	 class listenForViewCompAdmMenuBttn implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
@@ -392,6 +410,38 @@ public class Controller {
 		 
 	 }
 	 
+	 class listenForLoadBttn implements ActionListener {
+
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Complaint> list = new ArrayList<Complaint>();
+				client.sendAction("View Complaint Financial");
+				try {
+					list =  client.recieveComplaintsFinancial();
+				} catch (ClassNotFoundException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//System.out.println(list.get(0));
+				//System.out.println(list.get(1));
+				//System.out.println(list.get(2));
+				
+				//Adding each item in the ArrayList to a row
+				DefaultTableModel model = (DefaultTableModel) repViewComp.table.getModel();
+				Object [] row = new Object [7];
+				for (int i = 0; i<list.size(); i++) {
+					row[0] = list.get(i).getId();
+					row[1] = list.get(i).getDate();
+					row[2]= list.get(i).getTime();
+					row[3]= list.get(i).getTypeOfComplaint();
+					row[4]=list.get(i).getComplaint();
+					row[5]=list.get(i).getStuId();
+					row[6]=list.get(i).getStatus();
+					model.addRow(row);
+				}
+			}
+			 
+		 }
+	 
 	 class listenForJTableClicked implements MouseListener {
 		 public void mouseClicked(MouseEvent arg0) {
 			 int i = agentViewComp.table.getSelectedRow();
@@ -419,6 +469,32 @@ public class Controller {
 		}
 	 }
 	 
+	 class listenForJTableClickedRep implements MouseListener {
+		 public void mouseClicked(MouseEvent arg0) {
+			 int i = repViewComp.table.getSelectedRow();
+			 TableModel model = repViewComp.table.getModel();
+			 repViewComp.cmpIdTxt.setText(model.getValueAt(i, 0).toString());
+			 repViewComp.dateTxt.setText(model.getValueAt(i, 1).toString());
+			 repViewComp.timeTxt.setText(model.getValueAt(i, 2).toString());
+			 repViewComp.typeTxt.setText(model.getValueAt(i, 3).toString());
+			 repViewComp.stuIdTxt.setText(model.getValueAt(i, 5).toString());
+			 repViewComp.textArea.setText(model.getValueAt(i, 4).toString());
+			 repViewComp.statusComboBox.setSelectedItem(model.getValueAt(i, 6));
+
+			}
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {	
+		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
+	 }
 	 
 	 
 	 
@@ -543,7 +619,9 @@ public class Controller {
 		public void actionPerformed(ActionEvent arg0) {
 			client.sendAction("Agent Update");
 			String status = agentViewComp.statusComboBox.getSelectedItem().toString();
-			String cmpID = agentViewComp.cmpIdTxt.getSelectedText();
+			String cmpID = agentViewComp.cmpIdTxt.getText();
+			System.out.println(cmpID);
+			System.out.println(status);
 			client.sendAgentUpdateInfo(cmpID, status);
 			Boolean flag = client.recieveResponse();
 			if (flag = true) {
@@ -551,6 +629,32 @@ public class Controller {
 			}else {
 				 JOptionPane.showMessageDialog(null, "Update Unsucessfull");
 			}
+		}
+		 
+	 }
+	 
+	 class listenForViewCompMenuBttn2 implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			repViewComp.setVisible(true);
+			
+		}
+		 
+	 }
+	 
+	 
+	 class listenForUpdateBttn3 implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			client.sendAction("Add Comment");
+			client.sendComment(new Comment(0, dt.Date(), dt.Time(), repViewComp.commentTxt.getText(), Integer.parseInt(repViewComp.cmpIdTxt.getText())));	
+			 if (client.recieveResponse()== true) {
+				 JOptionPane.showMessageDialog(null, "Comment Logged Sucessfull"); 
+			 }
+			 else {
+				 JOptionPane.showMessageDialog(null, "Comment Logged Unsucessfull");
+			 };
+			 //client.sendAction("Exit");
 		}
 		 
 	 }

@@ -1,6 +1,8 @@
 package ServerModel;
 
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,14 +14,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="complaint")
-public class Complaint extends DateTime {
+public class Complaint extends DateTime implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	public transient int id;
+	public  int id;
 	
 	@Column(name="date")
 	public String date;
@@ -36,8 +39,14 @@ public class Complaint extends DateTime {
 	@Column(name="stuId")
 	public int stuId;
 	
+	@Column(name="status")
+	public String status;
 	
-	public Complaint(int id, String date, String time, String typeOfComplaint, String complaint, int stuId) {
+public Complaint(){
+		
+	}
+	
+	public Complaint(int id, String date, String time, String typeOfComplaint, String complaint, int stuId, String status) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -45,6 +54,7 @@ public class Complaint extends DateTime {
 		this.typeOfComplaint = typeOfComplaint;
 		this.complaint = complaint;
 		this.stuId = stuId;
+		this.status = status;
 	}
 
 	
@@ -118,13 +128,27 @@ public class Complaint extends DateTime {
 		
 	}
 
+	public String getStatus() {
+		return status;
+	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {
 		return "Complaint [id=" + id + ", date=" + date + ", time=" + time + ", typeOfComplaint=" + typeOfComplaint
-				+ ", complaint=" + complaint + ", stuId=" + stuId + "]";
+				+ ", complaint=" + complaint + ", stuId=" + stuId + ", status=" + status + "]";
 	}
+
+	/*@Override
+	public String toString() {
+		return "Complaint [id=" + id + ", date=" + date + ", time=" + time + ", typeOfComplaint=" + typeOfComplaint
+				+ ", complaint=" + complaint + ", stuId=" + stuId + "]";
+	}*/
+	
+	
 
 
 

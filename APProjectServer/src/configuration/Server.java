@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import projectModel.Agent;
-//import projectModel.Complaint;
+import projectModel.Comment;
 import projectModel.Complaint;
 import projectModel.Query;
 import projectModel.Reps;
@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ServerController.AgentHib;
+import ServerController.CommentHib;
 import ServerController.ComplaintHib;
 import ServerController.QueryHib;
 import ServerController.RepsHib;
@@ -205,11 +206,8 @@ public class Server {
 					 cmpList2 = cmpHib.getUnsolvedComplaintById(ID);
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					os.writeObject(true);
-					System.out.println("3");
 					os.writeObject(cmpList);
-					System.out.println("4");
 					os.writeObject(cmpList2);
-					System.out.println("5");
 					Logger.info("Data Successfully sent from client");
 					break;
 				case "Add Query":
@@ -247,6 +245,16 @@ public class Server {
 					 cmpList = cmpHib.getAllComplaintHlth();
 						os.writeObject(cmpList);
 						System.out.println(cmpList);
+					Logger.info("Data Successfully sent from client");
+					break;
+				case "Add Comment":
+					Logger.warn("Attempting to recieve comment data from client, Erros may occur");
+					Comment cmtObj = (Comment)is.readObject();
+					Logger.info("Comment data successfully recieved from client");
+					CommentHib cmt = new CommentHib();
+					cmt.saveComment(cmtObj);
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					os.writeObject(true);
 					Logger.info("Data Successfully sent from client");
 					break;
 				}

@@ -1,11 +1,15 @@
 package ServerModel;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
@@ -13,6 +17,8 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.Transaction;
 import java.io.Serializable;
+import java.util.ArrayList;
+import projectModel.Student;
 
 import org.hibernate.Session;
 import factory.SessionFactoryBuilder;
@@ -38,12 +44,20 @@ public class Student implements Serializable {
 	@Column(name="contactNum")
 	private int contactNum;
 	
-	public Student (int id, String firstName, String lastName, String email, int contactNum) {
+	@Column(name="pass")
+	private int pass;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	//@JoinTable(name="student_complaint_table", joinColumns=@JoinColumn(name="id"), inverseJoinColumns=JoinColumn(name="id"))
+	private ArrayList<Complaint> complaintList = new ArrayList<>();
+	
+	public Student (int id, String firstName, String lastName, String email, int contactNum, int pass) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.contactNum = contactNum;
+		this.pass = pass;
 
 	}
 	
@@ -53,63 +67,11 @@ public class Student implements Serializable {
 		this.lastName = "Doe";
 		this.email = "johndoe@gmail.com";
 		this.contactNum = 8597198;
+		this.pass=1;
 
 	}
 
-	public void create() {
-		Session session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
-		
-		Transaction transaction = (Transaction) session.beginTransaction();
-		session.save(this);
-		try {
-			transaction.commit();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RollbackException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (HeuristicMixedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (HeuristicRollbackException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		session.close();
-	}
-	
-	public void update() {
-		Session session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
-		
-		Transaction transaction = (Transaction) session.beginTransaction();
-		Student stu = (Student) session.get(Student.class, this.id);
-		stu.setFirstName(this.firstName);
-		stu.setLastName(this.lastName);
-		session.update(stu);
-		try {
-			transaction.commit();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RollbackException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (HeuristicMixedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (HeuristicRollbackException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		session.close();
-	}
+
 	
 	public int getStuId() {
 		return id;
@@ -151,7 +113,23 @@ public class Student implements Serializable {
 		this.contactNum = contactNum;
 	}
 
+	
 
+	public int getPass() {
+		return pass;
+	}
+
+	public void setPass(int pass) {
+		this.pass = pass;
+	}
+
+	public ArrayList<Complaint> getComplaintList() {
+		return complaintList;
+	}
+
+	public void setComplaintList(ArrayList<Complaint> complaintList) {
+		this.complaintList = complaintList;
+	}
 
 	@Override
 	public String toString() {

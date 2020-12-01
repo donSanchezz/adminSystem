@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import projectModel.Agent;
+import projectModel.Comment;
 
 //import java.io.Serializable;
 
@@ -124,11 +125,22 @@ public class Client {
 		}
 	}
 	
+	
 	public void sendQuery(Query obj) {
 		try {
 			Logger.warn("Attempting to send query information to Server, Errors may occur ");
 			os.writeObject(obj);
 			Logger.info("Query data Successfully sent to server");
+		}catch (IOException ex) {
+			Logger.error("Data not sent to server \n" + ex.getMessage());
+		}
+	}
+	
+	public void sendComment(Comment obj) {
+		try {
+			Logger.warn("Attempting to send comment information to Server, Errors may occur ");
+			os.writeObject(obj);
+			Logger.info("Comment data Successfully sent to server");
 		}catch (IOException ex) {
 			Logger.error("Data not sent to server \n" + ex.getMessage());
 		}

@@ -27,7 +27,12 @@ public class RepDashboard extends JFrame {
 	public JTextField hlthUnsolvedTxt;
 	public JTextField hlthSolvedTxt;
 	public JTextField repFNameHeader;
-	
+	public JMenuItem viewFin = new JMenuItem("View Financial");
+	JMenuItem viewAdm = new JMenuItem("View Administration");
+	JMenuItem viewHlth = new JMenuItem("View Health");
+	JMenuItem viewFinQ = new JMenuItem("View Financial");
+	JMenuItem viewAdmQ = new JMenuItem("View Administration");
+	JMenuItem viewHlthQ = new JMenuItem("View Health");
 
 	/**
 	 * Launch the application.
@@ -63,13 +68,13 @@ public class RepDashboard extends JFrame {
 		JMenu viewComp = new JMenu("View Complaint");
 		compMenu.add(viewComp);
 		
-		JMenuItem viewFin = new JMenuItem("View Financial");
+		//JMenuItem viewFin = new JMenuItem("View Financial");
 		viewComp.add(viewFin);
 		
-		JMenuItem viewAdm = new JMenuItem("View Administration");
+		//JMenuItem viewAdm = new JMenuItem("View Administration");
 		viewComp.add(viewAdm);
 		
-		JMenuItem viewHlth = new JMenuItem("View Health");
+		//JMenuItem viewHlth = new JMenuItem("View Health");
 		viewComp.add(viewHlth);
 		
 		JMenu queryMenu = new JMenu("Query");
@@ -78,13 +83,13 @@ public class RepDashboard extends JFrame {
 		JMenu viewQuery = new JMenu("View Query");
 		queryMenu.add(viewQuery);
 		
-		JMenuItem viewFinQ = new JMenuItem("View Financial");
+
 		viewQuery.add(viewFinQ);
 		
-		JMenuItem viewAdmQ = new JMenuItem("View Administration");
+
 		viewQuery.add(viewAdmQ);
 		
-		JMenuItem viewHlthQ = new JMenuItem("View Health");
+
 		viewQuery.add(viewHlthQ);
 		
 		dashViewPane = new JPanel();
@@ -240,11 +245,16 @@ public class RepDashboard extends JFrame {
 		healthPanel.add(hlthSolvedTxt);
 	}
 	
-	public void addNewComplaintListener (ActionListener listenForNewComp) {
-		//newCompItem.addActionListener(listenForNewComp);
+	public void addViewCompListener (ActionListener listenForViewCompMenuBttn2) {
+		viewFin.addActionListener(listenForViewCompMenuBttn2);
 	}
 	
-	public void addNewQueryListener (ActionListener listenForNewQuery) {
-		//newQueryItem.addActionListener(listenForNewQuery);
+	public void addViewCompListenerAdm (ActionListener listenForViewCompAdmMenuBttn2) {
+		viewAdm.addActionListener(listenForViewCompAdmMenuBttn2);
 	}
+	
+	public void addViewCompListenerHlth (ActionListener listenForViewCompHlthMenuBttn2) {
+		viewHlth.addActionListener(listenForViewCompHlthMenuBttn2);
+	}
+	
 }

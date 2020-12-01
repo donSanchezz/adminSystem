@@ -99,9 +99,9 @@ public class AgentHib {
 		Statement stmt = con.createStatement();
 		String sql = "Update complaint set status = '"+status+ "' where id = '"+ID+"'";
 		Logger.info("Statement created and stored:" +sql);
-		ResultSet rs = stmt.executeQuery(sql);
+		int rowCount = stmt.executeUpdate(sql);
 		Logger.warn("Attempting to update database table");
-		if (rs.next()) {
+		if (rowCount > 0) {
 			Logger.info("Update successfull!");
 			flag = true;
 		}
