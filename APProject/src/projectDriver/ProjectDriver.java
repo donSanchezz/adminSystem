@@ -21,6 +21,7 @@ import projectView.Login;
 import projectView.RepDashboard;
 import projectView.RepViewComplaint;
 import projectView.StuDashboard;
+import projectView.StuViewComp;
 import projectView.newComplaint;
 import projectView.newQuery;
 
@@ -62,8 +63,9 @@ public class ProjectDriver {
 		AgentViewComplaintAdm agentViewCompAdm = new AgentViewComplaintAdm();
 		AgentViewComplaintHlth agentViewCompHlth = new AgentViewComplaintHlth();
 		RepViewComplaint repViewComp = new RepViewComplaint();
+		StuViewComp stuViewComp = new StuViewComp();
 		
-		Controller con = new Controller(loginFrame, stuDashFrame, repDash, newComplaint, newQuery, agentDash, agentViewComp, agentViewCompAdm, agentViewCompHlth, repViewComp );
+		Controller con = new Controller(loginFrame, stuDashFrame, repDash, newComplaint, newQuery, agentDash, agentViewComp, agentViewCompAdm, agentViewCompHlth, repViewComp, stuViewComp );
 		//stuDashFrame.setVisible(true);
 	
 		loginFrame.setVisible(true);

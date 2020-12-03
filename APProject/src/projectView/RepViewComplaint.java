@@ -140,6 +140,7 @@ public class RepViewComplaint extends JFrame {
 		});*/
 		scrollPane.setViewportView(table);
 		table.setModel(model);
+		loadBttn.setToolTipText("Populate the table with financial related complaints.");
 		
 	
 		loadBttn.setBounds(10, 475, 89, 23);
@@ -156,6 +157,7 @@ public class RepViewComplaint extends JFrame {
 		JButton clearBttn = new JButton("Clear");
 		clearBttn.setBounds(10, 509, 89, 23);
 		contentPane.add(clearBttn);
+		updateBttn.setToolTipText("Adds a comment to the currently selected complaint.");
 		
 		
 		updateBttn.setBounds(134, 475, 89, 23);

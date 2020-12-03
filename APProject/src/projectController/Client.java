@@ -156,6 +156,17 @@ public class Client {
 		}
 	}
 	
+	public void sendID(String  ID) {
+		try {
+			Logger.warn("Attempting to send student information to Server, Errors may occur ");
+			os.writeObject(ID);
+			Logger.info("Data Successfully sent to server");
+		}catch (IOException ex) {
+			Logger.error("Data not Sent to server \n" + ex.getMessage());
+		}
+	}
+	
+	
 	public Boolean recieveResponse() {
 		Boolean val = null;
 		try {
@@ -187,6 +198,12 @@ public class Client {
 	public ArrayList<Agent> recieveAgent () throws ClassNotFoundException, IOException {
 		
 		return (ArrayList<Agent>) is.readObject();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Comment> recieveComment () throws ClassNotFoundException, IOException {
+		
+		return (ArrayList<Comment>) is.readObject();
 	}
 	
 

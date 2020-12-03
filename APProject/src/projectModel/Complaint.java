@@ -2,6 +2,7 @@ package projectModel;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -42,6 +44,7 @@ public class Complaint extends DateTime implements Serializable {
 	@Column(name="status")
 	public String status;
 	
+
 public Complaint(){
 		
 	}
@@ -97,8 +100,7 @@ public Complaint(){
 		this.typeOfComplaint = typeOfComplaint;
 	}
 
-	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="Complaint_FK")
+
 	public String getComplaint() {
 		return complaint;
 	}

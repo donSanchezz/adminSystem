@@ -35,6 +35,7 @@ import projectView.Login;
 import projectView.RepDashboard;
 import projectView.RepViewComplaint;
 import projectView.StuDashboard;
+import projectView.StuViewComp;
 import projectView.newComplaint;
 import projectView.newQuery;
 
@@ -51,13 +52,14 @@ public class Controller {
 	private AgentViewComplaintAdm agentViewCompAdm;
 	private AgentViewComplaintHlth agentViewCompHlth;
 	private RepViewComplaint repViewComp;
+	private StuViewComp stuViewComp;
 
 	
 	
 	newComplaint ncmp = new newComplaint();
 	Client client = new Client();
 	DateTime dt = new DateTime();
-	public Controller (Login login, StuDashboard stuDash, RepDashboard repDash, newComplaint newComp, newQuery newQuery, AgentDashboard agentDash, AgentViewCompaint agentViewComp, AgentViewComplaintAdm agentViewCompAdm, AgentViewComplaintHlth agentViewCompHlth, RepViewComplaint repViewComp) {
+	public Controller (Login login, StuDashboard stuDash, RepDashboard repDash, newComplaint newComp, newQuery newQuery, AgentDashboard agentDash, AgentViewCompaint agentViewComp, AgentViewComplaintAdm agentViewCompAdm, AgentViewComplaintHlth agentViewCompHlth, RepViewComplaint repViewComp, StuViewComp stuViewComp) {
 		
 		this.login = login;
 		this.stuDash = stuDash;
@@ -69,12 +71,14 @@ public class Controller {
 		this.agentViewCompHlth = agentViewCompHlth;
 		this.repDash = repDash;
 		this.repViewComp = repViewComp;
+		this.stuViewComp = stuViewComp;
 		
 		//Login listeners
 		this.login.addLoginListener(new loginBtnListener());
 		//Dashboard listeners
 		this.stuDash.addNewComplaintListener( new NewCompListener());
 		this.stuDash.addNewQueryListener( new NewQueryListener());
+		this.stuDash.addNewViewCompListener(new listenForViewComp());
 		//Complaint listeners
 		this.newComp.addClearListenerC(new listenForClearBttnC());
 		this.newComp.addExitListenerC(new listenForExitBttnC());
@@ -114,6 +118,11 @@ public class Controller {
 		this.repViewComp.addUpdateListener(new listenForUpdateBttn3());
 		this.repViewComp.addLoadBttnListener(new listenForLoadBttn());
 		this.repViewComp.addJTableListener(new listenForJTableClickedRep());
+		
+		//student view complaint listeners
+		this.stuViewComp.addLoadBttnListener(new listenForLoadBttnStu());
+		this.stuViewComp.addJTableListener(new listenForJTableClickedStu());
+		this.stuViewComp.addUpdateListener2(new listenForUpdateBttnStu());
 		
 	}
 	
@@ -246,6 +255,15 @@ public class Controller {
 			 stuDash.setVisible(false);
 			
 		 }
+	 }
+	 
+	 class listenForViewComp implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			stuViewComp.setVisible(true);
+		}
+		 
 	 }
 	 
 	
@@ -497,6 +515,28 @@ public class Controller {
 	 }
 	 
 	 
+	 class listenForJTableClickedStu implements MouseListener {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			 int i = stuViewComp.table.getSelectedRow();
+			 TableModel model = stuViewComp.table.getModel();
+			 stuViewComp.cmpIdTxt.setText(model.getValueAt(i, 0).toString());
+		}
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+		}
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+		}
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+		}
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+		} 
+	 }
+	 
+	 
 	 
 	 class listenForUpdateAdmBttn implements ActionListener {
 
@@ -647,7 +687,7 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			client.sendAction("Add Comment");
-			client.sendComment(new Comment(0, dt.Date(), dt.Time(), repViewComp.commentTxt.getText(), Integer.parseInt(repViewComp.cmpIdTxt.getText())));	
+			client.sendComment(new Comment(0, dt.Date(), dt.Time(), repViewComp.commentTxt.getText(), Integer.parseInt(repViewComp.cmpIdTxt.getText()), Integer.parseInt(login.user.getText())));	
 			 if (client.recieveResponse()== true) {
 				 JOptionPane.showMessageDialog(null, "Comment Logged Sucessfull"); 
 			 }
@@ -655,6 +695,69 @@ public class Controller {
 				 JOptionPane.showMessageDialog(null, "Comment Logged Unsucessfull");
 			 };
 			 //client.sendAction("Exit");
+		}
+		 
+	 }
+	 
+	 
+	 class listenForLoadBttnStu implements ActionListener {
+
+		 public void actionPerformed(ActionEvent e) {
+				ArrayList<Complaint> list = new ArrayList<Complaint>();
+				client.sendAction("View Complaint Student");
+				client.sendID(login.user.getText());
+				try {
+					list =  client.recieveComplaintsFinancial();
+				} catch (ClassNotFoundException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//System.out.println(list.get(0));
+				//System.out.println(list.get(1));
+				//System.out.println(list.get(2));
+				
+				//Adding each item in the ArrayList to a row
+				DefaultTableModel model = (DefaultTableModel) stuViewComp.table.getModel();
+				Object [] row = new Object [5];
+				for (int i = 0; i<list.size(); i++) {
+					row[0] = list.get(i).getId();
+					row[1] = list.get(i).getDate();
+					row[2]= list.get(i).getTime();
+					row[3]= list.get(i).getTypeOfComplaint();
+					row[4]=list.get(i).getComplaint();
+					model.addRow(row);
+				}
+			}
+		 
+	 }
+	 
+	 class listenForUpdateBttnStu implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ArrayList<Comment> list = new ArrayList<Comment>();
+			client.sendAction("View Comment Student");
+			client.sendID(stuViewComp.cmpIdTxt.getText());
+			try {
+				list =  client.recieveComment();
+			} catch (ClassNotFoundException | IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			System.out.println(list);
+			//Adding each item in the ArrayList to a row
+			DefaultTableModel model = (DefaultTableModel) stuViewComp.table_1.getModel();
+			Object [] row = new Object [6];
+			for (int i = 0; i<list.size(); i++) {
+				row[0] = list.get(i).getId();
+				row[1] = list.get(i).getDate();
+				row[2]= list.get(i).getTime();
+				row[3]= list.get(i).getComment();
+				row[4] = list.get(i).getCmpId();
+				row[5]=list.get(i).getRepId();
+				
+				model.addRow(row);
+			}
 		}
 		 
 	 }

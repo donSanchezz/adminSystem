@@ -37,18 +37,22 @@ public String comment;
 @Column(name="cmpId")
 public int cmpId;
 
+@Column(name="repId")
+public int repId;
+
 public Comment () {
 	
 }
 
 
-public Comment(int id, String date, String time, String comment, int cmpId) {
+public Comment(int id, String date, String time, String comment, int cmpId, int repId) {
 	super();
 	this.id = id;
 	this.date = date;
 	this.time = time;
 	this.comment = comment;
 	this.cmpId = cmpId;
+	this.repId = repId;
 }
 
 public int getId() {
@@ -91,11 +95,25 @@ public void setCmpId(int cmpId) {
 	this.cmpId = cmpId;
 }
 
+
+
+public int getRepId() {
+	return repId;
+}
+
+
+public void setRepId(int repId) {
+	this.repId = repId;
+}
+
+
 @Override
 public String toString() {
 	return "Comment [id=" + id + ", date=" + date + ", time=" + time + ", comment=" + comment + ", cmpId=" + cmpId
-			+ "]";
+			+ ", repId=" + repId + "]";
 }
+
+
 
 
 	

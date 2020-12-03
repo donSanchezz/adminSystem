@@ -32,6 +32,7 @@ public class StuDashboard extends JFrame {
 	public JTextField hlthUnsolvedTxt;
 	public JTextField hlthSolvedTxt;
 	public JTextField stuFNameHeader;
+	JMenuItem viewCompItem = new JMenuItem("View complaint");
 
 	/**
 	 * Launch the application.
@@ -67,7 +68,7 @@ public class StuDashboard extends JFrame {
 	
 		compMenu.add(newCompItem);
 		
-		JMenuItem viewCompItem = new JMenuItem("View complaint");
+		
 		compMenu.add(viewCompItem);
 		
 		JMenu queryMenu = new JMenu("Query");
@@ -238,4 +239,10 @@ public class StuDashboard extends JFrame {
 	public void addNewQueryListener (ActionListener listenForNewQuery) {
 		newQueryItem.addActionListener(listenForNewQuery);
 	}
+	
+	public void addNewViewCompListener (ActionListener listenForViewComp) {
+		viewCompItem.addActionListener(listenForViewComp);
+	}
+	
+	
 }

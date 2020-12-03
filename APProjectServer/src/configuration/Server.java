@@ -90,8 +90,10 @@ public class Server {
 		ComplaintHib cmpHib = new ComplaintHib();
 		QueryHib queryHib = new QueryHib();
 		RepsHib repHib = new RepsHib();
+		CommentHib cmtHib = new CommentHib();
 		ArrayList<Complaint> cmpList;
 		ArrayList<Complaint> cmpList2;
+		ArrayList<Comment> cmtList;
 		ArrayList<Student> stuList;
 		ArrayList<Agent> agtList;
 		ArrayList<Reps> repList;
@@ -221,8 +223,6 @@ public class Server {
 					Logger.info("Data Successfully sent from client");
 					break;
 				case "View Complaint Financial":
-					Logger.warn("Attempting to recieve query data from client, Erros may occur");
-					Logger.info("Query data Successfully recieved from client");
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					 cmpList = cmpHib.getAllComplaintFinancial();
 						os.writeObject(cmpList);
@@ -230,8 +230,6 @@ public class Server {
 					Logger.info("Data Successfully sent from client");
 					break;
 				case "View Complaint Admin":
-					Logger.warn("Attempting to recieve query data from client, Erros may occur");
-					Logger.info("Query data Successfully recieved from client");
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					cmpList = cmpHib.getAllComplaintFinancial();
 						os.writeObject(cmpList);
@@ -240,7 +238,6 @@ public class Server {
 					break;
 				case "View Complaint Health":
 					Logger.warn("Attempting to recieve query data from client, Erros may occur");
-					Logger.info("Query data Successfully recieved from client");
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					 cmpList = cmpHib.getAllComplaintHlth();
 						os.writeObject(cmpList);
@@ -255,6 +252,22 @@ public class Server {
 					cmt.saveComment(cmtObj);
 					Logger.warn("Attempting to send data to client, Errors may occur");
 					os.writeObject(true);
+					Logger.info("Data Successfully sent from client");
+					break;
+				case "View Complaint Student":
+					ID = (String)is.readObject();
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					 cmpList = cmpHib.getSolvedComplaintById(ID);
+					os.writeObject(cmpList);
+					System.out.println(cmpList);
+					Logger.info("Data Successfully sent from client");
+					break;
+				case "View Comment Student":
+					ID = (String)is.readObject();
+					Logger.warn("Attempting to send data to client, Errors may occur");
+					 cmtList = cmtHib.getCommentsById(ID);
+					os.writeObject(cmtList);
+					System.out.println(cmtList);
 					Logger.info("Data Successfully sent from client");
 					break;
 				}
