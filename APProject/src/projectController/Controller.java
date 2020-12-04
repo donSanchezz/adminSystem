@@ -449,9 +449,7 @@ public class Controller {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			//System.out.println(list.get(0));
-			//System.out.println(list.get(1));
-			//System.out.println(list.get(2));
+	
 			
 			//Adding each item in the ArrayList to a row
 			DefaultTableModel model = (DefaultTableModel) agentViewComp.table.getModel();
@@ -481,9 +479,7 @@ public class Controller {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				//System.out.println(list.get(0));
-				//System.out.println(list.get(1));
-				//System.out.println(list.get(2));
+			
 				
 				//Adding each item in the ArrayList to a row
 				DefaultTableModel model = (DefaultTableModel) repViewComp.table.getModel();
@@ -641,9 +637,7 @@ public class Controller {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				//System.out.println(list.get(0));
-				//System.out.println(list.get(1));
-				//System.out.println(list.get(2));
+		
 				
 				//Adding each item in the ArrayList to a row
 				DefaultTableModel model = (DefaultTableModel) agentViewCompAdm.table.getModel();
@@ -699,10 +693,7 @@ public class Controller {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				//System.out.println(list.get(0));
-				//System.out.println(list.get(1));
-				//System.out.println(list.get(2));
-				
+		
 				//Adding each item in the ArrayList to a row
 				DefaultTableModel model = (DefaultTableModel) agentViewCompHlth.table.getModel();
 				Object [] row = new Object [6];
@@ -786,7 +777,7 @@ public class Controller {
 			 else {
 				 JOptionPane.showMessageDialog(null, "Comment Logged Unsucessfull");
 			 };
-			 //client.sendAction("Exit");
+
 		}
 		 
 	 }
@@ -804,9 +795,7 @@ public class Controller {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}		
-				//System.out.println(list.get(0));
-				//System.out.println(list.get(1));
-				//System.out.println(list.get(2));
+
 				
 				//Adding each item in the ArrayList to a row
 				DefaultTableModel model = (DefaultTableModel) stuViewComp.table.getModel();
@@ -864,7 +853,7 @@ public class Controller {
 					row[6] = list2.get(j).getFirstName();
 					row[7] = list2.get(j).getLastName();
 		
-					//model.addRow(row);
+				
 				}
 				
 				model.addRow(row);

@@ -111,7 +111,6 @@ public class StuViewComp extends JFrame {
 		contentPane.add(scrollPane_1);
 		
 		table_1 = new JTable();
-		//scrollPane_1.setRowHeaderView(table_1);
 		scrollPane_1.setViewportView(table_1);
 		table_1.setModel(model2);
 		

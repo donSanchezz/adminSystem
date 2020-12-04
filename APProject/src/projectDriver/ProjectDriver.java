@@ -32,26 +32,11 @@ import org.apache.logging.log4j.Logger;
 public class ProjectDriver {
 
 	public static void main(String[] args) {
-		//Client client = new Client();
-		//DateTime dt = new DateTime();
-		//Complaint complaint;
-		
-		//Client client = new Client();
-		//client.sendAction("Add Complaint");
-		//client.sendAction("Add Comment");
-		//client.sendComment(new Comment(0, dt.Date(), dt.Time(), "test", 1));
-		//client.sendComplaint(new Complaint(0, "23", "23", "Finance", "I have paid 500, but it hasn't show on my portal", 0));
-		//Student stuObj = new Student(10, "Alexis", "Garcia", "alexisgarcia@gmail.com", 99999);
-		//client.sendStudent(new Student(10, "Alexis", "Garcia", "alexisgarcia@gmail.com", 99999));
-		//client.recieveResponse();
-		//client.sendAction("Exit");
+
 		
 		
 		
-		
-		
-		/*Login loginFrame = new Login();
-		new dbConnector(); */
+
 		
 		Login loginFrame = new Login();
 		StuDashboard stuDashFrame = new StuDashboard();
@@ -66,33 +51,9 @@ public class ProjectDriver {
 		StuViewComp stuViewComp = new StuViewComp();
 		
 		Controller con = new Controller(loginFrame, stuDashFrame, repDash, newComplaint, newQuery, agentDash, agentViewComp, agentViewCompAdm, agentViewCompHlth, repViewComp, stuViewComp );
-		//stuDashFrame.setVisible(true);
 	
 		loginFrame.setVisible(true);
-		//repViewComp.setVisible(true);
-		//loginFrame.setVisible(true); */
-		
-		/*final Logger Logger = LogManager.getLogger(ProjectDriver.class);
-		Logger.info("Test Info message");
-		Logger.debug("Test Debug message");
-		Logger.error("Test error message");
-		Logger.trace("Test trace message");
-		Logger.fatal("Test fatal message");
-		Logger.warn("Test warning message");*/
-		
-		
-		
-		/*EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});*/
-		
+	
 		
 	
 	}
