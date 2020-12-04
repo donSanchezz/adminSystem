@@ -43,7 +43,7 @@ public class ChatClient {
         client.addMessageListener(new MessageListener() {
             @Override
             public void onMessage(String fromLogin, String msgBody) {
-                System.out.println("You got a message from " + fromLogin + " ===>" + msgBody);
+                System.out.println("You got a message from " + fromLogin + " " + msgBody);
             }
         });
 
@@ -54,8 +54,7 @@ public class ChatClient {
 
             if (client.login("guest", "guest")) {
                 System.out.println("Login successful");
-
-                client.msg("jim", "Hello World!");
+                
             } else {
                 System.err.println("Login failed");
             }
