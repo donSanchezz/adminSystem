@@ -75,11 +75,15 @@ public class Controller {
 		
 		//Login listeners
 		this.login.addLoginListener(new loginBtnListener());
+		this.login.addExitBttnListener(new ListenForExitBttnLogin());
 		//Student dashboard listeners
 		this.stuDash.addNewComplaintListener( new NewCompListener());
 		this.stuDash.addNewQueryListener( new NewQueryListener());
 		this.stuDash.addNewViewCompListener(new listenForViewComp());
 		this.stuDash.addLogoutListener(new listenForLogoutBtn());
+		
+		//student View Comp Listeners
+		this.stuViewComp.AddExitBtnListener(new listenForExitBttnStu());
 		//Complaint listeners
 		this.newComp.addClearListenerC(new listenForClearBttnC());
 		this.newComp.addExitListenerC(new listenForExitBttnC());
@@ -102,14 +106,18 @@ public class Controller {
 		//agent financial view 
 		this.agentViewComp.addUpdateListener(new listenForUpdateBttn());
 		this.agentViewComp.addJTableListener( new listenForJTableClicked());
+		this.agentViewComp.AddExitBtnListener(new listenForExitBttn());
 		
 		//agent administration view
 		this.agentViewCompAdm.addUpdateListener( new listenForUpdateAdmBttn());
 		this.agentViewCompAdm.addJTableListener( new listenForJTableClickedAdm());
+		this.agentViewCompAdm.AddExitBtnListener(new listenForExitBttn());
+		
 		
 		//agent health view
 		this.agentViewCompHlth.addUpdateListener( new listenForUpdateHlthBttn());
 		this.agentViewCompHlth.addJTableListener( new listenForJTableClickedHlth());
+		this.agentViewCompHlth.AddExitBtnListener(new listenForExitBttn());
 		
 		//rep dashboard listeners
 		this.repDash.addViewCompListener( new listenForViewCompMenuBttn2());
@@ -119,6 +127,7 @@ public class Controller {
 		this.repViewComp.addUpdateListener(new listenForUpdateBttn3());
 		this.repViewComp.addLoadBttnListener(new listenForLoadBttn());
 		this.repViewComp.addJTableListener(new listenForJTableClickedRep());
+		this.repViewComp.AddExitBtnListener(new listenForExitBttn2());
 		
 		//student view complaint listeners
 		this.stuViewComp.addLoadBttnListener(new listenForLoadBttnStu());
@@ -238,6 +247,18 @@ public class Controller {
 		
 			 
 		 }
+	 
+	 class ListenForExitBttnLogin implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			client.sendAction("Exit");
+			login.setVisible(false);
+			System.exit(0);
+			
+		}
+		 
+	 }
 	 
 	 
 	 
@@ -507,6 +528,56 @@ public class Controller {
 		public void mouseReleased(MouseEvent e) {
 		}
 	 }
+	 
+	 class listenForExitBttn implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			agentViewComp.setVisible(false);
+			agentViewCompAdm.setVisible(false);
+			agentViewCompHlth.setVisible(false);
+			agentDash.setVisible(true);
+			 DefaultTableModel model = (DefaultTableModel) agentViewComp.table.getModel();
+			 model.setRowCount(0);
+			 DefaultTableModel model2 = (DefaultTableModel) agentViewCompHlth.table.getModel();
+			 model2.setRowCount(0);
+			 DefaultTableModel model3 = (DefaultTableModel) agentViewCompAdm.table.getModel();
+			 model3.setRowCount(0);
+			 
+			
+		}
+		 
+	 }
+	 
+	 class listenForExitBttn2 implements ActionListener {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				repViewComp.setVisible(false);
+				repDash.setVisible(true);
+				 DefaultTableModel model = (DefaultTableModel) repViewComp.table.getModel();
+				 model.setRowCount(0); 	
+			}
+			 
+		 }
+	 
+	 class listenForExitBttnStu implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			stuViewComp.setVisible(false);
+			stuDash.setVisible(true);
+			 DefaultTableModel model = (DefaultTableModel) stuViewComp.table.getModel();
+			 model.setRowCount(0);
+			 DefaultTableModel model2 = (DefaultTableModel) stuViewComp.table_1.getModel();
+			 model2.setRowCount(0);
+			 			
+		}
+		 
+		 
+	 }
+	 
+
 	 
 	 class listenForJTableClickedRep implements MouseListener {
 		 public void mouseClicked(MouseEvent arg0) {
@@ -803,7 +874,8 @@ public class Controller {
 		}
 		 
 	 }
-	 
+
+
 	
 
 }

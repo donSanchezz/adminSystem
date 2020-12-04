@@ -43,6 +43,7 @@ public class AgentViewCompaint extends JFrame {
 	public JTextArea textArea = new JTextArea();
 	public JComboBox statusComboBox = new JComboBox();
 	JButton updateBttn = new JButton("Update");
+	JButton exitBttn = new JButton("Exit");
 	
 	/**
 	 * Launch the application.
@@ -186,7 +187,7 @@ public class AgentViewCompaint extends JFrame {
 		deleteBttn.setBounds(258, 475, 89, 23);
 		contentPane.add(deleteBttn);
 		
-		JButton exitBttn = new JButton("Exit");
+		
 		exitBttn.setBounds(258, 509, 89, 23);
 		contentPane.add(exitBttn);
 		
@@ -229,4 +230,10 @@ public class AgentViewCompaint extends JFrame {
 		public void addUpdateListener2 (ActionListener listenForUpdateBttn2) {
 			updateBttn.addActionListener(listenForUpdateBttn2);
 		}
+		
+		public void AddExitBtnListener (ActionListener listenForExitBttn) {
+			exitBttn.addActionListener(listenForExitBttn);
+		}
+		
+		
 }

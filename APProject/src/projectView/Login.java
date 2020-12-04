@@ -24,6 +24,7 @@ public class Login extends JFrame {
 	public JPasswordField pass;
 	public JButton loginBtn = new JButton("Login");
 	public JComboBox comboBox = new JComboBox();
+	public JButton exitBttn = new JButton("Exit");
 
 	/**
 	 * Launch the application.
@@ -66,7 +67,7 @@ public class Login extends JFrame {
 		contentPane.add(pass);
 		
 		
-		loginBtn.setBounds(107, 260, 89, 23);
+		loginBtn.setBounds(62, 254, 89, 23);
 		contentPane.add(loginBtn);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Type");
@@ -77,9 +78,17 @@ public class Login extends JFrame {
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Student", "Agent", "Representative"}));
 		comboBox.setBounds(10, 179, 134, 20);
 		contentPane.add(comboBox);
+		
+		
+		exitBttn.setBounds(161, 254, 89, 23);
+		contentPane.add(exitBttn);
 	}
 	
 	public void addLoginListener (ActionListener listenForLoginBtn) {
 		loginBtn.addActionListener(listenForLoginBtn);
+	}
+	
+	public void addExitBttnListener (ActionListener ListenForExitBttnLogin) {
+		exitBttn.addActionListener(ListenForExitBttnLogin);
 	}
 }

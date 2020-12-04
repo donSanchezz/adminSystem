@@ -36,6 +36,7 @@ public class StuViewComp extends JFrame {
 	JButton loadBttn = new JButton("Load");
 	JButton updateBttn = new JButton("Update");
 	public JTable table_1;
+	JButton exitBttn = new JButton("Exit");
 	
 	/**
 	 * Launch the application.
@@ -99,7 +100,7 @@ public class StuViewComp extends JFrame {
 		loadBttn.setBounds(10, 475, 89, 23);
 		contentPane.add(loadBttn);
 		
-		JButton exitBttn = new JButton("Exit");
+
 		exitBttn.setBounds(258, 475, 89, 23);
 		contentPane.add(exitBttn);
 		updateBttn.setBounds(134, 475, 89, 23);
@@ -130,6 +131,10 @@ public class StuViewComp extends JFrame {
 		
 		public void addJTableListener (MouseListener listenForJTableClickedStu) {
 			table.addMouseListener( listenForJTableClickedStu);
+		}
+		
+		public void AddExitBtnListener (ActionListener listenForExitBttn) {
+			exitBttn.addActionListener(listenForExitBttn);
 		}
 		
 		

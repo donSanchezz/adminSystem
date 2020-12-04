@@ -231,7 +231,7 @@ public class Server {
 					break;
 				case "View Complaint Admin":
 					Logger.warn("Attempting to send data to client, Errors may occur");
-					cmpList = cmpHib.getAllComplaintFinancial();
+					cmpList = cmpHib.getAllComplaintAdmin();
 						os.writeObject(cmpList);
 						System.out.println(cmpList);
 					Logger.info("Data Successfully sent from client");

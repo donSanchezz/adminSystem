@@ -41,6 +41,7 @@ public class RepViewComplaint extends JFrame {
 	public JComboBox statusComboBox = new JComboBox();
 	JButton updateBttn = new JButton("Update");
 	public JTextArea textArea =new JTextArea();
+	JButton exitBttn = new JButton("Exit");
 	
 	/**
 	 * Launch the application.
@@ -150,7 +151,7 @@ public class RepViewComplaint extends JFrame {
 		deleteBttn.setBounds(258, 475, 89, 23);
 		contentPane.add(deleteBttn);
 		
-		JButton exitBttn = new JButton("Exit");
+		
 		exitBttn.setBounds(258, 509, 89, 23);
 		contentPane.add(exitBttn);
 		
@@ -207,6 +208,10 @@ public class RepViewComplaint extends JFrame {
 		
 		public void addJTableListener (MouseListener listenForJTableClickedRep) {
 			table.addMouseListener( listenForJTableClickedRep);
+		}
+		
+		public void AddExitBtnListener (ActionListener listenForExitBttn) {
+			exitBttn.addActionListener(listenForExitBttn);
 		}
 }
 

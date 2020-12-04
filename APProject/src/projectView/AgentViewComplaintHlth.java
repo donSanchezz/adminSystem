@@ -39,6 +39,7 @@ public class AgentViewComplaintHlth extends JFrame {
 	private JScrollPane scrollPane;
 	JButton loadBttn = new JButton("Load");
 	public JTextArea textArea = new JTextArea();
+	JButton exitBttn = new JButton("Exit");
 
 	/**
 	 * Launch the application.
@@ -182,7 +183,7 @@ public class AgentViewComplaintHlth extends JFrame {
 		deleteBttn.setBounds(258, 475, 89, 23);
 		contentPane.add(deleteBttn);
 		
-		JButton exitBttn = new JButton("Exit");
+
 		exitBttn.setBounds(258, 509, 89, 23);
 		contentPane.add(exitBttn);
 		
@@ -210,5 +211,9 @@ public class AgentViewComplaintHlth extends JFrame {
 		
 		public void addJTableListener (MouseListener listenForJTableClicked) {
 			table.addMouseListener( listenForJTableClicked);
+		}
+		
+		public void AddExitBtnListener (ActionListener listenForExitBttn) {
+			exitBttn.addActionListener(listenForExitBttn);
 		}
 }
