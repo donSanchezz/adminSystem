@@ -147,17 +147,9 @@ public class RepViewComplaint extends JFrame {
 		loadBttn.setBounds(10, 475, 89, 23);
 		contentPane.add(loadBttn);
 		
-		JButton deleteBttn = new JButton("Delete");
-		deleteBttn.setBounds(258, 475, 89, 23);
-		contentPane.add(deleteBttn);
 		
-		
-		exitBttn.setBounds(258, 509, 89, 23);
+		exitBttn.setBounds(258, 475, 89, 23);
 		contentPane.add(exitBttn);
-		
-		JButton clearBttn = new JButton("Clear");
-		clearBttn.setBounds(10, 509, 89, 23);
-		contentPane.add(clearBttn);
 		updateBttn.setToolTipText("Adds a comment to the currently selected complaint.");
 		
 		
