@@ -33,6 +33,7 @@ public class RepDashboard extends JFrame {
 	JMenuItem viewFinQ = new JMenuItem("View Financial");
 	JMenuItem viewAdmQ = new JMenuItem("View Administration");
 	JMenuItem viewHlthQ = new JMenuItem("View Health");
+	JMenuItem logoutMenuItem = new JMenuItem("Logout");
 
 	/**
 	 * Launch the application.
@@ -91,6 +92,12 @@ public class RepDashboard extends JFrame {
 		
 
 		viewQuery.add(viewHlthQ);
+		
+		JMenu logoutMenu = new JMenu("Logout");
+		menuBar.add(logoutMenu);
+		
+		
+		logoutMenu.add(logoutMenuItem);
 		
 		dashViewPane = new JPanel();
 		dashViewPane.setBackground(Color.LIGHT_GRAY);
@@ -255,6 +262,10 @@ public class RepDashboard extends JFrame {
 	
 	public void addViewCompListenerHlth (ActionListener listenForViewCompHlthMenuBttn2) {
 		viewHlth.addActionListener(listenForViewCompHlthMenuBttn2);
+	}
+	
+	public void addLogoutListener (ActionListener listenForLogoutBtn) {
+		logoutMenuItem.addActionListener(listenForLogoutBtn);
 	}
 	
 }

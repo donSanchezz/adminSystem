@@ -82,7 +82,7 @@ public class StuViewComp extends JFrame {
 		model.setColumnIdentifiers(column);;
 		
 		model2 = new DefaultTableModel();
-		Object [] column2 = {"ID", "Date", "Time", "Comment", "CmpID", "RepID",};
+		Object [] column2 = {"ID", "Date", "Time", "Comment", "CmpID", "RepID","FName", "LName"};
 		model2.setColumnIdentifiers(column2);
 		
 		

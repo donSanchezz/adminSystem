@@ -75,10 +75,11 @@ public class Controller {
 		
 		//Login listeners
 		this.login.addLoginListener(new loginBtnListener());
-		//Dashboard listeners
+		//Student dashboard listeners
 		this.stuDash.addNewComplaintListener( new NewCompListener());
 		this.stuDash.addNewQueryListener( new NewQueryListener());
 		this.stuDash.addNewViewCompListener(new listenForViewComp());
+		this.stuDash.addLogoutListener(new listenForLogoutBtn());
 		//Complaint listeners
 		this.newComp.addClearListenerC(new listenForClearBttnC());
 		this.newComp.addExitListenerC(new listenForExitBttnC());
@@ -95,6 +96,7 @@ public class Controller {
 		this.agentDash.addViewCompListener(new listenForViewCompMenuBttn());
 		this.agentDash.addViewCompListenerAdm(new listenForViewCompAdmMenuBttn());
 		this.agentDash.addViewCompListenerHlth(new listenForViewCompHlthMenuBttn());
+		this.agentDash.AddLogoutListener(new listenForLogoutBtn());
 		
 		
 		//agent financial view 
@@ -111,8 +113,7 @@ public class Controller {
 		
 		//rep dashboard listeners
 		this.repDash.addViewCompListener( new listenForViewCompMenuBttn2());
-		//this.repDash.addViewCompListenerAdm(new listenForViewCompAdmMenuBttn2());
-		//this.repDash.addViewCompListenerHlth(new listenForViewCompHlthMenuBttn2());
+		this.repDash.addLogoutListener(new listenForLogoutBtn());
 		
 		//rep View complaint
 		this.repViewComp.addUpdateListener(new listenForUpdateBttn3());
@@ -148,6 +149,7 @@ public class Controller {
 							list = client.recieveStudent();
 							solved = client.recieveStuCmps();
 							unsolved = client.recieveStuCmps();
+							System.out.println(list);
 							list.get(0).getStuId();
 							stuDash.stuLNameHeader.setText(list.get(0).getFirstName()); 
 							stuDash.stuFNameHeader.setText(list.get(0).getLastName());
@@ -236,6 +238,9 @@ public class Controller {
 		
 			 
 		 }
+	 
+	 
+	 
 	
 	 
 	 //Dashboard Action Listeners
@@ -262,6 +267,22 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			stuViewComp.setVisible(true);
+		}
+		 
+	 }
+	 
+	 class listenForLogoutBtn implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			stuDash.setVisible(false);
+			repDash.setVisible(false);
+			agentDash.setVisible(false);
+			login.pass.setText("");
+			login.user.setText("");
+			login.setVisible(true);
+			
+			
 		}
 		 
 	 }
@@ -711,7 +732,7 @@ public class Controller {
 				} catch (ClassNotFoundException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+				}		
 				//System.out.println(list.get(0));
 				//System.out.println(list.get(1));
 				//System.out.println(list.get(2));
@@ -727,12 +748,14 @@ public class Controller {
 					row[4]=list.get(i).getComplaint();
 					model.addRow(row);
 				}
+				
+				
 			}
 		 
 	 }
 	 
 	 class listenForUpdateBttnStu implements ActionListener {
-
+			ArrayList<Reps> list2 = new ArrayList<Reps>();
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ArrayList<Comment> list = new ArrayList<Comment>();
@@ -744,20 +767,39 @@ public class Controller {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			System.out.println(list);
+			String ID = Integer.toString(list.get(0).getRepId());
+			client.sendAction("Get Rep Info");
+			client.sendID(ID);
+				
+			try {
+		
+				list2 = client.recieveRep();
+			} catch (ClassNotFoundException | IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			//Adding each item in the ArrayList to a row
 			DefaultTableModel model = (DefaultTableModel) stuViewComp.table_1.getModel();
-			Object [] row = new Object [6];
+			Object [] row = new Object [8];
 			for (int i = 0; i<list.size(); i++) {
-				row[0] = list.get(i).getId();
-				row[1] = list.get(i).getDate();
-				row[2]= list.get(i).getTime();
-				row[3]= list.get(i).getComment();
-				row[4] = list.get(i).getCmpId();
-				row[5]=list.get(i).getRepId();
+			
+				for (int j = 0; j<list2.size(); j++) {
+					row[0] = list.get(i).getId();
+					row[1] = list.get(i).getDate();
+					row[2]= list.get(i).getTime();
+					row[3]= list.get(i).getComment();
+					row[4] = list.get(i).getCmpId();
+					row[5]=list.get(i).getRepId();
+					row[6] = list2.get(j).getFirstName();
+					row[7] = list2.get(j).getLastName();
+		
+					//model.addRow(row);
+				}
 				
 				model.addRow(row);
 			}
+	
+			
 		}
 		 
 	 }

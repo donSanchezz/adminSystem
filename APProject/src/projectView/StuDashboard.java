@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JInternalFrame;
+import javax.swing.JButton;
 
 public class StuDashboard extends JFrame {
 
@@ -33,6 +34,7 @@ public class StuDashboard extends JFrame {
 	public JTextField hlthSolvedTxt;
 	public JTextField stuFNameHeader;
 	JMenuItem viewCompItem = new JMenuItem("View complaint");
+	JMenuItem logoutMenuItem = new JMenuItem("Logout");
 
 	/**
 	 * Launch the application.
@@ -77,6 +79,12 @@ public class StuDashboard extends JFrame {
 
 		queryMenu.add(newQueryItem);
 		queryMenu.add(viewQueryItem);
+		
+		JMenu logoutMenu = new JMenu("Logout");
+		menuBar.add(logoutMenu);
+		
+		
+		logoutMenu.add(logoutMenuItem);
 		
 		dashViewPane = new JPanel();
 		dashViewPane.setBackground(Color.LIGHT_GRAY);
@@ -140,6 +148,7 @@ public class StuDashboard extends JFrame {
 		financialPanel.add(solvedLbl);
 		
 		finUnsolvedTxt = new JTextField();
+		finUnsolvedTxt.setEditable(false);
 		finUnsolvedTxt.setFont(new Font("Tahoma", Font.BOLD, 15));
 		finUnsolvedTxt.setText("10");
 		finUnsolvedTxt.setHorizontalAlignment(SwingConstants.CENTER);
@@ -148,6 +157,7 @@ public class StuDashboard extends JFrame {
 		finUnsolvedTxt.setColumns(10);
 		
 		finSolvedTxt = new JTextField();
+		finSolvedTxt.setEditable(false);
 		finSolvedTxt.setFont(new Font("Tahoma", Font.BOLD, 15));
 		finSolvedTxt.setText("5");
 		finSolvedTxt.setHorizontalAlignment(SwingConstants.CENTER);
@@ -178,6 +188,7 @@ public class StuDashboard extends JFrame {
 		adminPanel.add(adminSolvedLbl);
 		
 		admUnsolvedTxt = new JTextField();
+		admUnsolvedTxt.setEditable(false);
 		admUnsolvedTxt.setText("2");
 		admUnsolvedTxt.setHorizontalAlignment(SwingConstants.CENTER);
 		admUnsolvedTxt.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -186,6 +197,7 @@ public class StuDashboard extends JFrame {
 		adminPanel.add(admUnsolvedTxt);
 		
 		admSolvedTxt = new JTextField();
+		admSolvedTxt.setEditable(false);
 		admSolvedTxt.setText("4");
 		admSolvedTxt.setHorizontalAlignment(SwingConstants.CENTER);
 		admSolvedTxt.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -216,6 +228,7 @@ public class StuDashboard extends JFrame {
 		healthPanel.add(healthSolvedLbl);
 		
 		hlthUnsolvedTxt = new JTextField();
+		hlthUnsolvedTxt.setEditable(false);
 		hlthUnsolvedTxt.setText("4");
 		hlthUnsolvedTxt.setHorizontalAlignment(SwingConstants.CENTER);
 		hlthUnsolvedTxt.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -224,6 +237,7 @@ public class StuDashboard extends JFrame {
 		healthPanel.add(hlthUnsolvedTxt);
 		
 		hlthSolvedTxt = new JTextField();
+		hlthSolvedTxt.setEditable(false);
 		hlthSolvedTxt.setText("0");
 		hlthSolvedTxt.setHorizontalAlignment(SwingConstants.CENTER);
 		hlthSolvedTxt.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -244,5 +258,7 @@ public class StuDashboard extends JFrame {
 		viewCompItem.addActionListener(listenForViewComp);
 	}
 	
-	
+	public void addLogoutListener (ActionListener listenForLogoutBtn) {
+		logoutMenuItem.addActionListener(listenForLogoutBtn);
+	}
 }

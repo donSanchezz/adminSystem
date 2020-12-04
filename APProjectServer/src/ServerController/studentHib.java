@@ -215,7 +215,7 @@ public class studentHib {
 				String lastName = rs.getString("lastName");
 				String email = rs.getString("email");
 				int contactNum = rs.getInt("contactNum");
-				int pass = rs.getInt("pass");
+				String pass = rs.getString("pass");
 				
 				Student stu = new Student();
 				stu.setStuId(id);

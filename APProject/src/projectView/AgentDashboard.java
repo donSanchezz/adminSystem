@@ -31,6 +31,7 @@ public class AgentDashboard extends JFrame {
 	JMenuItem viewAdm = new JMenuItem("View Administration");
 	JMenuItem viewHlth = new JMenuItem("View Health");
 	public JTextField agtFNameHeader;
+	JMenuItem logoutMenuItem = new JMenuItem("Logout");
 	
 
 	/**
@@ -89,6 +90,12 @@ public class AgentDashboard extends JFrame {
 		
 		JMenuItem viewHlthQ = new JMenuItem("View Health");
 		viewQuery.add(viewHlthQ);
+		
+		JMenu logoutMenu = new JMenu("Logout");
+		menuBar.add(logoutMenu);
+		
+		
+		logoutMenu.add(logoutMenuItem);
 		
 		dashViewPane = new JPanel();
 		dashViewPane.setBackground(Color.LIGHT_GRAY);
@@ -262,6 +269,10 @@ public class AgentDashboard extends JFrame {
 	
 	public void addViewCompListenerHlth (ActionListener listenForViewCompHlthMenuBttn) {
 		viewHlth.addActionListener(listenForViewCompHlthMenuBttn);
+	}
+	
+	public void AddLogoutListener (ActionListener listenForLogoutBtn) {
+		logoutMenuItem.addActionListener(listenForLogoutBtn);
 	}
 	
 }

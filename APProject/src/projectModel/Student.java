@@ -44,13 +44,13 @@ public class Student implements Serializable {
 	private int contactNum;
 	
 	@Column(name="pass")
-	private int pass;
+	private String pass;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	//@JoinTable(name="student_complaint_table", joinColumns=@JoinColumn(name="id"), inverseJoinColumns=JoinColumn(name="id"))
 	private ArrayList<Complaint> complaintList = new ArrayList<>();
 	
-	public Student (int id, String firstName, String lastName, String email, int contactNum, int pass) {
+	public Student (int id, String firstName, String lastName, String email, int contactNum, String pass) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -66,7 +66,7 @@ public class Student implements Serializable {
 		this.lastName = "Doe";
 		this.email = "johndoe@gmail.com";
 		this.contactNum = 8597198;
-		this.pass=1;
+		this.pass=" ";
 
 	}
 
@@ -114,11 +114,11 @@ public class Student implements Serializable {
 
 	
 
-	public int getPass() {
+	public String getPass() {
 		return pass;
 	}
 
-	public void setPass(int pass) {
+	public void setPass(String pass) {
 		this.pass = pass;
 	}
 
